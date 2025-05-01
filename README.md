@@ -1,2 +1,2 @@
 # CentroEventos
-Proyecto preentrega de Seminario de Lenguajes - Opción .NET 1er. Semestre 2025
+Primer Trabajo para entregar de Seminario de Lenguajes - Opción .NET 1er. Semestre 2025
