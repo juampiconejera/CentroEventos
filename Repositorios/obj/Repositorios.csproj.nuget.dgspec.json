@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matia\\CentroEventos\\Repositorios\\Repositorios.csproj": {}
+    "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Repositorios\\Repositorios.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matia\\CentroEventos\\Repositorios\\Repositorios.csproj": {
+    "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Repositorios\\Repositorios.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matia\\CentroEventos\\Repositorios\\Repositorios.csproj",
+        "projectUniqueName": "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Repositorios\\Repositorios.csproj",
         "projectName": "Repositorios",
-        "projectPath": "C:\\Users\\matia\\CentroEventos\\Repositorios\\Repositorios.csproj",
-        "packagesPath": "C:\\Users\\matia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matia\\CentroEventos\\Repositorios\\obj\\",
+        "projectPath": "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Repositorios\\Repositorios.csproj",
+        "packagesPath": "C:\\Users\\Juampi conejera\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Repositorios\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\matia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Juampi conejera\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
