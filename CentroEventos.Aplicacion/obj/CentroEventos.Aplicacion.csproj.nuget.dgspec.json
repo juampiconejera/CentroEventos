@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {}
+    "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {}
   },
   "projects": {
-    "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+    "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
+        "projectUniqueName": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
         "projectName": "CentroEventos.Aplicacion",
-        "projectPath": "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
-        "packagesPath": "C:\\Users\\juamp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\obj\\",
+        "projectPath": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
+        "packagesPath": "C:\\Users\\matia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\juamp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\matia\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.310/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

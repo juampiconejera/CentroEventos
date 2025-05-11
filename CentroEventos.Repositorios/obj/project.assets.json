@@ -1,26 +1,45 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "CentroEventos.Aplicacion/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CentroEventos.Aplicacion.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CentroEventos.Aplicacion.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CentroEventos.Aplicacion/1.0.0": {
+      "type": "project",
+      "path": "../CentroEventos.Aplicacion/CentroEventos.Aplicacion.csproj",
+      "msbuildProject": "../CentroEventos.Aplicacion/CentroEventos.Aplicacion.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "CentroEventos.Aplicacion >= 1.0.0"
+    ]
   },
   "packageFolders": {
-    "C:\\Users\\juamp\\.nuget\\packages\\": {}
+    "C:\\Users\\matia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
+      "projectUniqueName": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
       "projectName": "CentroEventos.Repositorios",
-      "projectPath": "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
-      "packagesPath": "C:\\Users\\juamp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\juamp\\OneDrive\\Documentos\\GitHub\\CentroEventos\\CentroEventos.Repositorios\\obj\\",
+      "projectPath": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj",
+      "packagesPath": "C:\\Users\\matia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Repositorios\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\juamp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\matia\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -31,7 +50,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+              "projectPath": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -64,7 +87,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.310/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
