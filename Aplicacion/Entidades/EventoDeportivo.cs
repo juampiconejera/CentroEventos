@@ -55,6 +55,7 @@ public class EventoDeportivo
             get => _responsableId;
             set => _responsableId = value;
         }
+        // hacer el tostring
         
     }
 

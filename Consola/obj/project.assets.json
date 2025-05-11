@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Juampi conejera\\.nuget\\packages\\": {}
+    "C:\\Users\\matia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Consola\\Consola.csproj",
+      "projectUniqueName": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\Consola\\Consola.csproj",
       "projectName": "Consola",
-      "projectPath": "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Consola\\Consola.csproj",
-      "packagesPath": "C:\\Users\\Juampi conejera\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Juampi conejera\\Documents\\GitHub\\CentroEventos\\Consola\\obj\\",
+      "projectPath": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\Consola\\Consola.csproj",
+      "packagesPath": "C:\\Users\\matia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\matia\\Documents\\GitHub\\CentroEventos\\Consola\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Juampi conejera\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\matia\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
