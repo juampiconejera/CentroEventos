@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 namespace CentroEventos.Aplicacion.Entidades;
 //Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
@@ -13,52 +14,53 @@ public class EventoDeportivo
 
     private int _responsableId;//Id de la Persona a cargo del evento)
 
-
-        public int Id
-        {
-            get => _id;
-            set => _id = value;
-        }
-
-        public string? Nombre
-        {
-            get => _nombre;
-            set => _nombre = value;
-        }
-
-        public string? Descripcion
-        {
-            get => _descripcion;
-            set => _descripcion = value;
-        }
-
-        public DateTime FechaHoraInicio
-        {
-            get => _fechaHoraInicio;
-            set => _fechaHoraInicio = value;
-        }
-
-        public double DuracionHoras
-        {
-            get => _duracionHoras;
-            set => _duracionHoras = value;
-        }
-
-        public int CupoMaximo
-        {
-            get => _cupoMaximo;
-            set => _cupoMaximo = value;
-        }
-
-        public int ResponsableId
-        {
-            get => _responsableId;
-            set => _responsableId = value;
-        }
-        
-        // hacer el tostring
-        
+    public int Id
+    {
+        get => _id;
+        set => _id = value;
     }
+
+    public string? Nombre
+    {
+        get => _nombre;
+        set => _nombre = value;
+    }
+
+    public string? Descripcion
+    {
+        get => _descripcion;
+        set => _descripcion = value;
+    }
+
+    public DateTime FechaHoraInicio
+    {
+        get => _fechaHoraInicio;
+        set => _fechaHoraInicio = value;
+    }
+
+    public double DuracionHoras
+    {
+        get => _duracionHoras;
+        set => _duracionHoras = value;
+    }
+
+    public int CupoMaximo
+    {
+        get => _cupoMaximo;
+        set => _cupoMaximo = value;
+    }
+
+    public int ResponsableId
+    {
+        get => _responsableId;
+        set => _responsableId = value;
+    }
+
+    public override string ToString()
+    {
+        return ($"Id: {Id}, Nombre: {Nombre}, Descripcion: {Descripcion}, FechaHoraInicio: {FechaHoraInicio}, DuracionHoras: {DuracionHoras}, CupoMaximo: {CupoMaximo}, ResponsableId: {ResponsableId}");
+    }     
+}
 
     
 
