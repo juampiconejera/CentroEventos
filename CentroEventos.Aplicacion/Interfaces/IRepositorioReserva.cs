@@ -7,6 +7,4 @@ using CentroEventos.Aplicacion.Entidades;
         void Modificar(Reserva reserva);
         Reserva ObtenerPorId(int id);
         List<Reserva> Listar();
-        
-        
     }
