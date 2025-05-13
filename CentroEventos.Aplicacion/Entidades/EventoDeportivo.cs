@@ -59,7 +59,7 @@ public class EventoDeportivo
     public override string ToString()
     {
         return ($"Id: {Id}, Nombre: {Nombre}, Descripcion: {Descripcion}, FechaHoraInicio: {FechaHoraInicio}, DuracionHoras: {DuracionHoras}, CupoMaximo: {CupoMaximo}, ResponsableId: {ResponsableId}");
-    }     
+    }
 }
 
     
