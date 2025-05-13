@@ -51,7 +51,7 @@ public class Persona : IRepositorioPersona
 
     public void Agregar(Persona persona)
     {
-
+        throw new NotImplementedException();
     }
 
     public void Eliminar(Persona persona)
