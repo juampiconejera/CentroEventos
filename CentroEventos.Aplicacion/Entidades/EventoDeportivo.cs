@@ -5,14 +5,14 @@ namespace CentroEventos.Aplicacion.Entidades;
 //Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
 public class EventoDeportivo
 {
-    private int _id;//único, debe ser autoincremental gestionado por el repositorio
-    private string? _nombre;//ej: "Clase de Spinning Avanzado", "Partido final de Vóley"
+    private int _id;    //único, debe ser autoincremental gestionado por el repositorio
+    private string? _nombre;    //ej: "Clase de Spinning Avanzado", "Partido final de Vóley"
     private string? _descripcion;   
-    private DateTime _fechaHoraInicio;//DateTime - Fecha y hora exactas de inicio del evento)
-    private double _duracionHoras;//Duración del evento en horas, ej: 1.5 para una hora y media
-    private int _cupoMaximo;//Cantidad máxima de participantes permitidos)
+    private DateTime _fechaHoraInicio;  //DateTime - Fecha y hora exactas de inicio del evento)
+    private double _duracionHoras;  //Duración del evento en horas, ej: 1.5 para una hora y media
+    private int _cupoMaximo;        //Cantidad máxima de participantes permitidos)
 
-    private int _responsableId;//Id de la Persona a cargo del evento)
+    private int _responsableId;     //Id de la Persona a cargo del evento)
 
     public int Id
     {

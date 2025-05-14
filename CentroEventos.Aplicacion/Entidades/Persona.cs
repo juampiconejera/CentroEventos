@@ -69,7 +69,15 @@ public class Persona : IRepositorioPersona
         throw new NotImplementedException();
     }
 
-    public Persona? ObtenerPorId(int id)
+    public Persona ObtenerPorId(int id)
+    {
+        throw new NotImplementedException();
+    }
+    public Persona ObtenerPorDni(string dni)
+    {
+        throw new NotImplementedException();
+    }
+    public Persona ObtenerPorEmail(string email)
     {
         throw new NotImplementedException();
     }
