@@ -1,7 +1,5 @@
 using System;
-using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
-using CentroEventos.Aplicacion.Excepciones;
 
 namespace CentroEventos.Aplicacion.Validadores;
 /*
@@ -16,18 +14,46 @@ IRepositorioEventoDeportivo y IRepositorioReserva)
 */
 public class ReservaValidador
 {
-    public bool Validar(Reserva reserva, IRepositorioReserva repositorioReserva,IRepositorioPersona repositorioPersona, IRepositorioEventoDeportivo repositorioEventoDeportivo)
+    public bool Validar(Reserva reserva, out string mensajeError)
     {   
+        bool validacion = true;
+        mensajeError = "";
         //validacion IdPersona
-        if(!repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorId(reserva.PersonaId)))
+        if(validacion && string.IsNullOrWhiteSpace(reserva.PersonaId + ""))
+        {
+            mensajeError = "Id de la persona invalido.\n";
+            validacion = false;
+        }
+        //validacion IdEventoDeportivo
+        if(validacion && string.IsNullOrWhiteSpace(reserva.EventoDeportivoId + ""))
+        {
+            mensajeError = "Id del evento deportivo invalido.\n";
+            validacion = false;
+        }
+        //validacion FechaAltaReserva
+        if(validacion && string.IsNullOrWhiteSpace(reserva.FechaAltaReserva + ""))
+        {
+            mensajeError = "FechaAlta de la reserva invalida.\n";
+            validacion = false;
+        }
+        //validacion Estado
+        if(validacion && string.IsNullOrWhiteSpace(reserva.Estado + ""))
+        {
+            mensajeError = "Estado de la reserva invalido.\n";
+            validacion = false;
+        }
+        return validacion;
+
+        /* //validacion IdPersona       PARA PONER EN EL CASO DE USO
+        if(validacion & !repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorId(reserva.PersonaId)))
         {
             throw new EntidadNotFoundException("El Id no corresponde a una persona registrada.");
         }
         //validacion IdEventoDeportivo
-        if(!repositorioEventoDeportivo.Listar().Contains(repositorioEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId)))
+        if(validacion & !repositorioEventoDeportivo.Listar().Contains(repositorioEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId)))
         {
-            throw new EntidadNotFoundException("El Id no corresponde a un evento registrado.");
-        }
-        return true;
+            mensajeError = "El Id no corresponde a un evento registrado.\n";
+            validacion = false;
+        }*/
     }
 }

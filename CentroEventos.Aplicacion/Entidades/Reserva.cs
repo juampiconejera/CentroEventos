@@ -1,5 +1,6 @@
 using System;
 using CentroEventos.Aplicacion.Interfaces;
+using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.Entidades;
 //Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
@@ -9,7 +10,7 @@ public class Reserva : IRepositorioReserva
     private int _personaId;//Id de la Persona que hace la reserva
     private int _eventoDeportivoId;//Id de la EventoDeportivo reservado
     private DateTime _fechaAltaReserva;//Fecha y hora en que se realizó la inscripción)
-    private EstadoAsistencia _estado;//Pendiente, Presente, Ausente)
+    /* private EstadoAsistencia _estado;//Pendiente, Presente, Ausente) */
 
     public int Id
     {
@@ -35,11 +36,11 @@ public class Reserva : IRepositorioReserva
         set => _fechaAltaReserva = value;
     }
 
-    public EstadoAsistencia Estado
+    /* public EstadoAsistencia Estado
     {
         get => _estado;
         set => _estado = value;
-    }
+    } */
 
     public void Agregar(Reserva reserva)
     {
@@ -70,9 +71,3 @@ public class Reserva : IRepositorioReserva
         return ($"Id de la reserva: {Id}, Id de la persona que realizó la reserva: {PersonaId}, Id del evento deportivo reservado: {EventoDeportivoId}, Fecha y hora: {FechaAltaReserva}, Estado: {Estado}");
     }
 }
-    public enum EstadoAsistencia
-    {
-        Pendiente,
-        Presente,
-        Ausente
-    }

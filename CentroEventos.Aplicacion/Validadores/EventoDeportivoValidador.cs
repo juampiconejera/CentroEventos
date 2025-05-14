@@ -1,7 +1,5 @@
 using System;
 using CentroEventos.Aplicacion.Entidades;
-using CentroEventos.Aplicacion.Excepciones;
-using CentroEventos.Aplicacion.Interfaces;
     
 namespace CentroEventos.Aplicacion.Validadores;
 //toy pensando en meter como vamos a conectar esto con el repositorio IRepositorioPersona
@@ -14,41 +12,42 @@ namespace CentroEventos.Aplicacion.Validadores;
 ○ ResponsableId debe corresponder a una Persona existente. (Requiere consulta a IRepositorioPersona)*/
 public class EventoDeportivoValidador
 {
-    public bool Validar(EventoDeportivo eventoDeportivo, IRepositorioPersona repositorioPersona, out string mensajeError)
+    public bool Validar(EventoDeportivo eventoDeportivo, out string mensajeError)
     {
         bool validacion = true;
         mensajeError = "";
         //Validar nombre y descripcion.
-        if(validacion & string.IsNullOrWhiteSpace(eventoDeportivo.Nombre))
+        if(validacion && string.IsNullOrWhiteSpace(eventoDeportivo.Nombre))
         {
             mensajeError = "Nombre del evento deportivo invalido.\n";
             validacion = false;
         }
-        if(validacion & string.IsNullOrWhiteSpace(eventoDeportivo.Descripcion))
+        if(validacion && string.IsNullOrWhiteSpace(eventoDeportivo.Descripcion))
         {
             mensajeError = "Descripcion del evento deportivo invalida.\n";
             validacion = false;
         }
         //validad hora del evento.
-        if(validacion & eventoDeportivo.FechaHoraInicio < DateTime.Now)
+        if(validacion && eventoDeportivo.FechaHoraInicio < DateTime.Now)
         {
-            throw new ValidacionException("FechaHoraInicio anterior a la fecha y hora actual.\n");
+            mensajeError = "La fecha y hora de inicio anterior a la fecha y hora actual\n";
+            validacion = false;
         }
         //validar cupoMaximo > 0
-        if(validacion & eventoDeportivo.CupoMaximo <= 0)
+        if(validacion && eventoDeportivo.CupoMaximo <= 0)
         {
-            throw new ValidacionException("El cupo maximo es menor o igual a cero.\n");
+            mensajeError = "El cupo maximo es menor o igual a cero.\n";
+            validacion = false;
         }
         //validar DuracionHoras > 0
-        if(validacion & eventoDeportivo.DuracionHoras <= 0)
+        if(validacion && eventoDeportivo.DuracionHoras <= 0)
         {
-            throw new ValidacionException("La duracion del evento es menor o igual a cero.\n");
+            mensajeError = "La duracion del evento es menor o igual a cero.\n";
+            validacion = false;
         }
-        //validar ResponsableId
-        if(validacion & !repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorId(eventoDeportivo.ResponsableId)))
-        {
-            throw new EntidadNotFoundException("El Id del responsable no corresponde a una persona registrada.\n");
-        }
+        /*
+        agregar al useCase
+        */
         return validacion;    //retorna true si no hay error
     }
 }
