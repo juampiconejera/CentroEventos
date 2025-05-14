@@ -1,8 +1,9 @@
 using System;
+using CentroEventos.Aplicacion.Interfaces;
 
 namespace CentroEventos.Aplicacion.Entidades;
 //Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
-public class Reserva
+public class Reserva : IRepositorioReserva
 {
     private int _id;//único, debe ser autoincremental gestionado por el repositorio
     private int _personaId;//Id de la Persona que hace la reserva
@@ -38,6 +39,31 @@ public class Reserva
     {
         get => _estado;
         set => _estado = value;
+    }
+
+    public void Agregar(Reserva reserva)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Eliminar(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Reserva> Listar()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Modificar(Reserva reserva)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Reserva ObtenerPorId(int id)
+    {
+        throw new NotImplementedException();
     }
 
     public override string ToString(){
