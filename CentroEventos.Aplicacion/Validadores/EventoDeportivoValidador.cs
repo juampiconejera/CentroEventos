@@ -1,5 +1,6 @@
 using System;
 using CentroEventos.Aplicacion.Entidades;
+using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
     
 namespace CentroEventos.Aplicacion.Validadores;
@@ -31,26 +32,22 @@ public class EventoDeportivoValidador
         //validad hora del evento.
         if(validacion & eventoDeportivo.FechaHoraInicio < DateTime.Now)
         {
-            mensajeError = "La fecha y hora de inicio es anterior a la fecha actual.\n";
-            validacion = false;
+            throw new ValidacionException("FechaHoraInicio anterior a la fecha y hora actual.\n");
         }
         //validar cupoMaximo > 0
         if(validacion & eventoDeportivo.CupoMaximo <= 0)
         {
-            mensajeError = "El cupo maximo es menor o igual a cero.\n";
-            validacion = false;
+            throw new ValidacionException("El cupo maximo es menor o igual a cero.\n");
         }
         //validar DuracionHoras > 0
         if(validacion & eventoDeportivo.DuracionHoras <= 0)
         {
-            mensajeError = "La duracion en horas es menor o igual a cero.\n";
-            validacion = false;
+            throw new ValidacionException("La duracion del evento es menor o igual a cero.\n");
         }
         //validar ResponsableId
         if(validacion & !repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorId(eventoDeportivo.ResponsableId)))
         {
-            mensajeError = "El Id del responsable no corresponde a una persona registrada.\n";
-            validacion = false;
+            throw new EntidadNotFoundException("El Id del responsable no corresponde a una persona registrada.\n");
         }
         return validacion;    //retorna true si no hay error
     }
