@@ -1,6 +1,7 @@
 using System;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
+using CentroEventos.Aplicacion.Excepciones;
 
 namespace CentroEventos.Aplicacion.Validadores;
 /*
@@ -15,21 +16,18 @@ IRepositorioEventoDeportivo y IRepositorioReserva)
 */
 public class ReservaValidador
 {
-    public bool Validar(Reserva reserva, IRepositorioReserva repositorioReserva,IRepositorioPersona repositorioPersona, IRepositorioEventoDeportivo repositorioEventoDeportivo, out string mensajeError)
-    {   bool validacion = true;
-        mensajeError = "";
+    public bool Validar(Reserva reserva, IRepositorioReserva repositorioReserva,IRepositorioPersona repositorioPersona, IRepositorioEventoDeportivo repositorioEventoDeportivo)
+    {   
         //validacion IdPersona
-        if(validacion & !repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorId(reserva.PersonaId)))
+        if(!repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorId(reserva.PersonaId)))
         {
-            mensajeError = "El Id no corresponde a una persona registrada.\n";
-            validacion = false;
+            throw new EntidadNotFoundException("El Id no corresponde a una persona registrada.");
         }
         //validacion IdEventoDeportivo
-        if(validacion & !repositorioEventoDeportivo.Listar().Contains(repositorioEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId)))
+        if(!repositorioEventoDeportivo.Listar().Contains(repositorioEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId)))
         {
-            mensajeError = "El Id no corresponde a un evento registrado.\n";
-            validacion = false;
+            throw new EntidadNotFoundException("El Id no corresponde a un evento registrado.");
         }
-        return validacion;
+        return true;
     }
 }
