@@ -1,5 +1,6 @@
 using System;
 using CentroEventos.Aplicacion.Entidades;
+using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
 
 namespace CentroEventos.Aplicacion.Validadores;
@@ -41,14 +42,12 @@ public class PersonaValidador
         //validacion dni ya registrado
         if(validacion & !repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorDni(persona.Dni)))
         {
-            mensajeError = "DNI ya registrado.\n";
-            validacion = false;
+            throw new DuplicadoException("DNI ya registrado.\n");
         }
         //validacion email ya registrado
         if(validacion & !repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorEmail(persona.Email)))
         {
-            mensajeError = "Email ya registrado.\n";
-            validacion = false;
+            throw new DuplicadoException("Email ya registrado.\n");
         }
         return validacion;
     }
