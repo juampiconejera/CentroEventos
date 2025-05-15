@@ -5,8 +5,8 @@ public interface IRepositorioPersona
     void Agregar(Persona persona);
     void Eliminar(Persona persona);
     void Modificar(Persona persona);
-    Persona ObtenerPorId(int id);
-    Persona ObtenerPorDni(string dni);
-    Persona ObtenerPorEmail(string email);
+    bool ExistePorId(int id);
+    bool ExistePorDni(string dni);
+    bool ExistePorEmail(string dni);
     List<Persona> Listar();
 }

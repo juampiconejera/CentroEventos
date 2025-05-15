@@ -3,7 +3,7 @@ using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.Interfaces;
 
-public interface IServicioAutorizacion
+public interface IServicioAutorizacionProvisorio
 {
-    bool PoseeElPermiso(int IdUsuario, Permiso permiso); 
+    bool PoseeElPermiso(int IdUsuario);
 }

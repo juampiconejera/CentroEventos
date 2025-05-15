@@ -12,7 +12,7 @@ public class EventoDeportivo : IRepositorioEventoDeportivo
     private DateTime _fechaHoraInicio;  //DateTime - Fecha y hora exactas de inicio del evento)
     private double _duracionHoras;  //Duración del evento en horas, ej: 1.5 para una hora y media
     private int _cupoMaximo;        //Cantidad máxima de participantes permitidos)
-
+    private int _cantidadReservas = 0;
     private int _responsableId;     //Id de la Persona a cargo del evento)
 
     public int Id
@@ -51,6 +51,11 @@ public class EventoDeportivo : IRepositorioEventoDeportivo
         set => _cupoMaximo = value;
     }
 
+    public int CantidadReservas
+    {
+        get => _cantidadReservas;
+    }
+    
     public int ResponsableId
     {
         get => _responsableId;
