@@ -5,20 +5,21 @@ using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Provisional;
 using CentroEventos.Aplicacion.Validadores;
+using Aplicacion;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
 public class AltaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, 
 IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaValidador reservaValidador)
 {
-    private bool cupoDisponible(EventoDeportivo eventoDeportivo)
+    private bool EventoLleno(EventoDeportivo eventoDeportivo)
     {
         return eventoDeportivo.CantidadReservas > eventoDeportivo.CupoMaximo;
     }
 
-    private bool reservaDuplicada(Reserva reserva)
+    private bool ReservaDuplicada(Reserva reserva)
     {
-        return ;
+        return !repoPersona.ExistePorId(reserva.PersonaId);
     }
     public void Ejecutar(Reserva reserva, int idUsuario){
         //verificamos si posee permisos
@@ -45,12 +46,21 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
         }
 
         //validar cupo disponible.
-        if(cupoDisponible(repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId))){
+        if(EventoLleno(repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId))){
             throw new CupoExcedidoException("Evento deportivo lleno");
         }
+
+        //Validar que PersonaID no tenga EventoDeportivoId dos veces.
+        if (repoReserva.Listar().Any(repo => repo.PersonaId == reserva.PersonaId && repo.EventoDeportivoId == reserva.EventoDeportivoId))
+        {
+            throw new DuplicadoException("Persona duplicada en el evento");
+        }
+
+        //Completar datosReserva.
+        reserva.FechaAltaReserva = DateTime.Now;
+        reserva.EstadoAsistencia = EstadoAsistencia.Pendiente;
         /*FALTA:
-          4. Validar que la Persona no tenga ya una reserva para ese EventoDeportivo. Lanzar DuplicadoException si ya existe. 
-          5. Si todo OK, completar datosReserva (FechaAltaReserva, EstadoAsistencia).*/
+              5. Si todo OK, completar datosReserva (FechaAltaReserva, EstadoAsistencia). CREO QUE ESTÁ TODO ACÁ*/ 
         repoReserva.Agregar(reserva);
     }
 }
