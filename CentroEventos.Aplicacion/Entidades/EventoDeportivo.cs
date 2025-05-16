@@ -91,11 +91,20 @@ public class EventoDeportivo : IRepositorioEventoDeportivo
         throw new NotImplementedException();
     }
 
+    public List<EventoDeportivo> ListarEventosDisponibles()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Persona> ListarPresentes(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public override string ToString()
     {
         return ($"Id: {Id}, Nombre: {Nombre}, Descripcion: {Descripcion}, FechaHoraInicio: {FechaHoraInicio}, DuracionHoras: {DuracionHoras}, CupoMaximo: {CupoMaximo}, ResponsableId: {ResponsableId}");
     }
-    
 }
 
     

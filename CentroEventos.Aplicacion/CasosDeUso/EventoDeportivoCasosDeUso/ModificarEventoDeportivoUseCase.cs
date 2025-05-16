@@ -6,7 +6,7 @@ using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
-public class ModificarEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IServicioAutorizacionProvisorio Auth, EventoDeportivoValidador eventoDeportivoValidador)
+public class ModificarEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, EventoDeportivoValidador eventoDeportivoValidador)
 {
     public void Ejecutar(EventoDeportivo eventoDeportivo, int IdUsuario)
     {
@@ -20,6 +20,15 @@ public class ModificarEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEve
             throw new ValidacionException(mensajeError);
         }
 
+        if(!repoEventoDeportivo.ExistePorId(eventoDeportivo.Id))
+        {
+            throw new EntidadNotFoundException("Id del evento no corresponde a un evento registrado.\n");
+        }
+
+        if(!repoPersona.ExistePorId(eventoDeportivo.ResponsableId))
+        {
+            throw new EntidadNotFoundException("Id del responsable no corresponde a una persona registrada.\n");
+        }
         repoEventoDeportivo.Modificar(eventoDeportivo);
     }
 }

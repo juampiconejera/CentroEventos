@@ -16,11 +16,7 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
     {
         return eventoDeportivo.CantidadReservas > eventoDeportivo.CupoMaximo;
     }
-
-    private bool ReservaDuplicada(Reserva reserva)
-    {
-        return !repoPersona.ExistePorId(reserva.PersonaId);
-    }
+    
     public void Ejecutar(Reserva reserva, int idUsuario){
         //verificamos si posee permisos
         if(!Auth.PoseeElPermiso(idUsuario)){
@@ -32,9 +28,8 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
         {
             throw new ValidacionException(message);
         }
-
         //verificamos si existe la persona por id
-        if(!repoPersona.ExistePorId(reserva.PersonaId))
+        if (!repoPersona.ExistePorId(reserva.PersonaId))
         {
             throw new EntidadNotFoundException("Persona no encontrada.");
         }

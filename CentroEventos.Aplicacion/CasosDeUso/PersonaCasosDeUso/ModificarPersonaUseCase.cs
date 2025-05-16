@@ -20,6 +20,12 @@ public class ModificacionPersonaUseCase(IRepositorioPersona repoPersona, IServic
         {
             throw new ValidacionException(mensajeError);
         }
+
+        if(!repoPersona.ExistePorId(persona.Id))
+        {
+            throw new EntidadNotFoundException("Id del responsable no corresponde a una persona registrada.\n");
+        }
+
         //Buscamos la persona en el repositorio y si existe la modificamos
         repoPersona.Modificar(persona);
     }
