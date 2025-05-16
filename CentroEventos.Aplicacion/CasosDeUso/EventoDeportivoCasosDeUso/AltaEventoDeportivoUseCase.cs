@@ -12,19 +12,19 @@ public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDe
 {
     public void Ejecutar(EventoDeportivo eventoDeportivo, int idUsuario)
     {
-        //primero verificar permisos
+        //Primero verificamos permisos
         if(!Auth.PoseeElPermiso(idUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado");
         }
 
-        //validamos el evento deportivo
+        //Validamos el evento deportivo
         if(!eventoDeportivoValidador.Validar(eventoDeportivo, out string mensajeError))
         {
             throw new ValidacionException(mensajeError);
         }
         
-        //validar ResponsableId
+        //Validar ResponsableId
         if(!repoPersona.ExistePorId(eventoDeportivo.ResponsableId))
         {
             throw new EntidadNotFoundException("Id del responsable no corresponde a una persona registrada.\n");

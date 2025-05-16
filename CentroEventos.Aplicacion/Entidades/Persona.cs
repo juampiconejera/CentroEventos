@@ -81,6 +81,25 @@ public class Persona : IRepositorioPersona
     {
         throw new NotImplementedException();
     }
+    public void Eliminar(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool ExistePorId(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool ExistePorDni(string dni)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool ExistePorEmail(string dni)
+    {
+        throw new NotImplementedException();
+    }
 
     public override string ToString()
     {

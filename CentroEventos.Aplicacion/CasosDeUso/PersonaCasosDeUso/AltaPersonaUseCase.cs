@@ -13,7 +13,7 @@ public class AltaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutori
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
-        if(personaValidador.Validar(persona, out string mensajeError))
+        if(!personaValidador.Validar(persona, out string mensajeError))
         {
             throw new ValidacionException(mensajeError);
         }

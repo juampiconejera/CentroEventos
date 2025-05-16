@@ -51,7 +51,7 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
         }
 
         //Validar que PersonaID no tenga EventoDeportivoId dos veces.
-        if (repoReserva.Listar().Any(repo => repo.PersonaId == reserva.PersonaId && repo.EventoDeportivoId == reserva.EventoDeportivoId))
+        if (repoReserva.Listar().Any( repo => (repo.PersonaId == reserva.PersonaId) && (repo.EventoDeportivoId == reserva.EventoDeportivoId) ))
         {
             throw new DuplicadoException("Persona duplicada en el evento");
         }
@@ -59,8 +59,8 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
         //Completar datosReserva.
         reserva.FechaAltaReserva = DateTime.Now;
         reserva.EstadoAsistencia = EstadoAsistencia.Pendiente;
-        /*FALTA:
-              5. Si todo OK, completar datosReserva (FechaAltaReserva, EstadoAsistencia). CREO QUE ESTÁ TODO ACÁ*/ 
+        
+        //Agregamos la reserva
         repoReserva.Agregar(reserva);
     }
 }
