@@ -1,6 +1,6 @@
 using System;
 using CentroEventos.Aplicacion.Interfaces;
-namespace CentroEventos.Aplicacion.provisional;
+namespace CentroEventos.Aplicacion.Provisional;
 
 public class ServicioAutorizacionProvisorio : IServicioAutorizacionProvisorio
 {

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
-using CentroEventos.Aplicacion.provisional;
+using CentroEventos.Aplicacion.Provisional;
 using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;

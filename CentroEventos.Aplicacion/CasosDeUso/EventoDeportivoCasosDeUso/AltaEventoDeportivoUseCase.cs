@@ -3,7 +3,7 @@ using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Validadores;
-using CentroEventos.Aplicacion.provisional;
+using CentroEventos.Aplicacion.Provisional;
 
 
 namespace CentroEventos.Aplicacion.CasosDeUso;
