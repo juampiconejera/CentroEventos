@@ -8,6 +8,8 @@ public interface IRepositorioEventoDeportivo
     void Agregar (EventoDeportivo eventoDeportivo);
     void Eliminar (int id);
     void Modificar (EventoDeportivo eventoDeportivo);
+    List<EventoDeportivo> ListarEventosDisponibles();
+    List<Persona> ListarPresentes(int id);
     bool ExistePorId(int id);
     EventoDeportivo ObtenerPorId (int id);
     List<EventoDeportivo> Listar ();

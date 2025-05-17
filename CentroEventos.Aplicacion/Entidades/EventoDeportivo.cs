@@ -85,6 +85,20 @@ public class EventoDeportivo : IRepositorioEventoDeportivo
     {
         throw new NotImplementedException();
     }
+    public bool ExistePorId(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<EventoDeportivo> ListarEventosDisponibles()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Persona> ListarPresentes(int id)
+    {
+        throw new NotImplementedException();
+    }
 
     public override string ToString()
     {

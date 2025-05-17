@@ -23,9 +23,8 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
         {
             throw new ValidacionException(message);
         }
-
         //verificamos si existe la persona por id
-        if(!repoPersona.ExistePorId(reserva.PersonaId))
+        if (!repoPersona.ExistePorId(reserva.PersonaId))
         {
             throw new EntidadNotFoundException("Persona no encontrada.");
         }
@@ -42,7 +41,7 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
         }
 
         //Validar que PersonaID no tenga EventoDeportivoId dos veces.
-        if (repoReserva.Listar().Any(repo => repo.PersonaId == reserva.PersonaId && repo.EventoDeportivoId == reserva.EventoDeportivoId))
+        if (repoReserva.Listar().Any( repo => (repo.PersonaId == reserva.PersonaId) && (repo.EventoDeportivoId == reserva.EventoDeportivoId) ))
         {
             throw new DuplicadoException("Persona duplicada en el evento.");
         }
@@ -50,7 +49,8 @@ IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaVal
         //Completar datosReserva.
         reserva.FechaAltaReserva = DateTime.Now;
         reserva.EstadoAsistencia = EstadoAsistencia.Pendiente;
-
+        
+        //Agregamos la reserva
         repoReserva.Agregar(reserva);
     }
 }
