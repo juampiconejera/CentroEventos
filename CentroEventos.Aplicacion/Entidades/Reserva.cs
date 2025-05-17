@@ -68,6 +68,10 @@ public class Reserva : IRepositorioReserva
     {
         throw new NotImplementedException();
     }
+    public List<EventoDeportivo> ListarEventos(int id)
+    {
+        throw new NotImplementedException();
+    }
 
     public override string ToString(){
         return ($"Id de la reserva: {Id}, Id de la persona que realizó la reserva: {PersonaId}, Id del evento deportivo reservado: {EventoDeportivoId}, Fecha y hora: {FechaAltaReserva}, Estado: {EstadoAsistencia}");

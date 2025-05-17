@@ -1,6 +1,6 @@
 namespace CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
-    public interface IRepositorioReserva
+public interface IRepositorioReserva
     {
         void Agregar(Reserva reserva);
         void Eliminar(int id);

@@ -21,25 +21,25 @@ public class ReservaValidador
         //validacion IdPersona
         if(validacion && string.IsNullOrWhiteSpace(reserva.PersonaId + ""))
         {
-            mensajeError = "Id de la persona invalido.\n";
+            mensajeError += "Id de la persona invalido.\n";
             validacion = false;
         }
         //validacion IdEventoDeportivo
         if(validacion && string.IsNullOrWhiteSpace(reserva.EventoDeportivoId + ""))
         {
-            mensajeError = "Id del evento deportivo invalido.\n";
+            mensajeError += "Id del evento deportivo invalido.\n";
             validacion = false;
         }
         //validacion FechaAltaReserva
         if(validacion && string.IsNullOrWhiteSpace(reserva.FechaAltaReserva + ""))
         {
-            mensajeError = "FechaAlta de la reserva invalida.\n";
+            mensajeError += "FechaAlta de la reserva invalida.\n";
             validacion = false;
         }
         //validacion Estado
         if(validacion && string.IsNullOrWhiteSpace(reserva.EstadoAsistencia + ""))
         {
-            mensajeError = "Estado de la reserva invalido.\n";
+            mensajeError += "Estado de la reserva invalido.\n";
             validacion = false;
         }
         return validacion;

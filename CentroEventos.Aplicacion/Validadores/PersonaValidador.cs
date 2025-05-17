@@ -15,25 +15,25 @@ public class PersonaValidador
         //validacion nombre
         if(validacion && string.IsNullOrEmpty(persona.Nombre))
         {
-            mensajeError = "Nombre de la persona invalido.";
+            mensajeError += "Nombre de la persona invalido.\n";
             validacion = false;
         }
         //validacion apellido
         if(validacion && string.IsNullOrEmpty(persona.Apellido))
         {
-            mensajeError = "Apellido de la persona invalido.\n";
+            mensajeError += "Apellido de la persona invalido.\n";
             validacion = false;
         }
         //validacion dni
         if(validacion && string.IsNullOrEmpty(persona.Dni))
         {
-            mensajeError = "DNI de la persona invalido.\n";
+            mensajeError += "DNI de la persona invalido.\n";
             validacion = false;
         }
         //validacion email
         if(validacion && string.IsNullOrEmpty(persona.Email))
         {
-            mensajeError = "Email de la persona invalido.\n";
+            mensajeError += "Email de la persona invalido.\n";
             validacion = false;
         }
         return validacion;
