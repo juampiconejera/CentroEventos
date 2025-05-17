@@ -7,4 +7,5 @@ using CentroEventos.Aplicacion.Entidades;
         void Modificar(Reserva reserva);
         Reserva ObtenerPorId(int id);
         List<Reserva> Listar();
+        List<EventoDeportivo> ListarEventos(int id);
     }

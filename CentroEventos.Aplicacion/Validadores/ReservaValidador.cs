@@ -37,23 +37,11 @@ public class ReservaValidador
             validacion = false;
         }
         //validacion Estado
-        if(validacion && string.IsNullOrWhiteSpace(reserva.Estado + ""))
+        if(validacion && string.IsNullOrWhiteSpace(reserva.EstadoAsistencia + ""))
         {
             mensajeError = "Estado de la reserva invalido.\n";
             validacion = false;
         }
         return validacion;
-
-        /* //validacion IdPersona       PARA PONER EN EL CASO DE USO
-        if(validacion & !repositorioPersona.Listar().Contains(repositorioPersona.ObtenerPorId(reserva.PersonaId)))
-        {
-            throw new EntidadNotFoundException("El Id no corresponde a una persona registrada.");
-        }
-        //validacion IdEventoDeportivo
-        if(validacion & !repositorioEventoDeportivo.Listar().Contains(repositorioEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId)))
-        {
-            mensajeError = "El Id no corresponde a un evento registrado.\n";
-            validacion = false;
-        }*/
     }
 }
