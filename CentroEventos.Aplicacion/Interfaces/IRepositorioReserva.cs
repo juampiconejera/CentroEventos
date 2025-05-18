@@ -7,5 +7,5 @@ public interface IRepositorioReserva
         void Modificar(Reserva reserva);
         Reserva ObtenerPorId(int id);
         List<Reserva> Listar();
-        List<EventoDeportivo> ListarEventos(int id);
+        List<Reserva> ListarEventos(int id);
     }

@@ -11,7 +11,6 @@ public class Reserva : IRepositorioReserva
     private int _personaId;//Id de la Persona que hace la reserva
     private int _eventoDeportivoId;//Id de la EventoDeportivo reservado
     private DateTime _fechaAltaReserva;//Fecha y hora en que se realizó la inscripción)
-    /* private EstadoAsistencia _estado;//Pendiente, Presente, Ausente) */
     private EstadoAsistencia _estadoAsistencia;
 
     public int Id
