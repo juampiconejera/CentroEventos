@@ -27,6 +27,25 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         sw.WriteLine(eventoDeportivo.ResponsableId);
     }
 
+    public void Modificar(EventoDeportivo eventoModif)
+    {
+        var listaTotal = Listar();
+        for (int i = 0; i < listaTotal.Count; i++)
+        {
+            if (listaTotal[i].Id == eventoModif.Id)
+            {
+                listaTotal[i] = eventoModif;
+                break;
+            }
+        }
+
+        using var sw = new StreamWriter(_nombreArchivo, false);
+        foreach (EventoDeportivo e in listaTotal)
+        {
+            sw.WriteLine(e.Id); sw.WriteLine(e.Nombre); sw.WriteLine(e.Descripcion); sw.WriteLine(e.FechaHoraInicio); sw.WriteLine(e.DuracionHoras); sw.WriteLine(e.CupoMaximo); sw.WriteLine(e.ResponsableId);
+        }
+    }
+
     public List<EventoDeportivo> Listar()
     {
         var listaTotal = new List<EventoDeportivo>();
