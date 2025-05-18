@@ -46,6 +46,21 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         }
     }
 
+    public EventoDeportivo ObtenerPorId(int idEvento)
+    {
+        var listaTotal = Listar();
+        EventoDeportivo eventoRetorno = new EventoDeportivo();
+        foreach (EventoDeportivo e in listaTotal)
+        {
+            if (e.Id == idEvento)
+            {
+                eventoRetorno = e;
+                break;
+            }
+        }
+        return eventoRetorno;
+    }
+
     public List<EventoDeportivo> Listar()
     {
         var listaTotal = new List<EventoDeportivo>();
