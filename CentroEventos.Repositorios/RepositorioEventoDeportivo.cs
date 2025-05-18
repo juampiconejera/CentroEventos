@@ -47,6 +47,12 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         }
     }
 
+    public void Eliminar(int idEvento)
+    {
+        var listaTotal = Listar();  //como lo elimino? buena pregunta dorothy, rocket y vuelvo
+
+    }
+
     public EventoDeportivo ObtenerPorId(int idEvento)
     {
         var listaTotal = Listar();
