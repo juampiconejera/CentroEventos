@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Diagnostics.Tracing;
 using CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
@@ -59,6 +60,19 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
             }
         }
         return eventoRetorno;
+    }
+
+    public bool ExistePorId(int idEvento)
+    {
+        var listaTotal = Listar();
+        foreach (EventoDeportivo e in listaTotal)
+        {
+            if (e.Id == idEvento)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<EventoDeportivo> Listar()
