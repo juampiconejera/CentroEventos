@@ -134,7 +134,17 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
     {
         List<EventoDeportivo> listaRetorno = new List<EventoDeportivo>();
         var listaTotal = Listar();
-        
+
+        foreach (EventoDeportivo e in listaTotal)
+        {
+            var listaReservas = _repoReserva.ListarEventos(e.Id);
+
+            if (e.CupoMaximo > listaReservas.Count)   //si la cantidad de reservas de ese evento es menor al cupo maximo
+            {
+                listaRetorno.Add(e);    //agrego el evento deportivo a la lista
+            }
+        }
+
         return listaRetorno;
     }
 }
