@@ -4,7 +4,7 @@ using CentroEventos.Aplicacion.Interfaces;
 
 namespace CentroEventos.Aplicacion.Entidades;
 //Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
-public class EventoDeportivo : IRepositorioEventoDeportivo
+public class EventoDeportivo
 {
     private int _id;    //único, debe ser autoincremental gestionado por el repositorio
     private string? _nombre;    //ej: "Clase de Spinning Avanzado", "Partido final de Vóley"
@@ -56,45 +56,6 @@ public class EventoDeportivo : IRepositorioEventoDeportivo
         set => _responsableId = value;
     }
 
-    public void Agregar(EventoDeportivo eventoDeportivo)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Eliminar(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool ExistePorId(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<EventoDeportivo> Listar()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Modificar(EventoDeportivo eventoDeportivo)
-    {
-        throw new NotImplementedException();
-    }
-
-    public EventoDeportivo ObtenerPorId(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<EventoDeportivo> ListarEventosDisponibles()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Persona> ListarPresentes(int id)
-    {
-        throw new NotImplementedException();
-    }
 
     public override string ToString()
     {

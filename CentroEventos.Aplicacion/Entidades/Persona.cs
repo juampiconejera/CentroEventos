@@ -4,7 +4,7 @@ using System;
 using CentroEventos.Aplicacion.Interfaces;
 
 //Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
-public class Persona : IRepositorioPersona
+public class Persona
 {
     private int _id;//único, debe ser autoincremental gestionado por el repositorio
     private string? _dni;//único
@@ -47,58 +47,6 @@ public class Persona : IRepositorioPersona
     {
         get => _telefono;
         set => _telefono = value;
-    }
-
-    public void Agregar(Persona persona)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Eliminar(Persona persona)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Persona> Listar()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Modificar(Persona persona)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Persona ObtenerPorId(int id)
-    {
-        throw new NotImplementedException();
-    }
-    public Persona ObtenerPorDni(string dni)
-    {
-        throw new NotImplementedException();
-    }
-    public Persona ObtenerPorEmail(string email)
-    {
-        throw new NotImplementedException();
-    }
-    public void Eliminar(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool ExistePorId(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool ExistePorDni(string dni)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool ExistePorEmail(string dni)
-    {
-        throw new NotImplementedException();
     }
 
     public override string ToString()
