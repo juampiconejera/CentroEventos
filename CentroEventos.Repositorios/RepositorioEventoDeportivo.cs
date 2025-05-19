@@ -5,11 +5,20 @@ using CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Interfaces;
+using Aplicacion;                               //para verificar EstadoAsistencia, a revisar
 
 namespace CentroEventos.Repositorios;
 
 public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
 {
+    private readonly IRepositorioReserva _repoReserva;
+    private readonly IRepositorioPersona _repoPersona;
+
+    public RepositorioEventoDeportivo(IRepositorioReserva repoReserva, IRepositorioPersona repoPersona)
+    {
+        _repoReserva = repoReserva;
+        _repoPersona = repoPersona;
+    }
     readonly string _nombreArchivo = "eventos.txt";
     private int GenerarId()
     {
@@ -93,5 +102,39 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         }
 
         return listaTotal;
+    }
+
+    public List<Persona> ListarPresentes(int idEvento)
+    {
+        List<Persona> listaRetorno = new List<Persona>();
+
+        var listaReservas = _repoReserva.Listar();
+        var listaPersonas = _repoPersona.Listar();
+
+        foreach (Reserva r in listaReservas)
+        {
+            if (r.EventoDeportivoId == idEvento && r.EstadoAsistencia == EstadoAsistencia.Presente)
+            {
+                foreach (Persona p in listaPersonas)
+                {
+                    if (p.Id == r.PersonaId)
+                    {
+                        Persona personaAdd = p;
+                        listaRetorno.Add(personaAdd);
+                        break;
+                        //lo agrego a la lista y paso con el siguiente
+                    }
+                }
+            }
+        }
+        return listaRetorno;
+    }
+
+    public List<EventoDeportivo> ListarEventosDisponibles()
+    {
+        List<EventoDeportivo> listaRetorno = new List<EventoDeportivo>();
+        var listaTotal = Listar();
+        
+        return listaRetorno;
     }
 }
