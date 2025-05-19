@@ -10,13 +10,13 @@ public class RepositorioReserva : IRepositorioReserva
 {
     readonly string _nombreArchivo = "Reservas.txt";
 
-    private int generarId()
+    private int GenerarId()
     {
-        return 1;
+        return Listar().Count();
     }
     public void Agregar(Reserva reserva)
     {
-        reserva.Id = generarId();
+        reserva.Id = GenerarId();
         using var sw = new StreamWriter(_nombreArchivo, true);
         sw.WriteLine(reserva.Id); sw.WriteLine(reserva.PersonaId); sw.WriteLine(reserva.EventoDeportivoId); sw.WriteLine(reserva.FechaAltaReserva); sw.WriteLine(reserva.EstadoAsistencia);
     }
