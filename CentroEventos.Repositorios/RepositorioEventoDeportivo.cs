@@ -58,8 +58,21 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
 
     public void Eliminar(int idEvento)
     {
-        var listaTotal = Listar();  //como lo elimino? buena pregunta dorothy, rocket y vuelvo
+        var listaTotal = Listar();  //Voy a realizar una baja logica
+        foreach (EventoDeportivo e in listaTotal)
+        {
+            if (e.Id == idEvento)
+            {
+                e.Nombre = "ELIMINADO";
+                e.Descripcion = "ELIMINADO";
+            }
+        }
 
+        using var sw = new StreamWriter(_nombreArchivo, false);
+        foreach(EventoDeportivo e in listaTotal)
+        {
+            sw.WriteLine(e.Id); sw.WriteLine(e.Nombre); sw.WriteLine(e.Descripcion); sw.WriteLine(e.FechaHoraInicio); sw.WriteLine(e.DuracionHoras); sw.WriteLine(e.CupoMaximo); sw.WriteLine(e.ResponsableId);
+        }
     }
 
     public EventoDeportivo ObtenerPorId(int idEvento)
@@ -139,12 +152,12 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         {
             var listaReservas = _repoReserva.ListarEventos(e.Id);
 
-            if (e.CupoMaximo > listaReservas.Count)   //si la cantidad de reservas de ese evento es menor al cupo maximo
+            if (e.CupoMaximo > listaReservas.Count)   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
             {
                 listaRetorno.Add(e);    //agrego el evento deportivo a la lista
             }
         }
 
-        return listaRetorno;
+        return listaRetorno;    //devuelvo la lista con eventos disponibles
     }
 }
