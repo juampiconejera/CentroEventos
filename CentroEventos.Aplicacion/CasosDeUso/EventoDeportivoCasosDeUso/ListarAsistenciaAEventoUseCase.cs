@@ -2,12 +2,13 @@ using System;
 using System.Net.Cache;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
+using CentroEventos.Aplicacion.Entidades;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
 public class ListarAsistenciaAEventoUseCase(IRepositorioEventoDeportivo repoEvento, IRepositorioReserva repoReserva)
 {
-    public void Ejecutar(int idEvento)
+    public List<Persona> Ejecutar(int idEvento)
     {
         //Verificar existencia del evento
         if (!repoEvento.ExistePorId(idEvento))
@@ -21,6 +22,6 @@ public class ListarAsistenciaAEventoUseCase(IRepositorioEventoDeportivo repoEven
             throw new ValidacionException("El evento deportivo no se ha realizado.");
         }
 
-        repoEvento.ListarPresentes(idEvento);
+        return repoEvento.ListarPresentes(idEvento);
     }
 }

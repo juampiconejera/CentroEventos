@@ -3,47 +3,70 @@ using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
 using CentroEventos.Repositorios;
 using CentroEventos.Aplicacion.Validadores;
+using CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
 public class MetodosPersona
 {
-    public void menu()
+    public void menu(IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, PersonaValidador personaValidador, AltaPersonaUseCase altaPersona, BajaPersonaUseCase bajaPersona, ModificacionPersonaUseCase modificarPersona, ListarPersonaUseCase listarPersona, ListarAsistenciaAEventoUseCase listarAsistencia)
     {
-        IRepositorioPersona repoPersona = new RepositorioPersona();
-        IServicioAutorizacionProvisorio Auth = new ServicioAutorizacionProvisiorio();
-        PersonaValidador personaValidador = new PersonaValidador();
-        var altaPersona = new AltaPersonaUseCase(repoPersona, Auth, personaValidador);
-        var bajaPersona = new BajaPersonaUseCase(repoPersona, Auth);
-        var modificarPersona = new ModificacionPersonaUseCase(repoPersona, Auth, personaValidador);
-        var listarPersonas = new ListarPersonaUseCase(repoPersona);
-        
-        Console.WriteLine("Ingrese alguno de los siguientes casos: ");
-        Console.WriteLine("1. Dar de alta una persona.");
-        Console.WriteLine("2. Modificar una persona registrada.");
-        Console.WriteLine("3. Eliminar una persona registrada.");
-        Console.WriteLine("4. Listar a todas las personas registradas.");
-        Console.WriteLine("5. Volver.");
-        char opciones = char.Parse(Console.ReadLine() ?? "");
+        bool estado = true;
+        while(estado){
+            Console.WriteLine("Ingrese alguno de los siguientes casos: ");
+            Console.WriteLine("1. Dar de alta una persona.");
+            Console.WriteLine("2. Modificar una persona registrada.");
+            Console.WriteLine("3. Eliminar una persona registrada.");
+            Console.WriteLine("4. Listar a todas las personas registradas.");
+            Console.WriteLine("5. Listar asistencia a un evento determinado.");
+            Console.WriteLine("6. Volver.");
+            char opciones = char.Parse(Console.ReadLine() ?? "");
+            MetodosComunes metodosComunes = new MetodosComunes();
 
-        switch(opciones)
-        {
-            case '1':
-                Console.Clear();
-                Persona nuevaPersona = leerPersona();
-                altaPersona.Ejecutar(nuevaPersona, 1);          //tenemos que ver como pasarle el admin 
-                Console.Clear();
-                Console.WriteLine("Persona agregada correctamente!");
-                break;
-            case '2':
-                
-                break;
-            case '3':
-                Console.Clear();
-                MetodosComunes metodosComunes = new MetodosComunes();
-                break;
-            case '4':
-                break;
-            case '5':
-                break;
+            switch (opciones)
+            {
+                //Dar de alta una persona
+                case '1':
+                    Console.Clear();
+                    Persona nuevaPersona = leerPersona();
+                    altaPersona.Ejecutar(nuevaPersona, listarPersona.Ejecutar()[0].Id);          //tenemos que ver como pasarle el admin 
+                    Console.Clear();
+                    Console.WriteLine("Persona agregada correctamente!");
+                    break;
+                //Modificar una persona
+                case '2':
+                    Console.Clear();
+                    Persona personaModificar = leerPersona();
+                    modificarPersona.Ejecutar(personaModificar, listarPersona.Ejecutar()[0].Id);     //tenemos que ver como pasarle el admin 
+                    Console.Clear();
+                    Console.WriteLine("Persona modificada correctamente!");
+                    break;
+                //Eliminar una persona
+                case '3':
+                    Console.Clear();
+                    int idPersonaEliminar = metodosComunes.leerId("persona");
+                    bajaPersona.Ejecutar(idPersonaEliminar, listarPersona.Ejecutar()[0].Id);         //tenemos que ver como pasarle el admin 
+                    Console.Clear();
+                    Console.WriteLine("Persona eliminada correctamente!");
+                    break;
+                //Listar a todas las personas
+                case '4':
+                    Console.Clear();
+                    listarPersona.Ejecutar();
+                    Console.Clear();
+                    Console.WriteLine("Personas listadas correctamente!");
+                    break;
+                //Listar a todas las personas presentes en un evento deportivo pasado
+                case '5':
+                    Console.Clear();
+                    int idEvento = metodosComunes.leerId("evento deportivo");
+                    listarAsistencia.Ejecutar(idEvento);
+                    Console.Clear();
+                    Console.WriteLine("Personas presentes listadas correctamente!");
+                    break;
+                //Volvemos 
+                case '6':
+                    estado = false;
+                    break;
+            }
         }
     }
     

@@ -7,8 +7,8 @@ namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
 public class ListarReservaUseCase(IRepositorioReserva repoReserva)
 {
-    public void Ejecutar(int idUsuario)
+    public List<Reserva> Ejecutar()
     {
-        repoReserva.Listar();
+        return repoReserva.Listar();
     }
 }

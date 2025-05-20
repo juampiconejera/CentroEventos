@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <Compile Include="personas.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CentroEventos.Aplicacion\CentroEventos.Aplicacion.csproj" />
   </ItemGroup>
 

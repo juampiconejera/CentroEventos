@@ -4,7 +4,7 @@ using CentroEventos.Aplicacion.Interfaces;
 
 public class BajaReservaUseCase(IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth)
 {
-    public void Ejecutar(Reserva reserva, int idUsuario)
+    public void Ejecutar(int reservaId, int idUsuario)
     {
         //Verificamos permisos
         if (!Auth.PoseeElPermiso(idUsuario))
@@ -12,6 +12,6 @@ public class BajaReservaUseCase(IRepositorioReserva repoReserva, IServicioAutori
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
         
-        repoReserva.Eliminar(reserva.Id);
+        repoReserva.Eliminar(reservaId);
     }
 }

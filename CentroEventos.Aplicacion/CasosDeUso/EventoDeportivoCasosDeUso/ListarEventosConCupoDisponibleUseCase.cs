@@ -1,11 +1,12 @@
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Excepciones;
+using CentroEventos.Aplicacion.Entidades;
 
-namespace CentroEventos.Aplicacion.CasosDeUso;
+namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 public class ListarEventosConCupoDisponibleUseCase(IRepositorioEventoDeportivo repoEventoDeportivo)
 {
-    public void Ejecutar(int idUsuario)
+    public List<EventoDeportivo> Ejecutar(int idUsuario)
     {   
-        repoEventoDeportivo.ListarEventosDisponibles();
+        return repoEventoDeportivo.ListarEventosDisponibles();
     }
 }
