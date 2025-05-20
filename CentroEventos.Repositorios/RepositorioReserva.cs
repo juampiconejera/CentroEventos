@@ -8,7 +8,7 @@ namespace CentroEventos.Repositorios;
 
 public class RepositorioReserva : IRepositorioReserva
 {
-    readonly string _nombreArchivo = "Reservas.txt";
+    readonly string _nombreArchivo = "reservas.txt";
 
     private int GenerarId()
     {

@@ -100,7 +100,7 @@ public class MetodosEventoDeportivo
         Console.WriteLine("Ingrese los segundos: ");
         int s = int.Parse(Console.ReadLine() ?? "");
 
-        DateTime fechaHoraInicio = new DateTime(a, m, d, h, min, s);
+        DateTime fechaHoraInicio = new DateTime(a, m, d, h, min, 0);
         return fechaHoraInicio;
     }
 }

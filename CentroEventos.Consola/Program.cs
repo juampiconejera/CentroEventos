@@ -53,8 +53,7 @@ namespace CentroEventos.Consola
             var metodosReserva = new MetodosReserva();
             bool estado = true;
 
-            //1
-            // altaPersona.Ejecutar(new Persona("admin","admin","admin","admin","admin"),1);
+            altaPersona.Ejecutar(new Persona("admin","admin","admin","admin","admin"),1);
 
             while (estado)
             {

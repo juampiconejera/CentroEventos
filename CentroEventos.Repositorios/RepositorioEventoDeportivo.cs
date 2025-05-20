@@ -11,6 +11,7 @@ namespace CentroEventos.Repositorios;
 
 public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
 {
+    readonly string _nombreArchivo = "eventos.txt";
     private readonly IRepositorioReserva _repoReserva;
     private readonly IRepositorioPersona _repoPersona;
 
@@ -19,7 +20,6 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         _repoReserva = repoReserva;
         _repoPersona = repoPersona;
     }
-    readonly string _nombreArchivo = "eventos.txt";
     private int GenerarId()
     {
         return Listar().Count()+1;
