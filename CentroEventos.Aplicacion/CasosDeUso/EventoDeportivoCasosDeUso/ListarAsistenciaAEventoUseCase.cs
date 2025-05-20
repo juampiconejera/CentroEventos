@@ -5,16 +5,10 @@ using CentroEventos.Aplicacion.Interfaces;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
-public class ListarAsistenciaAEventoUseCase(IServicioAutorizacionProvisorio Auth, IRepositorioEventoDeportivo repoEvento, IRepositorioReserva repoReserva)
+public class ListarAsistenciaAEventoUseCase(IRepositorioEventoDeportivo repoEvento, IRepositorioReserva repoReserva)
 {
-    public void Ejecutar(int idUsuario, int idEvento)
+    public void Ejecutar(int idEvento)
     {
-        //Verificar permisos del usuario
-        if (!Auth.PoseeElPermiso(idUsuario))
-        {
-            throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
-
         //Verificar existencia del evento
         if (!repoEvento.ExistePorId(idEvento))
         {

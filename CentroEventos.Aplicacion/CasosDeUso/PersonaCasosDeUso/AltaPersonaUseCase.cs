@@ -4,8 +4,8 @@ using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Validadores;
 
-namespace CentroEventos.Aplicacion.CasosDeUso;
-public class AltaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth,PersonaValidador personaValidador)
+namespace CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
+public class AltaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, PersonaValidador personaValidador)
 {
     public void Ejecutar(Persona persona, int idUsuario)
     {

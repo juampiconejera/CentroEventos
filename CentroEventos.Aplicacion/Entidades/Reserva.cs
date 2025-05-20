@@ -12,6 +12,19 @@ public class Reserva
     private int _eventoDeportivoId;//Id de la EventoDeportivo reservado
     private DateTime _fechaAltaReserva;//Fecha y hora en que se realizó la inscripción)
     private EstadoAsistencia _estadoAsistencia;
+    
+    public Reserva()
+    {
+        
+    }
+
+    public Reserva(int personaId, int eventoDeportivoId, DateTime fechaAltaReserva, EstadoAsistencia estadoAsistencia)
+    {
+        PersonaId = personaId;
+        EventoDeportivoId = eventoDeportivoId;
+        FechaAltaReserva = fechaAltaReserva;
+        EstadoAsistencia = estadoAsistencia;
+    }
 
     public int Id
     {

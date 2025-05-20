@@ -5,7 +5,7 @@ using CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Interfaces;
-using Aplicacion;                               //para verificar EstadoAsistencia, a revisar
+using Aplicacion;
 
 namespace CentroEventos.Repositorios;
 
@@ -22,7 +22,7 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
     readonly string _nombreArchivo = "eventos.txt";
     private int GenerarId()
     {
-        return Listar().Count();
+        return Listar().Count()+1;
     }
     public void Agregar(EventoDeportivo eventoDeportivo)
     {

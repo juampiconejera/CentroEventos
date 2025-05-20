@@ -13,6 +13,19 @@ public class Persona
     private string? _email;// único
     private string? _telefono;
 
+    public Persona()
+    {
+        
+    }
+    public Persona(string dni, string nombre, string apellido, string email, string telefono)
+    {
+        Dni = dni;
+        Nombre = nombre;
+        Apellido = apellido;
+        Email = email;
+        Telefono = telefono;
+    }
+
     public int Id
     {
         get => _id;

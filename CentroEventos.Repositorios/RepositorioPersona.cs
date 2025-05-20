@@ -11,7 +11,7 @@ public class RepositorioPersona : IRepositorioPersona
 
     private int GenerarId()
     {
-        return Listar().Count();
+        return Listar().Count()+1;
     }
 
     public void Agregar(Persona persona)

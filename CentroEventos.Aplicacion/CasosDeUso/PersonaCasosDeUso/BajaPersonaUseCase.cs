@@ -7,13 +7,13 @@ namespace CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
 
 public class BajaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth)
 {
-    public void Ejecutar(Persona persona, int idUsuario)
+    public void Ejecutar(int id, int idUsuario)
     {
         if (!Auth.PoseeElPermiso(idUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
 
-        repoPersona.Eliminar(persona.Id);
+        repoPersona.Eliminar(id);
     }
 }

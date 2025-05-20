@@ -3,14 +3,13 @@ using System.Runtime.Serialization;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
-using CentroEventos.Aplicacion.Provisional;
 using CentroEventos.Aplicacion.Validadores;
 using Aplicacion;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
 public class AltaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, 
-IRepositorioReserva repoReserva, ServicioAutorizacionProvisorio Auth, ReservaValidador reservaValidador)
+IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaValidador reservaValidador)
 {
     public void Ejecutar(Reserva reserva, int idUsuario){
         //verificamos si posee permisos

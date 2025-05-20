@@ -12,7 +12,7 @@ public class RepositorioReserva : IRepositorioReserva
 
     private int GenerarId()
     {
-        return Listar().Count();
+        return Listar().Count()+1;
     }
     public void Agregar(Reserva reserva)
     {
@@ -67,7 +67,7 @@ public class RepositorioReserva : IRepositorioReserva
         while (!sr.EndOfStream)
         {
             var reserva = new Reserva();
-            reserva.Id = int.Parse(sr.ReadLine()); reserva.PersonaId = int.Parse(sr.ReadLine()); reserva.EventoDeportivoId = int.Parse(sr.ReadLine()); reserva.FechaAltaReserva = DateTime.Parse(sr.ReadLine()); reserva.EstadoAsistencia = (EstadoAsistencia)Enum.Parse(typeof(EstadoAsistencia), sr.ReadLine());
+            reserva.Id = int.Parse(sr.ReadLine() ?? ""); reserva.PersonaId = int.Parse(sr.ReadLine() ?? ""); reserva.EventoDeportivoId = int.Parse(sr.ReadLine() ?? ""); reserva.FechaAltaReserva = DateTime.Parse(sr.ReadLine() ?? ""); reserva.EstadoAsistencia = (EstadoAsistencia)Enum.Parse(typeof(EstadoAsistencia), sr.ReadLine() ?? "");
             listaTotal.Add(reserva);
         }
 

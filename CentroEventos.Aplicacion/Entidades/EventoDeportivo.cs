@@ -14,6 +14,20 @@ public class EventoDeportivo
     private int _cupoMaximo;        //Cantidad máxima de participantes permitidos
     private int _responsableId;     //Id de la Persona a cargo del evento)
 
+    public EventoDeportivo()
+    {
+    
+    }
+    public EventoDeportivo(string nombre, string descripcion, DateTime fechaHoraInicio, double duracionHoras, int cupoMaximo, int responsableId)
+    {
+        Nombre = nombre;
+        Descripcion = descripcion;
+        FechaHoraInicio = fechaHoraInicio;
+        DuracionHoras = duracionHoras;
+        CupoMaximo = cupoMaximo;
+        ResponsableId = responsableId;
+    }
+    
     public int Id
     {
         get => _id;

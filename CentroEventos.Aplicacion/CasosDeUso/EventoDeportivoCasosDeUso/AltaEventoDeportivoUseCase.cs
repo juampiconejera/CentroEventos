@@ -3,12 +3,11 @@ using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Validadores;
-using CentroEventos.Aplicacion.Provisional;
 
 
-namespace CentroEventos.Aplicacion.CasosDeUso;
+namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
-public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,IRepositorioPersona repoPersona, ServicioAutorizacionProvisorio Auth, EventoDeportivoValidador eventoDeportivoValidador)
+public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, EventoDeportivoValidador eventoDeportivoValidador)
 {
     public void Ejecutar(EventoDeportivo eventoDeportivo, int idUsuario)
     {
