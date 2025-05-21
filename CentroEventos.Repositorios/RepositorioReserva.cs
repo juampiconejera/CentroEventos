@@ -28,7 +28,7 @@ public class RepositorioReserva : IRepositorioReserva
         {
             if (r.Id == id)
             {
-                r.PersonaId = int.MaxValue; r.EventoDeportivoId = int.MaxValue;
+                r.FechaAltaReserva = DateTime.MaxValue;
                 break;
             }
         }
@@ -67,7 +67,10 @@ public class RepositorioReserva : IRepositorioReserva
         {
             var reserva = new Reserva();
             reserva.Id = int.Parse(sr.ReadLine() ?? ""); reserva.PersonaId = int.Parse(sr.ReadLine() ?? ""); reserva.EventoDeportivoId = int.Parse(sr.ReadLine() ?? ""); reserva.FechaAltaReserva = DateTime.Parse(sr.ReadLine() ?? ""); reserva.EstadoAsistencia = (EstadoAsistencia)Enum.Parse(typeof(EstadoAsistencia), sr.ReadLine() ?? "");
-            listaTotal.Add(reserva);
+            if (reserva.FechaAltaReserva != DateTime.MaxValue)
+            {
+                listaTotal.Add(reserva);
+            }   
         }
 
         return listaTotal;
@@ -99,7 +102,7 @@ public class RepositorioReserva : IRepositorioReserva
 
         foreach (Reserva r in listaTotal)
         {
-            if (r.EventoDeportivoId == id)
+            if (r.EventoDeportivoId == id && r.FechaAltaReserva != DateTime.MaxValue)
             {
                 listaValida.Add(r);
             }

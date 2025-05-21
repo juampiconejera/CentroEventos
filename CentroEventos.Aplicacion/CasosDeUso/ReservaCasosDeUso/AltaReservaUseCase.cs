@@ -12,11 +12,8 @@ IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaVa
 {
     private bool CuposDisponibles(IRepositorioReserva repoReserva, IRepositorioEventoDeportivo repoEventoDeportivo, Reserva reserva)
     {
-        var totalEventos = repoReserva.ListarEventos(reserva.Id);
+        var totalEventos = repoReserva.ListarEventos(reserva.EventoDeportivoId);
         var evento = repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId);
-
-        Console.WriteLine(totalEventos.Count());
-        evento.ToString();
         return totalEventos.Count() >= evento.CupoMaximo;
     }
 

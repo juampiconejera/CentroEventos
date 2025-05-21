@@ -64,7 +64,6 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
             if (e.Id == idEvento)
             {
                 e.Nombre = "ELIMINADO";
-                e.Descripcion = "ELIMINADO";
             }
         }
 
@@ -111,7 +110,10 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         {
             var evento = new EventoDeportivo();
             evento.Id = int.Parse(sr.ReadLine() ?? ""); evento.Nombre = sr.ReadLine(); evento.Descripcion = sr.ReadLine(); evento.FechaHoraInicio = DateTime.Parse(sr.ReadLine() ?? ""); evento.DuracionHoras = double.Parse(sr.ReadLine() ?? ""); evento.CupoMaximo = int.Parse(sr.ReadLine() ?? ""); evento.ResponsableId = int.Parse(sr.ReadLine() ?? "");
-            listaTotal.Add(evento);
+            if (evento.Nombre != "ELIMINADO")
+            {
+                listaTotal.Add(evento);
+            }
         }
 
         return listaTotal;
@@ -120,6 +122,8 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
     public List<Persona> ListarPresentes(int idEvento)
     {
         List<Persona> listaRetorno = new List<Persona>();
+
+        var evento = ObtenerPorId(idEvento);
 
         var listaReservas = _repoReserva.Listar();
         var listaPersonas = _repoPersona.Listar();
@@ -152,7 +156,7 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         {
             var listaReservas = _repoReserva.ListarEventos(e.Id);
 
-            if (e.CupoMaximo > listaReservas.Count)   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
+            if (e.Nombre != "ELIMINADO" && e.CupoMaximo > listaReservas.Count())   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
             {
                 listaRetorno.Add(e);    //agrego el evento deportivo a la lista
             }
