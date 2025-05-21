@@ -73,7 +73,10 @@ public class RepositorioPersona : IRepositorioPersona
         {
             var persona = new Persona();
             persona.Id = int.Parse(sr.ReadLine() ?? ""); persona.Dni = sr.ReadLine(); persona.Nombre = sr.ReadLine(); persona.Apellido = sr.ReadLine(); persona.Email = sr.ReadLine(); persona.Telefono = sr.ReadLine();
-            listaTotal.Add(persona);
+            if (persona.Telefono != "ELIMINADO")
+            {
+                listaTotal.Add(persona); 
+            }
         }
 
         return listaTotal;
