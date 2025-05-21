@@ -152,7 +152,7 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         {
             var listaReservas = _repoReserva.ListarEventos(e.Id);
 
-            if (e.CupoMaximo > listaReservas.Count)   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
+            if (e.CupoMaximo > listaReservas.Count())   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
             {
                 listaRetorno.Add(e);    //agrego el evento deportivo a la lista
             }

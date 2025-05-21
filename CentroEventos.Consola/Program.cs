@@ -44,8 +44,12 @@ namespace CentroEventos.Consola
             var listarReserva = new ListarReservaUseCase(repoReserva);
 
 
-
-
+            if (!File.Exists("personas.txt")){
+                File.Create("personas.txt").Close();
+                altaPersona.Ejecutar(new Persona("Admin","Admin","Admin","Admin","Admin"),1);
+            }
+            if (!File.Exists("eventos.txt")) File.Create("eventos.txt").Close();
+            if (!File.Exists("reservas.txt")) File.Create("reservas.txt").Close();
 
 
             Console.WriteLine("Sistema de Gestión del Centro Deportivo Universitario");

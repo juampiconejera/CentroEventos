@@ -1,0 +1,70 @@
+1
+Futbol 5 
+Futbol 5 para adultos
+11/10/2025 12:00:00 PM
+2
+10
+1
+2
+Futbol 5
+Futbol 5 para menores
+12/10/2025 12:00:00 PM
+2
+10
+1
+3
+Tenis
+Tenis 2 v 2
+8/20/2025 2:00:00 PM
+2
+4
+1
+4
+Tenis
+Tenis 1 v 1
+9/25/2025 4:00:00 PM
+2
+2
+1
+5
+Basket
+Basket para adultos
+10/12/2025 8:00:00 PM
+2
+6
+1
+6
+Golf
+Golf
+2/12/2026 8:00:00 AM
+4
+5
+2
+7
+Torneo Rocket League
+Torneo 3 v 3
+12/10/2025 10:00:00 PM
+1
+48
+3
+8
+Torneo EA FC25
+Mundial de clubes
+9/2/2025 12:00:00 PM
+10
+32
+2
+9
+Truco
+Truco 1 v 1
+1/1/2026 12:00:00 PM
+1
+2
+4
+10
+ELIMINADO
+ELIMINADO
+2/10/2026 12:00:00 PM
+1
+4
+1
