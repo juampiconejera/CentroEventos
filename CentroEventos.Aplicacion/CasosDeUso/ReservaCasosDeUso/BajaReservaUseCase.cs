@@ -12,6 +12,11 @@ public class BajaReservaUseCase(IRepositorioReserva repoReserva, IServicioAutori
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
         
+        if (!repoReserva.ExistePorId(reservaId))
+        {
+            throw new EntidadNotFoundException("La reserva no existe en la base de datos.");
+        }
+
         repoReserva.Eliminar(reservaId);
     }
 }

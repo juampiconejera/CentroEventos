@@ -43,20 +43,19 @@ public class RepositorioReserva : IRepositorioReserva
     public void Modificar(Reserva reserva)
     {
         var listaTotal = Listar();
-        int i;
-        for (i = 0; i < listaTotal.Count(); i++)
+        for (int i = 0; i < listaTotal.Count(); i++)
         {
-            if (listaTotal[i].PersonaId == reserva.PersonaId)
+            if (listaTotal[i].Id == reserva.Id)
             {
-                listaTotal[i].PersonaId = reserva.PersonaId; listaTotal[i].EventoDeportivoId = reserva.EventoDeportivoId; listaTotal[i].FechaAltaReserva = reserva.FechaAltaReserva; listaTotal[i].EstadoAsistencia = reserva.EstadoAsistencia;
+                listaTotal[i].PersonaId = reserva.PersonaId; listaTotal[i].EventoDeportivoId = reserva.EventoDeportivoId; listaTotal[i].FechaAltaReserva = DateTime.Now;
                 break;
             }
         }
 
         using var sw = new StreamWriter(_nombreArchivo, false);
-        for (int j = 0; j < i; j++)
+        foreach (Reserva r in listaTotal)
         {
-            sw.WriteLine(listaTotal[j].Id); sw.WriteLine(listaTotal[j].PersonaId); sw.WriteLine(listaTotal[j].EventoDeportivoId); sw.WriteLine(listaTotal[j].FechaAltaReserva); sw.WriteLine(reserva.EstadoAsistencia);
+            sw.WriteLine(r.Id); sw.WriteLine(r.PersonaId); sw.WriteLine(r.EventoDeportivoId); sw.WriteLine(r.FechaAltaReserva); sw.WriteLine(r.EstadoAsistencia);  
         }
     }
 
@@ -80,6 +79,19 @@ public class RepositorioReserva : IRepositorioReserva
         return listaTotal[id];
     }
 
+    public bool ExistePorId(int reservaId)
+    {
+        var listaTotal = Listar();
+        foreach (Reserva r in listaTotal)
+        {
+            if (r.Id == reservaId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Reserva> ListarEventos(int id)
     {
         var listaTotal = Listar();
@@ -87,7 +99,7 @@ public class RepositorioReserva : IRepositorioReserva
 
         foreach (Reserva r in listaTotal)
         {
-            if (r.Id == id)
+            if (r.EventoDeportivoId == id)
             {
                 listaValida.Add(r);
             }

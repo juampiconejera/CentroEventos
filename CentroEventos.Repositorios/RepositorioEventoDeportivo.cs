@@ -110,7 +110,7 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         while (!sr.EndOfStream)
         {
             var evento = new EventoDeportivo();
-            evento.Id = int.Parse(sr.ReadLine() ?? ""); evento.Nombre = sr.ReadLine(); evento.Descripcion = sr.ReadLine(); evento.FechaHoraInicio = DateTime.Parse(sr.ReadLine()); evento.DuracionHoras = double.Parse(sr.ReadLine()); evento.CupoMaximo = int.Parse(sr.ReadLine()); evento.ResponsableId = int.Parse(sr.ReadLine());
+            evento.Id = int.Parse(sr.ReadLine() ?? ""); evento.Nombre = sr.ReadLine(); evento.Descripcion = sr.ReadLine(); evento.FechaHoraInicio = DateTime.Parse(sr.ReadLine() ?? ""); evento.DuracionHoras = double.Parse(sr.ReadLine() ?? ""); evento.CupoMaximo = int.Parse(sr.ReadLine() ?? ""); evento.ResponsableId = int.Parse(sr.ReadLine() ?? "");
             listaTotal.Add(evento);
         }
 

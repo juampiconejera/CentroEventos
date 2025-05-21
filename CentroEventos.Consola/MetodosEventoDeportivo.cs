@@ -12,54 +12,48 @@ public class MetodosEventoDeportivo
         MetodosComunes metodosComunes = new MetodosComunes();
         bool estado = true;
         while(estado) {
-            Console.WriteLine("Ingrese alguno de los siguientes casos: ");
-            Console.WriteLine("1. Dar de alta un evento deportivo.");
-            Console.WriteLine("2. Modificar un evento deportivo registrado.");
-            Console.WriteLine("3. Eliminar un evento deportivo registrado.");
-            Console.WriteLine("4. Listar a todos los eventos deportivos registrados.");
-            Console.WriteLine("5. Listar a todos los eventos con cupo disponible.");
-            Console.WriteLine("6. Volver.");
+            string[] opcionesMenu = {
+                "1. Dar de alta un evento deportivo.",
+                "2. Modificar un evento deportivo registrado.",
+                "3. Eliminar un evento deportivo registrado.",
+                "4. Listar a todos los eventos deportivos registrados.",
+                "5. Listar a todos los eventos con cupo disponible.",
+                "6. Volver."
+            };
+            metodosComunes.MostrarMenuConCuadro("MENÚ EVENTOS DEPORTIVOS", opcionesMenu);
             
             char opciones = char.Parse(Console.ReadLine() ?? "");
             switch (opciones)
             {
                 //Dar de alta evento deportivo
                 case '1':
-                    Console.Clear();
                     EventoDeportivo nuevoEvento = leerEventoDeportivo();
                     altaEvento.Ejecutar(nuevoEvento, listarPersona.Ejecutar()[0].Id);                     //tenemos que ver como pasarle el admin 
-                    Console.Clear();
                     Console.WriteLine("Evento agregado correctamente!");
                     break;
                 //Modificar evento deportivo
                 case '2':
-                    Console.Clear();
                     EventoDeportivo eventoModificar = leerEventoDeportivo();
+                    eventoModificar.Id = metodosComunes.leerId("evento deportivo");
                     modificarEvento.Ejecutar(eventoModificar, listarPersona.Ejecutar()[0].Id);                //tenemos que ver como pasarle el admin 
-                    Console.Clear();
                     Console.WriteLine("Evento modificado correctamente!");
                     break;
                 //Eliminar evento deportivo  
                 case '3':
-                    Console.Clear();
                     int idEventoEliminar = metodosComunes.leerId("evento deportivo");
                     bajaEvento.Ejecutar(idEventoEliminar, listarPersona.Ejecutar()[0].Id);                           //tenemos que ver como pasarle el admin 
-                    Console.Clear();
                     Console.WriteLine("Evento eliminado correctamente!");
                     break;
                 case '4':
-                    Console.Clear();
                     List<EventoDeportivo> listaEventos = listarEventoDeportivo.Ejecutar();
                     foreach (EventoDeportivo e in listaEventos)
                     {
                         Console.WriteLine(e.ToString());
                     }
-                    Console.Clear();
                     Console.WriteLine("Eventos listados correctamente!");
                     break;
                 case '5':
-                    Console.Clear();
-                    List<EventoDeportivo> listaEventosDisponibles = listarEventosDisponibles.Ejecutar(metodosComunes.leerId("evento deportivo"));
+                    List<EventoDeportivo> listaEventosDisponibles = listarEventosDisponibles.Ejecutar();
                     foreach (EventoDeportivo e in listaEventosDisponibles)
                     {
                         Console.WriteLine(e.ToString());
@@ -93,7 +87,7 @@ public class MetodosEventoDeportivo
         return new EventoDeportivo(nombre, descripcion, fechaHoraInicio, duracionHoras, cupoMaximo, responsableId);
     }
 
-    private DateTime leerFechaHoraInicio()      //aca deberiamos chequear fecha valida
+    private DateTime leerFechaHoraInicio()
     {
         Console.WriteLine("Ingrese el año: ");
         int a = int.Parse(Console.ReadLine() ?? "");
@@ -105,8 +99,6 @@ public class MetodosEventoDeportivo
         int h = int.Parse(Console.ReadLine() ?? "");
         Console.WriteLine("Ingrese los minutos: ");
         int min = int.Parse(Console.ReadLine() ?? "");
-        Console.WriteLine("Ingrese los segundos: ");
-        int s = int.Parse(Console.ReadLine() ?? "");
 
         DateTime fechaHoraInicio = new DateTime(a, m, d, h, min, 0);
         return fechaHoraInicio;

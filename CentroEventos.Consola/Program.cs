@@ -35,7 +35,7 @@ namespace CentroEventos.Consola
             var modificarEventoDeportivo = new ModificarEventoDeportivoUseCase(repoEventoDeportivo, repoPersona, Auth, eventoDeportivoValidador);
             var listarEventoDeportivo = new ListarEventoDeportivoUseCase(repoEventoDeportivo);
             var listarEventosConCupoDisponible = new ListarEventosConCupoDisponibleUseCase(repoEventoDeportivo);
-            var listarAsistencia = new ListarAsistenciaAEventoUseCase(repoEventoDeportivo, repoReserva);
+            var listarAsistencia = new ListarAsistenciaAEventoUseCase(repoEventoDeportivo);
 
             //Casos de uso RESERVA
             var altaReserva = new AltaReservaUseCase(repoEventoDeportivo, repoPersona, repoReserva, Auth, reservaValidador);
@@ -45,24 +45,30 @@ namespace CentroEventos.Consola
 
 
 
+
+
+
             Console.WriteLine("Sistema de Gestión del Centro Deportivo Universitario");
 
             //MENU PRINCIPAL
             var metodosPersona = new MetodosPersona();
             var metodosEventoDeportivo = new MetodosEventoDeportivo();
             var metodosReserva = new MetodosReserva();
+            var metodosComunes = new MetodosComunes();
             bool estado = true;
-
-            altaPersona.Ejecutar(new Persona("admin","admin","admin","admin","admin"),1);
 
             while (estado)
             {
                 Console.Clear();
-                Console.WriteLine("Ingrese alguna de las siguientes opciones: ");
-                Console.WriteLine("1. Dar de alta, modificar, eliminar o listar personas.");
-                Console.WriteLine("2. Dar de alta, modificar, eliminar o listar eventos deportivos.");
-                Console.WriteLine("3. Dar de alta, modificar, eliminar o listar reservas.");
-                Console.WriteLine("4. Salir.");
+                string[] opcionesMenu = {
+                    "1. Dar de alta, modificar, eliminar o listar personas.",
+                    "2. Dar de alta, modificar, eliminar o listar eventos deportivos.",
+                    "3. Dar de alta, modificar, eliminar o listar reservas.",
+                    "4. Salir."
+                };
+
+                metodosComunes.MostrarMenuConCuadro("MENU PRINCIPAL", opcionesMenu);
+
                 char opciones = char.Parse(Console.ReadLine() ?? "");
 
                 switch (opciones)
@@ -88,22 +94,3 @@ namespace CentroEventos.Consola
         }
     }
 }
-
-/* int ancho = opciones.Max(op => op.Length) + 4;
-    string bordeSuperior = "┌" + new string('─', ancho) + "┐";
-    string bordeInferior = "└" + new string('─', ancho) + "┘";
-} 
-Console.WriteLine(bordeSuperior);
-    Console.WriteLine("│" + CenterText("MENÚ PRINCIPAL", ancho) + "│");
-    Console.WriteLine("├" + new string('─', ancho) + "┤");
-    foreach (var op in opciones)
-        Console.WriteLine("│ " + op.PadRight(ancho - 2) + " │");
-    Console.WriteLine(bordeInferior);
-    Console.Write("Seleccione una opción: ");
-}
-
-string CenterText(string text, int width)
-{
-    int padding = (width - text.Length) / 2;
-    return new string(' ', padding) + text + new string(' ', width - text.Length - padding);
-}*/

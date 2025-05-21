@@ -11,6 +11,11 @@ public class BajaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDe
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
         
+        if (!repoEventoDeportivo.ExistePorId(idEventoDeportivo))
+        {
+            throw new EntidadNotFoundException("El evento deportivo no existe en la base de datos.");
+        }
+
         repoEventoDeportivo.Eliminar(idEventoDeportivo);
     }
 }

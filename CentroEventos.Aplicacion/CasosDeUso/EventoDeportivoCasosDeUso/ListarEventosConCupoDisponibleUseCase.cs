@@ -5,7 +5,7 @@ using CentroEventos.Aplicacion.Entidades;
 namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 public class ListarEventosConCupoDisponibleUseCase(IRepositorioEventoDeportivo repoEventoDeportivo)
 {
-    public List<EventoDeportivo> Ejecutar(int idUsuario)
+    public List<EventoDeportivo> Ejecutar()
     {   
         return repoEventoDeportivo.ListarEventosDisponibles();
     }

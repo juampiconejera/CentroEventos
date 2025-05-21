@@ -18,6 +18,12 @@ public class Reserva
         
     }
 
+    public Reserva(int personaId, int eventoDeportivoId)
+    {
+        PersonaId = personaId;
+        EventoDeportivoId = eventoDeportivoId;
+    }
+
     public Reserva(int personaId, int eventoDeportivoId, DateTime fechaAltaReserva, EstadoAsistencia estadoAsistencia)
     {
         PersonaId = personaId;

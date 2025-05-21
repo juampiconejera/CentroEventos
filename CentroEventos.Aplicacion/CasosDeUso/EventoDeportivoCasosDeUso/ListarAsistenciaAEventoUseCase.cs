@@ -6,7 +6,7 @@ using CentroEventos.Aplicacion.Entidades;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
-public class ListarAsistenciaAEventoUseCase(IRepositorioEventoDeportivo repoEvento, IRepositorioReserva repoReserva)
+public class ListarAsistenciaAEventoUseCase(IRepositorioEventoDeportivo repoEvento)
 {
     public List<Persona> Ejecutar(int idEvento)
     {

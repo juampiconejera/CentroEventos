@@ -6,7 +6,7 @@ public interface IRepositorioPersona
     void Eliminar(int id);
     void Modificar(Persona persona);
     bool ExistePorId(int id);
-    bool ExistePorDni(string dni);
-    bool ExistePorEmail(string dni);
+    bool ExistePorDni(string? dni);
+    bool ExistePorEmail(string? dni);
     List<Persona> Listar();
 }

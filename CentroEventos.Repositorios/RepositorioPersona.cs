@@ -91,7 +91,7 @@ public class RepositorioPersona : IRepositorioPersona
         return false;
     }
 
-    public bool ExistePorDni(string dni)
+    public bool ExistePorDni(string? dni)
     {
         var listaTotal = Listar();
         foreach (Persona p in listaTotal)
@@ -103,7 +103,7 @@ public class RepositorioPersona : IRepositorioPersona
         }
         return false;
     }
-    public bool ExistePorEmail(string email)
+    public bool ExistePorEmail(string? email)
     {
         var listaTotal = Listar();
         foreach (Persona p in listaTotal)

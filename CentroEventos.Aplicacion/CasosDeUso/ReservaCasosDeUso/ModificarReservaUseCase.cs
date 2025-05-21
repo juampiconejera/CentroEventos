@@ -17,7 +17,7 @@ public class ModificarReservaUseCase(IRepositorioReserva repoReserva, IRepositor
         }
         
         //Validamos los datos de la reserva
-        if(reservaValidador.Validar(reserva, out string mensajeError))
+        if(!reservaValidador.Validar(reserva, out string mensajeError))
         {
             throw new ValidacionException(mensajeError);            
         }

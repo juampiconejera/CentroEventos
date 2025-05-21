@@ -7,10 +7,19 @@ using CentroEventos.Aplicacion.Validadores;
 using Aplicacion;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
-
 public class AltaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, 
 IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaValidador reservaValidador)
 {
+    private bool CuposDisponibles(IRepositorioReserva repoReserva, IRepositorioEventoDeportivo repoEventoDeportivo, Reserva reserva)
+    {
+        var totalEventos = repoReserva.ListarEventos(reserva.Id);
+        var evento = repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId);
+
+        Console.WriteLine(totalEventos.Count());
+        evento.ToString();
+        return totalEventos.Count() >= evento.CupoMaximo;
+    }
+
     public void Ejecutar(Reserva reserva, int idUsuario){
         //verificamos si posee permisos
         if(!Auth.PoseeElPermiso(idUsuario)){
@@ -35,12 +44,12 @@ IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaVa
         }
 
         //validar cupo disponible.
-        if( repoReserva.ListarEventos(reserva.EventoDeportivoId).Count() > repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId).CupoMaximo ){
+        if( (repoReserva.ListarEventos(reserva.EventoDeportivoId).Count()) > (repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId).CupoMaximo) ){
             throw new CupoExcedidoException("Evento deportivo lleno.");
         }
 
         //Validar que PersonaID no tenga EventoDeportivoId dos veces.
-        if (repoReserva.Listar().Any( repo => (repo.PersonaId == reserva.PersonaId) && (repo.EventoDeportivoId == reserva.EventoDeportivoId) ))
+        if (CuposDisponibles(repoReserva,repoEventoDeportivo, reserva))
         {
             throw new DuplicadoException("Persona duplicada en el evento.");
         }
