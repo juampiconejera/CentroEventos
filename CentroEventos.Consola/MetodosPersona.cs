@@ -85,7 +85,7 @@ public class MetodosPersona
         Console.WriteLine("Ingrese el email de la persona: ");
         string email = Console.ReadLine() ?? "";
         Console.WriteLine("Ingrese el telefono de la persona: ");
-        string telefono = Console.ReadLine()??"";
+        string telefono = Console.ReadLine() ?? "";
         return new Persona(dni, nombre, apellido, email, telefono);
     }
 }
