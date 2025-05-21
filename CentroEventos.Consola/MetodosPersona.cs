@@ -50,7 +50,11 @@ public class MetodosPersona
                 //Listar a todas las personas
                 case '4':
                     Console.Clear();
-                    listarPersona.Ejecutar();
+                    List<Persona> listaPersonas = listarPersona.Ejecutar();
+                    foreach (Persona p in listaPersonas)
+                    {
+                        Console.WriteLine(p);
+                    }
                     Console.Clear();
                     Console.WriteLine("Personas listadas correctamente!");
                     break;
@@ -58,7 +62,11 @@ public class MetodosPersona
                 case '5':
                     Console.Clear();
                     int idEvento = metodosComunes.leerId("evento deportivo");
-                    listarAsistencia.Ejecutar(idEvento);
+                    List<Persona> listaAsistentes = listarAsistencia.Ejecutar(idEvento);
+                    foreach (Persona p in listaAsistentes)
+                    {
+                        Console.WriteLine(p.ToString());
+                    }
                     Console.Clear();
                     Console.WriteLine("Personas presentes listadas correctamente!");
                     break;

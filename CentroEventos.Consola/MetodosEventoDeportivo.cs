@@ -49,13 +49,21 @@ public class MetodosEventoDeportivo
                     break;
                 case '4':
                     Console.Clear();
-                    listarEventoDeportivo.Ejecutar();
+                    List<EventoDeportivo> listaEventos = listarEventoDeportivo.Ejecutar();
+                    foreach (EventoDeportivo e in listaEventos)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
                     Console.Clear();
                     Console.WriteLine("Eventos listados correctamente!");
                     break;
                 case '5':
                     Console.Clear();
-                    listarEventosDisponibles.Ejecutar(metodosComunes.leerId("evento deportivo"));
+                    List<EventoDeportivo> listaEventosDisponibles = listarEventosDisponibles.Ejecutar(metodosComunes.leerId("evento deportivo"));
+                    foreach (EventoDeportivo e in listaEventosDisponibles)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
                     break;
                 case '6':
                     estado = false;

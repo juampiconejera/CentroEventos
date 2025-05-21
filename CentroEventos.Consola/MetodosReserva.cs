@@ -45,7 +45,11 @@ public class MetodosReserva
                     break;
                 case '4':
                     Console.Clear();
-                    listarReserva.Ejecutar();
+                    List<Reserva> listaReservas = listarReserva.Ejecutar();
+                    foreach (Reserva r in listaReservas)
+                    {
+                        Console.WriteLine(r.ToString());
+                    }
                     Console.Clear();
                     Console.WriteLine("Reservas listadas correctamente!");
                     break;
