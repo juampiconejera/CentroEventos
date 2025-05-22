@@ -28,20 +28,20 @@ public class MetodosEventoDeportivo
                 //Dar de alta evento deportivo
                 case '1':
                     EventoDeportivo nuevoEvento = leerEventoDeportivo();
-                    altaEvento.Ejecutar(nuevoEvento, listarPersona.Ejecutar()[0].Id);                     //tenemos que ver como pasarle el admin 
+                    altaEvento.Ejecutar(nuevoEvento, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Evento agregado correctamente!");
                     break;
                 //Modificar evento deportivo
                 case '2':
                     EventoDeportivo eventoModificar = leerEventoDeportivo();
                     eventoModificar.Id = metodosComunes.leerId("evento deportivo");
-                    modificarEvento.Ejecutar(eventoModificar, listarPersona.Ejecutar()[0].Id);                //tenemos que ver como pasarle el admin 
+                    modificarEvento.Ejecutar(eventoModificar, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Evento modificado correctamente!");
                     break;
                 //Eliminar evento deportivo  
                 case '3':
                     int idEventoEliminar = metodosComunes.leerId("evento deportivo");
-                    bajaEvento.Ejecutar(idEventoEliminar, listarPersona.Ejecutar()[0].Id);                           //tenemos que ver como pasarle el admin 
+                    bajaEvento.Ejecutar(idEventoEliminar, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Evento eliminado correctamente!");
                     break;
                 case '4':

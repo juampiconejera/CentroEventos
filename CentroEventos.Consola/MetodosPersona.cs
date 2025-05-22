@@ -30,20 +30,20 @@ public class MetodosPersona
                 //Dar de alta una persona
                 case '1':
                     Persona nuevaPersona = leerPersona();
-                    altaPersona.Ejecutar(nuevaPersona, listarPersona.Ejecutar()[0].Id);          //tenemos que ver como pasarle el admin 
+                    altaPersona.Ejecutar(nuevaPersona, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Persona agregada correctamente!");
                     break;
                 //Modificar una persona
                 case '2':
                     Persona personaModificar = leerPersona();
                     personaModificar.Id = metodosComunes.leerId("persona");
-                    modificarPersona.Ejecutar(personaModificar, listarPersona.Ejecutar()[0].Id);     //tenemos que ver como pasarle el admin 
+                    modificarPersona.Ejecutar(personaModificar, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Persona modificada correctamente!");
                     break;
                 //Eliminar una persona
                 case '3':
                     int idPersonaEliminar = metodosComunes.leerId("persona");
-                    bajaPersona.Ejecutar(idPersonaEliminar, listarPersona.Ejecutar()[0].Id);         //tenemos que ver como pasarle el admin 
+                    bajaPersona.Ejecutar(idPersonaEliminar, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Persona eliminada correctamente!");
                     break;
                 //Listar a todas las personas
@@ -65,7 +65,6 @@ public class MetodosPersona
                     }
                     Console.WriteLine("Personas presentes listadas correctamente!");
                     break;
-                //Volvemos 
                 case '6':
                     estado = false;
                     break;

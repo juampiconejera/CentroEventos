@@ -25,18 +25,18 @@ public class MetodosReserva
             {
                 case '1':
                     Reserva nuevaReserva = leerReserva();
-                    altaReserva.Ejecutar(nuevaReserva, listarPersona.Ejecutar()[0].Id);              //tenemos que ver como pasarle el admin
+                    altaReserva.Ejecutar(nuevaReserva, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Reserva agregada correctamente!");
                     break;
                 case '2':
                     Reserva reservaModificar = leerReserva();
                     reservaModificar.Id = metodosComunes.leerId("reserva");
-                    modificarReserva.Ejecutar(reservaModificar, listarPersona.Ejecutar()[0].Id);     //tenemos que ver como pasarle el admin
+                    modificarReserva.Ejecutar(reservaModificar, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Reserva modificada correctamente!");
                     break;
                 case '3':
                     int idReservaEliminar = metodosComunes.leerId("reserva");
-                    bajaReserva.Ejecutar(idReservaEliminar, listarPersona.Ejecutar()[0].Id);          //tenemos que ver como pasarle el admin
+                    bajaReserva.Ejecutar(idReservaEliminar, listarPersona.Ejecutar()[0].Id);
                     Console.WriteLine("Reserva eliminada correctamente!");
                     break;
                 case '4':
