@@ -14,7 +14,7 @@ IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaVa
     {
         var totalEventos = repoReserva.ListarEventos(reserva.EventoDeportivoId);
         var evento = repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId);
-        return totalEventos.Count() >= evento.CupoMaximo;
+        return totalEventos.Count() < evento.CupoMaximo;
     }
 
     public void Ejecutar(Reserva reserva, int idUsuario){
@@ -41,7 +41,7 @@ IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaVa
         }
 
         //validar cupo disponible.
-        if (CuposDisponibles(repoReserva,repoEventoDeportivo, reserva))
+        if (!CuposDisponibles(repoReserva,repoEventoDeportivo, reserva))
         {
             throw new CupoExcedidoException("Evento deportivo lleno.");
         }
