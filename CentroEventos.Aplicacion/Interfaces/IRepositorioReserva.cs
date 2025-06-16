@@ -8,6 +8,6 @@ public interface IRepositorioReserva
         Reserva ObtenerPorId(int id);
         bool ExistePorId(int id);
         List<Reserva> Listar();
-        List<Reserva> ListarEventos(int id);
+        List<Reserva> ListarReservasPorEvento(int id);
 
     }
