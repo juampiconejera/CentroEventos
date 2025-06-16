@@ -12,7 +12,7 @@ IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaVa
 {
     private bool CuposDisponibles(IRepositorioReserva repoReserva, IRepositorioEventoDeportivo repoEventoDeportivo, Reserva reserva)
     {
-        var totalEventos = repoReserva.ListarEventos(reserva.EventoDeportivoId);
+        var totalEventos = repoReserva.ListarReservasPorEvento(reserva.EventoDeportivoId);
         var evento = repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId);
         return totalEventos.Count() < evento.CupoMaximo;
     }
