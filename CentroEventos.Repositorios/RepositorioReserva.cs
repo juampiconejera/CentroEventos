@@ -95,6 +95,7 @@ public class RepositorioReserva : IRepositorioReserva
         return false;
     }
 
+    //"El método ListarEventos de RepositorioReserva no tiene un nombre descriptivo."
     public List<Reserva> ListarEventos(int id)
     {
         var listaTotal = Listar();
