@@ -39,7 +39,7 @@ namespace CentroEventos.Consola
 
             //Casos de uso RESERVA
             var altaReserva = new AltaReservaUseCase(repoEventoDeportivo, repoPersona, repoReserva, Auth, reservaValidador);
-            var bajaReserva = new BajaReservaUseCase(repoReserva, Auth);
+            var bajaReserva = new BajaReservaUseCase(repoEventoDeportivo, repoReserva, Auth);
             var modificarReserva = new ModificarReservaUseCase(repoReserva, repoPersona, repoEventoDeportivo, Auth, reservaValidador);
             var listarReserva = new ListarReservaUseCase(repoReserva);
 

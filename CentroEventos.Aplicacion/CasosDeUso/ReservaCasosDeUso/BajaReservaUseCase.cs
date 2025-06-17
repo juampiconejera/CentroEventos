@@ -1,8 +1,12 @@
+using System;
+using System.Runtime.Serialization;
+using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
-using CentroEventos.Aplicacion.Interfaces;
+using Aplicacion;
 
-public class BajaReservaUseCase(IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth)
+public class BajaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, 
+IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth)
 {
     public void Ejecutar(int reservaId, int idUsuario)
     {
@@ -11,12 +15,25 @@ public class BajaReservaUseCase(IRepositorioReserva repoReserva, IServicioAutori
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
-        
-        if (!repoReserva.ExistePorId(reservaId))
-        {
-            throw new EntidadNotFoundException("La reserva no existe en la base de datos.");
-        }
+        //Obtenemos la reserva
+        var reserva = repoReserva.ObtenerPorId(reservaId);
+        if (reserva == null)
+            {
+             throw new EntidadNotFoundException("La reserva no existe.");
+            }
+        //Y el evento para el que se creo. Para verificar que no sea un evento ya iniciado.
+        var evento = repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId);
 
+        if (evento.FechaHoraInicio < DateTime.Now)
+           {
+            throw new ValidacionException("No se puede cancelar una reserva a un evento ya iniciado.");
+           }
+        //Verificamos el estado de la reserva.
+        if (reserva.EstadoAsistencia != EstadoAsistencia.Pendiente)
+        {
+            throw new ValidacionException("Solo se pueden cancelar reservas pendientes.");
+        }
+        //Eliminamos
         repoReserva.Eliminar(reservaId);
     }
 }
