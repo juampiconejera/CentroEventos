@@ -3,20 +3,21 @@ namespace CentroEventos.Aplicacion.Entidades;
 using System;
 using CentroEventos.Aplicacion.Interfaces;
 
-//Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
+
 public class Persona
 {
-    private int _id;                //único, debe ser autoincremental gestionado por el repositorio
-    private string? _dni;           //único
-    private string? _nombre;
-    private string? _apellido;
-    private string? _email;         //único
-    private string? _telefono;
+    // Propiedades autoimplementadas
+    public int Id { get; set; }
+    public string Dni { get; set; } = string.Empty;         // único
+    public string Nombre { get; set; } = string.Empty;
+    public string Apellido { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;       // único
+    public string Telefono { get; set; } = string.Empty;
 
-    public Persona()
-    {
-        
-    }
+    // Constructor por defecto 
+    public Persona() { }
+
+    // Constructor para crear una persona rápidamente
     public Persona(string dni, string nombre, string apellido, string email, string telefono)
     {
         Dni = dni;
@@ -26,45 +27,8 @@ public class Persona
         Telefono = telefono;
     }
 
-    public int Id
-    {
-        get => _id;
-        set => _id = value;
-    }
-
-    public string? Dni
-    {
-        get => _dni;
-        set => _dni = value;
-    }
-
-    public string? Nombre
-    {
-        get => _nombre;
-        set => _nombre = value;
-    }
-
-    public string? Apellido
-    {
-        get => _apellido;
-        set => _apellido = value;
-    }
-
-    public string? Email
-    {
-        get => _email;
-        set => _email = value;
-    }
-
-    public string? Telefono
-    {
-        get => _telefono;
-        set => _telefono = value;
-    }
-
     public override string ToString()
     {
-        return ($"Id: {Id}, DNI: {Dni}, Nombre: {Nombre}, Apellido: {Apellido}, Email: {Email}, Telefono: {Telefono}");
+        return $"Id: {Id}, DNI: {Dni}, Nombre: {Nombre}, Apellido: {Apellido}, Email: {Email}, Telefono: {Telefono}";
     }
-
 }

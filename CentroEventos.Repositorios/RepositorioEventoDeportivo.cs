@@ -154,7 +154,7 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
 
         foreach (EventoDeportivo e in listaTotal)
         {
-            var listaReservas = _repoReserva.ListarEventos(e.Id);
+            var listaReservas = _repoReserva.ListarReservasPorEvento(e.Id);
 
             if (e.Nombre != "ELIMINADO" && e.CupoMaximo > listaReservas.Count())   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
             {
