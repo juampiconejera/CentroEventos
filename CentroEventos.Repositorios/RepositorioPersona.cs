@@ -7,11 +7,9 @@ namespace CentroEventos.Repositorios;
 
 public class RepositorioPersona : IRepositorioPersona
 {
-    readonly string _nombreArchivo = "personas.txt";
-
     public void Agregar(Persona persona)
     {
-        using (var context = new CentroDeportivoContext())
+        using (var context = new CentroEventosContext())
         {
             context.Add(persona);
             context.SaveChanges();
@@ -20,7 +18,7 @@ public class RepositorioPersona : IRepositorioPersona
 
     public void Eliminar(int id)
     {
-        using (var context = new CentroDeportivoContext())
+        using (var context = new CentroEventosContext())
         {
             Persona? persona = context.Personas.FirstOrDefault(p => p.Id == id);
             if (persona != null)
@@ -31,36 +29,33 @@ public class RepositorioPersona : IRepositorioPersona
         }
     }
 
-    public void Modificar(Persona persona)
+    public void Modificar(Persona personaNueva)
     {
-        var listaTotal = Listar();
-
-        for (int i = 0; i < listaTotal.Count; i++)
+        using (var context = new CentroEventosContext())
         {
-            if (listaTotal[i].Id == persona.Id)
+            Persona? personaVieja = context.Personas.FirstOrDefault(p => p.Id == personaNueva.Id);
+            if (personaVieja != null)
             {
-                listaTotal[i] = persona;
-                break;
+                personaVieja.Nombre = personaNueva.Nombre;
+                personaVieja.Apellido = personaNueva.Apellido;
+                personaVieja.Dni = personaNueva.Dni;
+                personaVieja.Email = personaNueva.Email;
+                personaVieja.Telefono = personaNueva.Telefono;
+                context.SaveChanges();
             }
-        }
-
-        using var sw = new StreamWriter(_nombreArchivo, false);
-        foreach (Persona p in listaTotal)
-        {
-            sw.WriteLine(p.Id); sw.WriteLine(p.Dni); sw.WriteLine(p.Nombre); sw.WriteLine(p.Apellido); sw.WriteLine(p.Email); sw.WriteLine(p.Telefono);
         }
     }
 
     public List<Persona> Listar()
     {
-        using (var context = new CentroDeportivoContext())
+        using (var context = new CentroEventosContext())
         {
             return context.Personas.ToList();
         }
     }
     public bool ExistePorId(int id)
     {
-        using (var context = new CentroDeportivoContext())
+        using (var context = new CentroEventosContext())
         {
             Persona? persona = context.Personas.FirstOrDefault(p => p.Id == id);
             return persona != null;
@@ -69,7 +64,7 @@ public class RepositorioPersona : IRepositorioPersona
 
     public bool ExistePorDni(string? dni)
     {
-        using (var context = new CentroDeportivoContext())
+        using (var context = new CentroEventosContext())
         {
             Persona? persona = context.Personas.FirstOrDefault(p => p.Dni == dni);
             return persona != null;
@@ -77,7 +72,7 @@ public class RepositorioPersona : IRepositorioPersona
     }
     public bool ExistePorEmail(string? email)
     {
-        using (var context = new CentroDeportivoContext())
+        using (var context = new CentroEventosContext())
         {
             Persona? persona = context.Personas.FirstOrDefault(p => p.Email == email);
             return persona != null;

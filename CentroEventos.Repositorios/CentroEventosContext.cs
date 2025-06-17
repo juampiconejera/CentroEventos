@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CentroEventos.Repositorios;
 
-public class CentroDeportivoContext : DbContext
+public class CentroEventosContext : DbContext
 {
     public DbSet<Persona> Personas { get; set; }                        //determinamos nombres de las tablas de la db
     public DbSet<EventoDeportivo> EventosDeportivos { get; set; }
