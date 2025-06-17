@@ -6,11 +6,11 @@ using CentroEventos.Aplicacion.Interfaces;
 //Se van a usar validaciones , asi que no usamos propiedades auto implementadas.
 public class Persona
 {
-    private int _id;//único, debe ser autoincremental gestionado por el repositorio
-    private string? _dni;//único
+    private int _id;                //único, debe ser autoincremental gestionado por el repositorio
+    private string? _dni;           //único
     private string? _nombre;
     private string? _apellido;
-    private string? _email;// único
+    private string? _email;         //único
     private string? _telefono;
 
     public Persona()
