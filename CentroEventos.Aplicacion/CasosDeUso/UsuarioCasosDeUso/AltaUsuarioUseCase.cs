@@ -3,10 +3,11 @@ using CentroEventos.Aplicacion.Entidades;
 using System.Net.Security;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Validadores;
+using CentroEventos.Aplicacion.Servicios;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
 
-public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario,/*  IRepositorioUsuario Auth, */ UsuarioValidador usuarioValidador)
+public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario,/*  IRepositorioUsuario Auth, */ ServicioSHA256 servicioSHA256, UsuarioValidador usuarioValidador)
 {
     public void Ejecutar(Usuario usuario, Usuario admin)
     {
@@ -19,6 +20,10 @@ public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario,/*  IRepositorio
         {
             throw new DuplicadoException("El email ya fue registrado");
         }
+        
+        //Hashing del password
+        string newPass = servicioSHA256.getSha256(usuario.Password);
+        usuario.Password = newPass;
 
         repoUsuario.Agregar(usuario);
     }

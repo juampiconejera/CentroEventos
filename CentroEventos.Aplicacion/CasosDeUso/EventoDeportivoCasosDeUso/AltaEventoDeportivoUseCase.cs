@@ -7,7 +7,7 @@ using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
-public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
+public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
 {
     public void Ejecutar(EventoDeportivo eventoDeportivo, int idUsuario)
     {

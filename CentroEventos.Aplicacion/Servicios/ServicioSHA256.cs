@@ -3,7 +3,7 @@ using CentroEventos.Aplicacion.Interfaces;
 using System.Security.Cryptography; 
 using System.Text;
 //para usar sha256
-//sha256 trabaja con bytes, por lo tanto debemos utilizarla
+//sha256 trabaja con bytes, por lo tanto debemos utilizar System.Text
 
 namespace CentroEventos.Aplicacion.Servicios;
 
