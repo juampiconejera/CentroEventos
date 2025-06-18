@@ -1,23 +1,24 @@
 using System;
-using System.Net.Security;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
-namespace CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
 
-public class BajaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacion Auth)
+
+namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
+
+public class BajaUsuarioUseCase(IRepositorioUsuario repoUsuario, IServicioAutorizacion Auth)
 {
-    public void Ejecutar(int id, int idUsuario)
+    public void Ejecutar(int id, Usuario admin)
     {
-        if (!Auth.PoseeElPermiso(idUsuario))
+        if (!Auth.PoseeElPermiso(admin))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
-        if (!repoPersona.ExistePorId(id))
+        if (!repoUsuario.ExistePorId(id))
         {
             throw new EntidadNotFoundException("El usuario no existe en la base de datos.");
         }
 
-        repoPersona.Eliminar(id);
+        repoUsuario.Eliminar(id);
     }
 }

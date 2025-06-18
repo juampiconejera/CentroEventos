@@ -1,0 +1,28 @@
+using CentroEventos.Aplicacion.Interfaces;
+using CentroEventos.Aplicacion.Entidades;
+using System.Net.Security;
+using CentroEventos.Aplicacion.Excepciones;
+using CentroEventos.Aplicacion.Validadores;
+
+namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
+
+public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario, IRepositorioUsuario Auth, UsuarioValidador usuarioValidador)
+{
+    public void Ejecutar(Usuario usuario, Usuario admin)
+    {
+        if (!Auth.PoseeElPermiso(admin))
+        {
+            throw new FalloAutorizacionException("Usuario no autorizado.");
+        }
+        if (!usuarioValidador.Validar(usuario, out string mensajeError))
+        {
+            throw new ValidacionException(mensajeError);
+        }
+        if (repoUsuario.ExistePorEmail(usuario.Email))
+        {
+            throw new DuplicadoException("El email ya fue registrado");
+        }
+
+        repoUsuario.Agregar(usuario);
+    }
+}

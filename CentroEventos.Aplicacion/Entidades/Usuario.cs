@@ -1,4 +1,5 @@
 using System;
+using System.Data.Common;
 using System.Security.Cryptography.X509Certificates;
 using CentroEventos.Aplicacion.Enumerativos;
 
@@ -6,6 +7,7 @@ namespace CentroEventos.Aplicacion.Entidades;
 
 public class Usuario
 {
+    public int id { get; set; }
     private string? _nombre;
     private string? _apellido;
     private string? _email;
