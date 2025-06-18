@@ -10,10 +10,7 @@ public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario, IRepositorioUsu
 {
     public void Ejecutar(Usuario usuario, Usuario admin)
     {
-        if (!Auth.PoseeElPermiso(admin))
-        {
-            throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        //No verificamos la validacion de permisos ya que AltaUsuario se usa solamente para registrarse.
         if (!usuarioValidador.Validar(usuario, out string mensajeError))
         {
             throw new ValidacionException(mensajeError);
