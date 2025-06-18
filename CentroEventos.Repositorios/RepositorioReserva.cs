@@ -8,107 +8,67 @@ namespace CentroEventos.Repositorios;
 
 public class RepositorioReserva : IRepositorioReserva
 {
-    readonly string _nombreArchivo = "reservas.txt";
 
-    private int GenerarId()
+     public void Agregar(Reserva reserva)
     {
-        return Listar().Count()+1;
-    }
-    public void Agregar(Reserva reserva)
-    {
-        reserva.Id = GenerarId();
-        using var sw = new StreamWriter(_nombreArchivo, true);
-        sw.WriteLine(reserva.Id); sw.WriteLine(reserva.PersonaId); sw.WriteLine(reserva.EventoDeportivoId); sw.WriteLine(reserva.FechaAltaReserva); sw.WriteLine(reserva.EstadoAsistencia);
+        using var context = new CentroEventosContext();
+        context.Reservas.Add(reserva);
+        context.SaveChanges();
     }
 
-    public void Eliminar(int id)
+     public void Eliminar(int id)
     {
-        var listaTotal = Listar();
-        foreach (Reserva r in listaTotal)
+        using var context = new CentroEventosContext();
+        var reserva = context.Reservas.FirstOrDefault(r => r.Id == id);
+        if (reserva != null)
         {
-            if (r.Id == id)
-            {
-                r.FechaAltaReserva = DateTime.MaxValue;
-                break;
-            }
-        }
-
-        using var sw = new StreamWriter(_nombreArchivo, false);
-        foreach (Reserva r in listaTotal)
-        {
-            sw.WriteLine(r.Id); sw.WriteLine(r.PersonaId); sw.WriteLine(r.EventoDeportivoId); sw.WriteLine(r.FechaAltaReserva); sw.WriteLine(r.EstadoAsistencia);
+            reserva.FechaAltaReserva = DateTime.MaxValue;
+            context.SaveChanges();
         }
     }
 
-    public void Modificar(Reserva reserva)
-    {
-        var listaTotal = Listar();
-        for (int i = 0; i < listaTotal.Count(); i++)
-        {
-            if (listaTotal[i].Id == reserva.Id)
-            {
-                listaTotal[i].PersonaId = reserva.PersonaId; listaTotal[i].EventoDeportivoId = reserva.EventoDeportivoId; listaTotal[i].FechaAltaReserva = DateTime.Now;
-                break;
-            }
-        }
+       
 
-        using var sw = new StreamWriter(_nombreArchivo, false);
-        foreach (Reserva r in listaTotal)
+   public void Modificar(Reserva reservaNueva)
+    {
+        using var context = new CentroEventosContext();
+        var reservaExistente = context.Reservas.FirstOrDefault(r => r.Id == reservaNueva.Id);
+        if (reservaExistente != null)
         {
-            sw.WriteLine(r.Id); sw.WriteLine(r.PersonaId); sw.WriteLine(r.EventoDeportivoId); sw.WriteLine(r.FechaAltaReserva); sw.WriteLine(r.EstadoAsistencia);  
+            reservaExistente.PersonaId = reservaNueva.PersonaId;
+            reservaExistente.EventoDeportivoId = reservaNueva.EventoDeportivoId;
+            reservaExistente.FechaAltaReserva = reservaNueva.FechaAltaReserva;
+            reservaExistente.EstadoAsistencia = reservaNueva.EstadoAsistencia;
+            context.SaveChanges();
         }
     }
 
     public List<Reserva> Listar()
     {
-        var listaTotal = new List<Reserva>();
-        using var sr = new StreamReader(_nombreArchivo);
-        while (!sr.EndOfStream)
-        {
-            var reserva = new Reserva();
-            reserva.Id = int.Parse(sr.ReadLine() ?? ""); reserva.PersonaId = int.Parse(sr.ReadLine() ?? ""); reserva.EventoDeportivoId = int.Parse(sr.ReadLine() ?? ""); reserva.FechaAltaReserva = DateTime.Parse(sr.ReadLine() ?? ""); reserva.EstadoAsistencia = (EstadoAsistencia)Enum.Parse(typeof(EstadoAsistencia), sr.ReadLine() ?? "");
-            if (reserva.FechaAltaReserva != DateTime.MaxValue)
-            {
-                listaTotal.Add(reserva);
-            }   
-        }
-
-        return listaTotal;
+        using var context = new CentroEventosContext();
+        return context.Reservas
+                      .Where(r => r.FechaAltaReserva != DateTime.MaxValue)
+                      .ToList();
     }
 
-    public Reserva ObtenerPorId(int id)
+    public Reserva? ObtenerPorId(int id)
     {
-        var listaTotal = Listar();
-        return listaTotal[id];
+        using var context = new CentroEventosContext();
+        return context.Reservas.FirstOrDefault(r => r.Id == id);
     }
 
     public bool ExistePorId(int reservaId)
     {
-        var listaTotal = Listar();
-        foreach (Reserva r in listaTotal)
-        {
-            if (r.Id == reservaId)
-            {
-                return true;
-            }
-        }
-        return false;
+        using var context = new CentroEventosContext();
+        return context.Reservas.Any(r => r.Id == reservaId);
     }
 
     //"El método ListarEventos de RepositorioReserva no tiene un nombre descriptivo."CORREGIDO
-    public List<Reserva> ListarReservasPorEvento(int id)
+    public List<Reserva> ListarReservasPorEvento(int eventoId)
     {
-        var listaTotal = Listar();
-        var listaValida = new List<Reserva>();
-
-        foreach (Reserva r in listaTotal)
-        {
-            if (r.EventoDeportivoId == id && r.FechaAltaReserva != DateTime.MaxValue)
-            {
-                listaValida.Add(r);
-            }
-        }
-
-        return listaValida;
+        using var context = new CentroEventosContext();
+        return context.Reservas
+                      .Where(r => r.EventoDeportivoId == eventoId && r.FechaAltaReserva != DateTime.MaxValue)
+                      .ToList();
     }
 }
