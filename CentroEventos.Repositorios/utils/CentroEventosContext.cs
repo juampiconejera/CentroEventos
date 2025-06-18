@@ -15,6 +15,18 @@ public class CentroEventosContext : DbContext
     {
         optionsBuilder.UseSqlite("data source=CentroDeportivo.sqlite");
     }
+
+    public void ConfigureSqliteJournalMode()
+    {
+        this.Database.EnsureCreated();
+        var connection = this.Database.GetDbConnection();
+        connection.Open();
+        using (var command = connection.CreateCommand())
+        {
+            command.CommandText = "PRAGMA journal_mode=DELETE;";
+            command.ExecuteNonQuery();
+        }
+    }
 }
 
 /*protected override void OnConfiguring(...):
