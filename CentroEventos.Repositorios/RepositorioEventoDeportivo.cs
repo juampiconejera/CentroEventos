@@ -11,6 +11,14 @@ namespace CentroEventos.Repositorios;
 
 public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
 {
+    private readonly IRepositorioReserva _repoReserva;
+    private readonly IRepositorioPersona _repoPersona;
+
+    public RepositorioEventoDeportivo(IRepositorioReserva repoReserva, IRepositorioPersona repoPersona)
+    {
+        _repoReserva = repoReserva;
+        _repoPersona = repoPersona;
+    }
     public void Agregar(EventoDeportivo eventoDeportivo)
     {
         using (var context = new CentroEventosContext())
@@ -80,45 +88,39 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
     public List<Persona> ListarPresentes(int idEvento)
     {
         List<Persona> listaRetorno = new List<Persona>();
-
-        var evento = ObtenerPorId(idEvento);
-
-        var listaReservas = _repoReserva.Listar();
-
-        foreach (Reserva r in listaReservas)
+        using (var context = new CentroEventosContext())
         {
-            if (r.EventoDeportivoId == idEvento && r.EstadoAsistencia == EstadoAsistencia.Presente)
+            List<Reserva> listaReservas = _repoReserva.ListarReservasPorEvento(idEvento);   //obtengo la lista de reservas de el evento determinado
+            foreach (Reserva r in listaReservas)
             {
-                foreach (Persona p in listaPersonas)
+                if (r.EstadoAsistencia == EstadoAsistencia.Presente)
                 {
-                    if (p.Id == r.PersonaId)
-                    {
-                        Persona personaAdd = p;
-                        listaRetorno.Add(personaAdd);
-                        break;
-                        //lo agrego a la lista y paso con el siguiente
+                    if (_repoPersona.ExistePorId(r.PersonaId))  //primero chequeo que exista
+                    { 
+                        Persona persona = _repoPersona.ObtenerPorId(r.PersonaId);   //lo busco
+                        listaRetorno.Add(persona);      //lo agrego
                     }
                 }
             }
+            return listaRetorno;
         }
-        return listaRetorno;
     }
-
+    
     public List<EventoDeportivo> ListarEventosDisponibles()
     {
         List<EventoDeportivo> listaRetorno = new List<EventoDeportivo>();
-        var listaTotal = Listar();
-
-        foreach (EventoDeportivo e in listaTotal)
+        using (var context = new CentroEventosContext())
         {
-            var listaReservas = _repoReserva.ListarReservasPorEvento(e.Id);
-
-            if (e.Nombre != "ELIMINADO" && e.CupoMaximo > listaReservas.Count())   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
+            List<EventoDeportivo> listaTotal = context.EventosDeportivos.ToList();
+            foreach (EventoDeportivo e in listaTotal)
             {
-                listaRetorno.Add(e);    //agrego el evento deportivo a la lista
+                List<Reserva> listaReservas = _repoReserva.ListarReservasPorEvento(e.Id);
+                if (e.Nombre != "ELIMINADO" && e.CupoMaximo > listaReservas.Count())   //si el cupo maximo es mayor a la cantidad de reservas, hay lugar disponible
+                {
+                    listaRetorno.Add(e);    //agrego el evento deportivo a la lista
+                }
             }
         }
-
         return listaRetorno;    //devuelvo la lista con eventos disponibles
     }
 }

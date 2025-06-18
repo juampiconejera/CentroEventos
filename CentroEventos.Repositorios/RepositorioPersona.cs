@@ -78,4 +78,12 @@ public class RepositorioPersona : IRepositorioPersona
             return persona != null;
         }
     }
+    public Persona? ObtenerPorId(int id)         //retornar null?
+    {
+        using (var context = new CentroEventosContext())
+        {
+            Persona? persona = context.Personas.FirstOrDefault(p => p.Id == id);
+            return persona;
+        }
+    }
 }

@@ -27,8 +27,6 @@ public class RepositorioReserva : IRepositorioReserva
         }
     }
 
-       
-
    public void Modificar(Reserva reservaNueva)
     {
         using var context = new CentroEventosContext();

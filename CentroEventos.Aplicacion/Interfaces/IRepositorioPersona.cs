@@ -8,5 +8,6 @@ public interface IRepositorioPersona
     bool ExistePorId(int id);
     bool ExistePorDni(string? dni);
     bool ExistePorEmail(string? dni);
+    Persona ObtenerPorId(int id);
     List<Persona> Listar();
 }
