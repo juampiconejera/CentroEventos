@@ -30,26 +30,52 @@ public class RepositorioUsuario : IRepositorioUsuario
 
     public bool ExistePorEmail(string email)
     {
-        throw new NotImplementedException();
+        using (var context = new CentroEventosContext())
+        {
+            Usuario? usuario = context.Usuarios.FirstOrDefault(u => u.Email == email);
+            return usuario != null;
+        }
     }
 
     public bool ExistePorId(int id)
     {
-        throw new NotImplementedException();
+        using (var context = new CentroEventosContext())
+        {
+            Usuario? usuario = context.Usuarios.FirstOrDefault(u => u.Id == id);
+            return usuario != null;
+        }
     }
 
     public List<Usuario> listarUsuarios()
     {
-        throw new NotImplementedException();
+        using (var context = new CentroEventosContext())
+        {
+            return context.Usuarios.ToList();
+        }
     }
 
-    public void Modificar(Usuario usuario)
+    public void Modificar(Usuario usuarioNuevo)
     {
-        throw new NotImplementedException();
+        using (var context = new CentroEventosContext())
+        {
+            Usuario? usuarioViejo = context.Usuarios.FirstOrDefault(u => u.Id == usuarioNuevo.Id);
+            if (usuarioViejo != null)
+            {
+                usuarioViejo.Nombre = usuarioNuevo.Nombre;
+                usuarioViejo.Apellido = usuarioNuevo.Apellido;
+                usuarioViejo.Email = usuarioNuevo.Email;
+                usuarioViejo.Password = usuarioNuevo.Password;
+                context.SaveChanges();
+            }
+        }
     }
 
     public Usuario? ObtenerUsuario(int id)
     {
-        throw new NotImplementedException();
+        using (var context = new CentroEventosContext())
+        {
+            Usuario? usuario = context.Usuarios.FirstOrDefault(u => u.Id == id);
+            return usuario;
+        }
     }
 }
