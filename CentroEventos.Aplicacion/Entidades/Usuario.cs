@@ -19,13 +19,19 @@ public class Usuario
     {
 
     }
-
-    public Usuario(string nombre, string apellido, string email, string password, List<Permiso> permisos)
+    public Usuario(string nombre, string apellido, string email, string password)
     {
         Nombre = nombre;
         Apellido = apellido;
         Email = email;
         Password = password;
-        Permisos = permisos;
+    }
+    public Usuario(int id, string nombre, string apellido, string email, string password)
+    {
+        Id = id;
+        Nombre = nombre;
+        Apellido = apellido;
+        Email = email;
+        Password = password;
     }
 }

@@ -6,15 +6,15 @@ using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
 
-public class ModificacionPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, PersonaValidador personaValidador)
+public class ModificacionPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacion Auth, PersonaValidador personaValidador)
 {
     public void Ejecutar(Persona persona, int idUsuario)
     {
        //Verificamos los permisos del usuario
-        if (!Auth.PoseeElPermiso(idUsuario))
+        /* if (!Auth.PoseeElPermiso(idUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        } */
         //Validamos los datos de la persona
         if(!personaValidador.Validar(persona, out string mensajeError))
         {

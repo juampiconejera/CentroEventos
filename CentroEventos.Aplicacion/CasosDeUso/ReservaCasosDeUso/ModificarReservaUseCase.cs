@@ -6,15 +6,15 @@ using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
-public class ModificarReservaUseCase(IRepositorioReserva repoReserva, IRepositorioPersona repoPersona, IRepositorioEventoDeportivo repoEventoDeportivo, IServicioAutorizacionProvisorio Auth, ReservaValidador reservaValidador)
+public class ModificarReservaUseCase(IRepositorioReserva repoReserva, IRepositorioPersona repoPersona, IRepositorioEventoDeportivo repoEventoDeportivo, IServicioAutorizacion Auth, ReservaValidador reservaValidador)
 {
     public void Ejecutar(Reserva reserva, int idUsuario)
     {
         //Verificamos los permisos del usuario
-        if(!Auth.PoseeElPermiso(idUsuario))
+        /* if(!Auth.PoseeElPermiso(idUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        } */
         
         //Validamos los datos de la reserva
         if(!reservaValidador.Validar(reserva, out string mensajeError))

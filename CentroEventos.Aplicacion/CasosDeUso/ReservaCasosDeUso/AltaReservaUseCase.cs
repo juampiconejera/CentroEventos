@@ -8,7 +8,7 @@ using Aplicacion;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 public class AltaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, 
-IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaValidador reservaValidador)
+IRepositorioReserva repoReserva, IServicioAutorizacion Auth, ReservaValidador reservaValidador)
 {
     private bool CuposDisponibles(IRepositorioReserva repoReserva, IRepositorioEventoDeportivo repoEventoDeportivo, Reserva reserva)
     {
@@ -19,9 +19,9 @@ IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth, ReservaVa
 
     public void Ejecutar(Reserva reserva, int idUsuario){
         //verificamos si posee permisos
-        if(!Auth.PoseeElPermiso(idUsuario)){
+        /* if(!Auth.PoseeElPermiso(idUsuario)){
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        } */
 
         //validamos la reserva
         if(!reservaValidador.Validar(reserva, out string message))

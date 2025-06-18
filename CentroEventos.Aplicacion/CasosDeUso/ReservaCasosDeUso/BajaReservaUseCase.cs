@@ -6,15 +6,15 @@ using CentroEventos.Aplicacion.Excepciones;
 using Aplicacion;
 
 public class BajaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, 
-IRepositorioReserva repoReserva, IServicioAutorizacionProvisorio Auth)
+IRepositorioReserva repoReserva, IServicioAutorizacion Auth)
 {
     public void Ejecutar(int reservaId, int idUsuario)
     {
         //Verificamos permisos
-        if (!Auth.PoseeElPermiso(idUsuario))
+        /* if (!Auth.PoseeElPermiso(idUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        } */
         //Obtenemos la reserva
         var reserva = repoReserva.ObtenerPorId(reservaId);
         if (reserva == null)

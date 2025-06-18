@@ -4,10 +4,8 @@ using CentroEventos.Aplicacion.Interfaces;
 
 namespace CentroEventos.Aplicacion.Servicios;
 
-public class ServicioAutorizacion : IServicioAutorizacion
+/* public class ServicioAutorizacion : IServicioAutorizacion
 {
-    public bool PoseeElPermiso(int idUsuario, Permiso permiso)
-    {
-        //completar
-    }
+    public bool PoseeElPermiso(int idUsuario, Permiso permiso);
 }
+ */

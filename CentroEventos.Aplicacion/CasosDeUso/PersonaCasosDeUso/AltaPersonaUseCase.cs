@@ -5,14 +5,14 @@ using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
-public class AltaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, PersonaValidador personaValidador)
+public class AltaPersonaUseCase(IRepositorioPersona repoPersona, /* IServicioAutorizacion Auth, */ PersonaValidador personaValidador)
 {
-    public void Ejecutar(Persona persona, int idUsuario)
+    public void Ejecutar(Persona persona, Usuario usuario)
     {
-        if (!Auth.PoseeElPermiso(idUsuario))
+        /* if (!Auth.PoseeElPermiso(idUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        } */
         if (!personaValidador.Validar(persona, out string mensajeError))
         {
             throw new ValidacionException(mensajeError);

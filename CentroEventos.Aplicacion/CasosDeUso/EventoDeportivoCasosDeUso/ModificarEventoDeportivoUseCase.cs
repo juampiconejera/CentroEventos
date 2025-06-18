@@ -6,14 +6,14 @@ using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
-public class ModificarEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, EventoDeportivoValidador eventoDeportivoValidador)
+public class ModificarEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
 {
     public void Ejecutar(EventoDeportivo eventoDeportivo, int IdUsuario)
     {
-        if(!Auth.PoseeElPermiso(IdUsuario))
+        /* if(!Auth.PoseeElPermiso(IdUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        } */
 
         if(!eventoDeportivoValidador.Validar(eventoDeportivo, out string mensajeError))
         {

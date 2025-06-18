@@ -7,15 +7,15 @@ using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
-public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,IRepositorioPersona repoPersona, IServicioAutorizacionProvisorio Auth, EventoDeportivoValidador eventoDeportivoValidador)
+public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
 {
     public void Ejecutar(EventoDeportivo eventoDeportivo, int idUsuario)
     {
         //Primero verificamos permisos
-        if(!Auth.PoseeElPermiso(idUsuario))
+        /* if(!Auth.PoseeElPermiso(idUsuario))
         {
             throw new FalloAutorizacionException("Usuario no autorizado");
-        }
+        } */
 
         //Validamos el evento deportivo
         if(!eventoDeportivoValidador.Validar(eventoDeportivo, out string mensajeError))

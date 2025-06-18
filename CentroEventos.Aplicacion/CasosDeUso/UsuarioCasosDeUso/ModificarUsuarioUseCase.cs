@@ -7,19 +7,19 @@ using CentroEventos.Aplicacion.Validadores;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
 
-public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, IServicioAutorizacion Auth, UsuarioValidador usuarioValidador)
+public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, /* IServicioAutorizacion Auth, */ UsuarioValidador usuarioValidador)
 {
     public void Ejecutar(Usuario usuario, Usuario admin)
     {
-        if (!Auth.PoseeElPermiso(admin))
+        /* if (!Auth.PoseeElPermiso(admin))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        }
+        } */
         if (!usuarioValidador.Validar(usuario, out string mensajeError))
         {
             throw new ValidacionException(mensajeError);
         }
-        if (!repoUsuario.ExistePorId(usuario.id))
+        if (!repoUsuario.ExistePorId(usuario.Id))
         {
             throw new EntidadNotFoundException("Id del responsable no corresponde a una persona ");
         }
