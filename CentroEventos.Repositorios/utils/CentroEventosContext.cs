@@ -16,6 +16,7 @@ public class CentroEventosContext : DbContext
         optionsBuilder.UseSqlite("data source=CentroDeportivo.sqlite");
     }
 
+    //add journalMode
     public void ConfigureSqliteJournalMode()
     {
         this.Database.EnsureCreated();
@@ -28,12 +29,3 @@ public class CentroEventosContext : DbContext
         }
     }
 }
-
-/*protected override void OnConfiguring(...):
-Es un método de la clase DbContext de Entity Framework Core que puedes sobrescribir para configurar cómo se conecta tu contexto a la base de datos.
-
-optionsBuilder.UseSqlite("data source=CentroDeportivo.sqlite");:
-Le dice a EF Core que use SQLite como base de datos y que el archivo de la base de datos se llamará CentroDeportivo.sqlite (se creará en la carpeta del proyecto si no existe).
-
-En resumen:
-Estas líneas configuran tu contexto para que use una base de datos SQLite local llamada CentroDeportivo.sqlite.*/
