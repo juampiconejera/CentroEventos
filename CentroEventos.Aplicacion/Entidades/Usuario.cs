@@ -6,11 +6,12 @@ namespace CentroEventos.Aplicacion.Entidades;
 
 public class Usuario
 {
-    private string? _nombre;
-    private string? _apellido;
-    private string? _email;
-    private string? _password;
-    private List<Permiso>? _permisos;
+    // Propiedades autoimplementadas
+    public string Nombre { get; set; } = string.Empty;
+    public string Apellido { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public List<Permiso>? Permisos { get; private set; }
 
     public Usuario()
     {
@@ -24,34 +25,5 @@ public class Usuario
         Email = email;
         Password = password;
         Permisos = permisos;
-    }
-    public string Nombre
-    {
-        get => _nombre;
-        set => _nombre = value;
-    }
-
-    public string Apellido
-    {
-        get => _apellido;
-        set => _apellido = value;
-    }
-
-    public string Email
-    {
-        get => _email;
-        set => _email = value;
-    }
-
-    public string Password
-    {
-        get => _password;           //el hash del password lo realizo en el caso de uso
-        set => _password = value;
-    }
-
-    public List<Permiso> Permisos
-    {
-        get => _permisos;
-        set => _permisos = value;
     }
 }
