@@ -12,7 +12,7 @@ public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, IServicioA
 {
     public void Ejecutar(Usuario usuario, Usuario admin)
     {
-        if (!Auth.PoseeElPermiso(admin.Permisos, Permiso.UsuarioModificacion))
+        if (!Auth.PoseeElPermiso(admin.Permisos, Permiso.UsuarioModificacion) && admin.Id != usuario.Id)
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
         }
