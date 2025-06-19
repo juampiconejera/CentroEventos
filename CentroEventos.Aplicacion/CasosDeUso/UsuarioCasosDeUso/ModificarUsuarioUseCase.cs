@@ -3,13 +3,12 @@ using System.Net.Security;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
-using CentroEventos.Aplicacion.Servicios;
 using CentroEventos.Aplicacion.Validadores;
 using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
 
-public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, IServicioAutorizacion Auth, ServicioSHA256 servicioSHA256, UsuarioValidador usuarioValidador)
+public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, IServicioAutorizacion Auth, UsuarioValidador usuarioValidador)
 {
     public void Ejecutar(Usuario usuario, Usuario admin)
     {
@@ -25,10 +24,6 @@ public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, IServicioA
         {
             throw new EntidadNotFoundException("Id del responsable no corresponde a una persona ");
         }
-
-        //Hashing del password
-        string newPass = servicioSHA256.getSha256(usuario.Password);
-        usuario.Password = newPass;
 
         repoUsuario.Modificar(usuario);
     }

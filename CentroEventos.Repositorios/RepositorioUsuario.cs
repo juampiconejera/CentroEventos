@@ -2,11 +2,13 @@ using System;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Enumerativos;
 using CentroEventos.Aplicacion.Interfaces;
+using CentroEventos.Aplicacion.Servicios;
 
 namespace CentroEventos.Repositorios;
 
 public class RepositorioUsuario : IRepositorioUsuario
 {
+    IServicioSHA256 servicioSHA256 = new ServicioSHA256(); 
     public void Agregar(Usuario usuario)
     {
         using (var context = new CentroEventosContext())
@@ -105,7 +107,9 @@ public class RepositorioUsuario : IRepositorioUsuario
                 usuarioViejo.Email = usuarioNuevo.Email;
                 if (usuarioViejo.Password != usuarioNuevo.Password)
                 {
-                    usuarioViejo.Password = usuarioNuevo.Password;
+                    //hago el hash
+                    string newPass = servicioSHA256.getSha256(usuarioNuevo.Password);
+                    usuarioNuevo.Password = newPass;
                 }
                 context.SaveChanges();
             }
