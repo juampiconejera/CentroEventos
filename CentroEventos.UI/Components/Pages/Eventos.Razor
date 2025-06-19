@@ -1,0 +1,27 @@
+@using CentroEventos.Aplicacion.Entidades
+@using CentroEventos.Aplicacion.Enumerativos
+@using CentroEventos.Aplicacion.Servicios
+@using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso
+@page "/eventos"
+@rendermode InteractiveServer
+@inject NavigationManager nav
+@inject Sesion sesion
+@inject ListarReservaUseCase listarReserva
+@inject ModificarReservaUseCase modificarReserva
+@inject BajaReservaUseCase bajaReserva
+@inject AltaReservaUseCase altaReserva
+
+<PageTitle>Gestion de Reservas - Centro de Eventos</PageTitle>
+
+@if (!sesion.isLogin())
+{
+    <div class="text-center mt-4">
+        <p>Bienvenido/a. Iniciá sesión o registrate para continuar.</p>
+        <button class="btn btn-primary me-2" @onclick='() => nav.NavigateTo("/login")'>Iniciar Sesión</button>
+        <button class="btn btn-secondary" @onclick='() => nav.NavigateTo("/register")'>Registrarse</button>
+    </div>
+}
+else
+{
+    
+}

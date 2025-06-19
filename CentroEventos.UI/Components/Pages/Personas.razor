@@ -82,32 +82,32 @@ else
                     <button type="button" class="btn-close" @onclick="CerrarModal"></button>
                 </div>
                 <div class="modal-body">
-                    <EditForm Model="personaSeleccionado" OnValidSubmit="GuardarCambios">
+                    <form Model="personaSeleccionado" @onsubmit="GuardarCambios">
                         <div class="mb-3">
                             <label class="form-label">Dni</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Dni" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Dni" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Nombre" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Nombre" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Apellido</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Apellido" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Apellido" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Email" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Email" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Telefono</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Telefono" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Telefono" />
                         </div>
                         <div class="text-end">
                             <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
                             <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         </div>
-                    </EditForm>
+                    </form>
                 </div>
             </div>
         </div>
@@ -144,32 +144,32 @@ else
                     <button type="button" class="btn-close" @onclick="CerrarModal"></button>
                 </div>
                 <div class="modal-body">
-                    <EditForm Model="personaSeleccionado" OnValidSubmit="agregarPersona">
+                    <form Model="personaSeleccionado" @onsubmit="agregarPersona">
                         <div class="mb-3">
                             <label class="form-label">Dni</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Dni" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Dni" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Nombre" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Nombre" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Apellido</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Apellido" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Apellido" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Email" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Email" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Telefono</label>
-                            <InputText class="form-control" @bind-Value="personaSeleccionado.Telefono" />
+                            <input type="text" class="form-control" @bind="personaSeleccionado.Telefono" />
                         </div>
                         <div class="text-end">
                             <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
                             <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         </div>
-                    </EditForm>
+                    </form>
                 </div>
             </div>
         </div>

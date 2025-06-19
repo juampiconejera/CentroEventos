@@ -70,6 +70,102 @@ else
     </div>
 }
 
+@if (reservaSeleccionada is not null && modo == "editar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar reserva</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form Model="reservaSeleccionada" @onsubmit="GuardarCambios">
+                        <div class="mb-3">
+                            <label class="form-label">Id de la persona</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.PersonaId" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Id del evento deportivo</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.EventoDeportivoId" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de alta</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.FechaAltaReserva" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estado de asistencia</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.EstadoAsistencia" />
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
+                            <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (reservaSeleccionada is not null && modo == "agregar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar reserva</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form Model="reservaSeleccionada"  @onsubmit="agregarReserva">
+                        <div class="mb-3">
+                            <label class="form-label">Id de la persona</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.PersonaId" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Id del evento deportivo</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.EventoDeportivoId" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de alta</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.FechaAltaReserva" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estado de asistencia</label>
+                            <input type="text" class="form-control" @bind="reservaSeleccionada.EstadoAsistencia" />
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
+                            <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (reservaSeleccionada is not null && modo == "eliminar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que querés eliminar la reserva<strong>@reservaSeleccionada.Id</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-danger" @onclick="EliminarReserva">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
     private List<Reserva> _reservas = new List<Reserva>();
     private Reserva? reservaSeleccionada = new Reserva();
