@@ -2,12 +2,14 @@
 @using CentroEventos.Aplicacion.Enumerativos
 @using CentroEventos.Aplicacion.Servicios
 @using CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso
-@page "/usuarios"
+@page "/personas"
 @rendermode InteractiveServer
 @inject NavigationManager nav
 @inject Sesion sesion
 @inject ListarPersonaUseCase listarPersona
 @inject ModificacionPersonaUseCase modificarPersona
+@inject BajaPersonaUseCase bajaPersona
+@inject AltaPersonaUseCase altaPersona
 
 @if (!sesion.isLogin())
 {
@@ -23,28 +25,33 @@ else
          <table class="table table-bordered table-striped mt-4">
         <thead class="table-dark">
             <tr>
+                <th>Id</th>
+                <th>Dni</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Email</th>
-                <th>Permisos</th>
+                <th>Telefono</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var usuario in _personas)
+            @foreach (var persona in _personas)
             {
                 <tr>
-                    <td>@usuario.Nombre</td>
-                    <td>@usuario.Apellido</td>
-                    <td>@usuario.Email</td>
+                    <td>@persona.Id</td>
+                    <td>@persona.Dni</td>
+                    <td>@persona.Nombre</td>
+                    <td>@persona.Apellido</td>
+                    <td>@persona.Email</td>
+                    <td>@persona.Telefono</td>
                     <td style="width: 140px;">
                         @if (sesion.UsuarioActual.Permisos.Contains(Permiso.PersonaModificacion))
                         {
-                            <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(usuario)">Editar</button>
+                            <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(persona)">Editar</button>
                         }
                         @if (sesion.UsuarioActual.Permisos.Contains(Permiso.PersonaBaja))
                         {
-                            <button class="btn btn-sm btn-danger" @onclick="() => AbrirEliminar(usuario)">Eliminar</button>
+                            <button class="btn btn-sm btn-danger" @onclick="() => AbrirEliminar(persona)">Eliminar</button>
                         }
                     </td>
                 </tr>
@@ -53,7 +60,7 @@ else
     </table>
     @if (sesion.UsuarioActual.Permisos.Contains(Permiso.PersonaAlta))
         {
-            <button class="btn btn-success mt-3" @onclick="AbrirAgregar">Agregar usuario</button>
+            <button class="btn btn-success mt-3" @onclick="AbrirAgregar">Agregar persona</button>
         }
     </div>
 }
@@ -64,11 +71,15 @@ else
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Editar Usuario</h5>
+                    <h5 class="modal-title">Editar persona</h5>
                     <button type="button" class="btn-close" @onclick="CerrarModal"></button>
                 </div>
                 <div class="modal-body">
                     <EditForm Model="personaSeleccionado" OnValidSubmit="GuardarCambios">
+                        <div class="mb-3">
+                            <label class="form-label">Dni</label>
+                            <InputText class="form-control" @bind-Value="personaSeleccionado.Dni" />
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
                             <InputText class="form-control" @bind-Value="personaSeleccionado.Nombre" />
@@ -81,27 +92,10 @@ else
                             <label class="form-label">Email</label>
                             <InputText class="form-control" @bind-Value="personaSeleccionado.Email" />
                         </div>
-
                         <div class="mb-3">
-                            <label class="form-label">Permisos</label>
-                            <div class="row">
-                                @foreach (var permiso in Enum.GetValues<Permiso>())
-                                {
-                                    @if (sesion.UsuarioActual.Permisos.Contains(permiso))
-                                    {
-                                        <div class="col-6 col-md-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    checked="@permisosSeleccionados.Contains(permiso)"
-                                                    @onchange="(e) => TogglePermiso(permiso, e.Value!.Equals(true))" />
-                                                <label class="form-check-label">@permiso</label>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            </div>
+                            <label class="form-label">Telefono</label>
+                            <InputText class="form-control" @bind-Value="personaSeleccionado.Telefono" />
                         </div>
-
                         <div class="text-end">
                             <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
                             <button class="btn btn-primary" type="submit">Guardar cambios</button>
@@ -126,7 +120,49 @@ else
                     <p>¿Estás seguro de que querés eliminar a <strong>@personaSeleccionado.Nombre</strong>?</p>
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-danger">Eliminar</button>
+                <button class="btn btn-danger" @onclick="EliminarPersona">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (personaSeleccionado is not null && modo == "agregar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar persona</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="personaSeleccionado" OnValidSubmit="agregarPersona">
+                        <div class="mb-3">
+                            <label class="form-label">Dni</label>
+                            <InputText class="form-control" @bind-Value="personaSeleccionado.Dni" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <InputText class="form-control" @bind-Value="personaSeleccionado.Nombre" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Apellido</label>
+                            <InputText class="form-control" @bind-Value="personaSeleccionado.Apellido" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <InputText class="form-control" @bind-Value="personaSeleccionado.Email" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Telefono</label>
+                            <InputText class="form-control" @bind-Value="personaSeleccionado.Telefono" />
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
+                            <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </div>
+                    </EditForm>
                 </div>
             </div>
         </div>
@@ -136,7 +172,7 @@ else
 @code
 {
     private List<Persona> _personas = new List<Persona>();
-    private Persona? personaSeleccionado;
+    private Persona? personaSeleccionado = new Persona();
     private string? modo;
     private HashSet<Permiso> permisosSeleccionados = new();
     protected override void OnInitialized()
@@ -161,13 +197,6 @@ else
             Telefono = p.Telefono
         };
         modo = "editar";
-    }
-    void TogglePermiso(Permiso permiso, bool activo)
-    {
-        if (activo)
-            permisosSeleccionados.Add(permiso);
-        else
-            permisosSeleccionados.Remove(permiso);
     }
     void GuardarCambios()
     {
@@ -199,7 +228,7 @@ else
     void AbrirAgregar()
     {
         personaSeleccionado = new Persona();
-        modo = "editar";
+        modo = "agregar";
     }
     void CerrarModal()
     {
@@ -207,4 +236,37 @@ else
         modo = null;
     }
 
+    void EliminarPersona()
+    {
+        try
+        {
+            bajaPersona.Ejecutar(personaSeleccionado.Id, sesion.UsuarioActual);
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        CerrarModal();
+    }
+
+    void agregarPersona()
+    {
+        try{
+            altaPersona.Ejecutar(personaSeleccionado,sesion.UsuarioActual);
+            
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        try
+        {
+            _personas = listarPersona.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        CerrarModal();
+    }
 }

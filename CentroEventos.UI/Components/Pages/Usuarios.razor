@@ -8,6 +8,7 @@
 @inject Sesion sesion
 @inject ListarUsuarioUseCase listarUsuario
 @inject ModificarUsuarioUseCase modificarUsuario
+@inject BajaUsuarioUseCase bajaUsuario
 @inject AsignarPermisosUseCase asignarPermisos
 @inject RetirarPermisosUseCase retirarPermiso
 
@@ -22,44 +23,40 @@
 else
 {
     <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
-         <table class="table table-bordered table-striped mt-4">
-        <thead class="table-dark">
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Permisos</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var usuario in _usuarios)
-            {
+        <table class="table table-bordered table-striped mt-4">
+            <thead class="table-dark">
                 <tr>
-                    <td>@usuario.Nombre</td>
-                    <td>@usuario.Apellido</td>
-                    <td>@usuario.Email</td>
-                    <td>
-                        @string.Join(", ", usuario.Permisos)
-                    </td>
-                    <td style="width: 140px;">
-                        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioModificacion))
-                        {
-                            <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(usuario)">Editar</button>
-                        }
-                        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioBaja))
-                        {
-                            <button class="btn btn-sm btn-danger" @onclick="() => AbrirEliminar(usuario)">Eliminar</button>
-                        }
-                    </td>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Permisos</th>
+                    <th>Acciones</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    @if (sesion.UsuarioActual.Permisos.Contains(Permiso.PersonaAlta))
-        {
-            <button class="btn btn-success mt-3" @onclick="AbrirAgregar">Agregar usuario</button>
-        }
+            </thead>
+            <tbody>
+                @foreach (var usuario in _usuarios)
+                {
+                    <tr>
+                        <td>@usuario.Nombre</td>
+                        <td>@usuario.Apellido</td>
+                        <td>@usuario.Email</td>
+                        <td>
+                            @string.Join(", ", usuario.Permisos)
+                        </td>
+                        <td style="width: 140px;">
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioModificacion))
+                            {
+                                <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(usuario)">Editar</button>
+                            }
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioBaja))
+                            {
+                                <button class="btn btn-sm btn-danger" @onclick="() => AbrirEliminar(usuario)">Eliminar</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 }
 
@@ -73,20 +70,23 @@ else
                     <button type="button" class="btn-close" @onclick="CerrarModal"></button>
                 </div>
                 <div class="modal-body">
-                    <EditForm Model="usuarioSeleccionado" OnValidSubmit="GuardarCambios">
+                    <form Model="usuarioSeleccionado" @onsubmit="GuardarCambios">
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
-                            <InputText class="form-control" @bind-Value="usuarioSeleccionado.Nombre" />
+                            <input type="text" class="form-control" @bind="usuarioSeleccionado.Nombre" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Apellido</label>
-                            <InputText class="form-control" @bind-Value="usuarioSeleccionado.Apellido" />
+                            <input type="text" class="form-control" @bind="usuarioSeleccionado.Apellido" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <InputText class="form-control" @bind-Value="usuarioSeleccionado.Email" />
+                            <input type="text" class="form-control" @bind="usuarioSeleccionado.Email" />
                         </div>
-
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" @bind="usuarioSeleccionado.Password" />
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Permisos</label>
                             <div class="row">
@@ -111,7 +111,7 @@ else
                             <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
                             <button class="btn btn-primary" type="submit">Guardar cambios</button>
                         </div>
-                    </EditForm>
+                    </form>
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@ else
                     <p>¿Estás seguro de que querés eliminar a <strong>@usuarioSeleccionado.Nombre</strong>?</p>
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-danger">Eliminar</button>
+                <button class="btn btn-danger" @onclick="eliminarUsuario">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -238,5 +238,24 @@ else
         usuarioSeleccionado = null;
         modo = null;
     }
-
+    void eliminarUsuario()
+    {
+        try
+        {
+            bajaUsuario.Ejecutar(usuarioSeleccionado.Id,sesion.UsuarioActual);
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        try
+        {
+            _usuarios = listarUsuario.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        CerrarModal();
+    }
 }
