@@ -51,7 +51,7 @@ builder.Services.AddTransient<EventoDeportivoValidador>();
 builder.Services.AddTransient<ReservaValidador>();
 builder.Services.AddTransient<UsuarioValidador>();
 //Sesion
-
+builder.Services.AddSingleton<Sesion>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
