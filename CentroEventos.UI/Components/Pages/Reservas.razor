@@ -60,7 +60,7 @@ else
         </table>
         @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaAlta))
         {
-            <button class="btn btn-success mt-3" @onclick="AbrirAgregar">Agregar reserva</button>
+            <button class="btn btn-success mt-3" @onclick="() => AbrirAgregar()">Agregar reserva</button>
         }
     </div>
 }
