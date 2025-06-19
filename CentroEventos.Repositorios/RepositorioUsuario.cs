@@ -109,7 +109,7 @@ public class RepositorioUsuario : IRepositorioUsuario
                 {
                     //hago el hash
                     string newPass = servicioSHA256.getSha256(usuarioNuevo.Password);
-                    usuarioNuevo.Password = newPass;
+                    usuarioViejo.Password = newPass;
                 }
                 context.SaveChanges();
             }

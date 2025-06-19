@@ -131,7 +131,7 @@ else
                     <p>¿Estás seguro de que querés eliminar a <strong>@usuarioSeleccionado.Nombre</strong>?</p>
                 </div>
                 <div class="modal-footer">
-                <button class="btn btn-danger" @onclick="eliminarUsuario">Eliminar</button>
+                <button class="btn btn-danger" @onclick="EliminarUsuario">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -238,7 +238,7 @@ else
         usuarioSeleccionado = null;
         modo = null;
     }
-    void eliminarUsuario()
+    void EliminarUsuario()
     {
         try
         {

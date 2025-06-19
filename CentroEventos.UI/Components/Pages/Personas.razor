@@ -246,6 +246,14 @@ else
         {
             Console.WriteLine(err);
         }
+        try
+        {
+            _personas = listarPersona.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
         CerrarModal();
     }
 
