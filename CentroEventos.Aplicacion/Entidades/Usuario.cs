@@ -15,9 +15,11 @@ public class Usuario
     public string Password { get; set; } = string.Empty;
     public List<Permiso>? Permisos { get; private set; } = new List<Permiso>();
 
-    public Usuario()
+    public Usuario(){}
+    public Usuario(string email, string password)
     {
-
+        Email = email;
+        Password = password;
     }
     public Usuario(string nombre, string apellido, string email, string password)
     {

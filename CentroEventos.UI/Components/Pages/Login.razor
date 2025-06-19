@@ -1,12 +1,13 @@
 @using CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso
 @using CentroEventos.Aplicacion.Servicios
+@using CentroEventos.Aplicacion.Entidades
 @page "/"
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 @inject LoginUseCase loginUseCase
-@inject Sesion Sesion
+@inject Sesion sesion
 
-<PageTitle>Login - Centro de Eventos</PageTitle>
+<PageTitle>Log in - Centro de Eventos</PageTitle>
 
 <h3>Iniciar Sesion</h3>
 
@@ -26,8 +27,13 @@
     private void IniciarSesion()
     {
         try {
-            loginUseCase.Ejecutar(_email,_password);    
-        } catch (Exception err){
+            loginUseCase.Ejecutar(_email,_password);
+            sesion.GuardarSesion(new Usuario(_email,_password));
+            NavigationManager.NavigateTo("/home");
+            
+        } 
+        catch (Exception err)
+        {
             Console.WriteLine(err);
         }
     }

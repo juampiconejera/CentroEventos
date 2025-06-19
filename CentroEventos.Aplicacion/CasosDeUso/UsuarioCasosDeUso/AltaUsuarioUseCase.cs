@@ -9,7 +9,7 @@ namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
 
 public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario, ServicioSHA256 servicioSHA256, UsuarioValidador usuarioValidador)
 {
-    public void Ejecutar(Usuario usuario, Usuario admin)
+    public void Ejecutar(Usuario usuario)
     {
         //No verificamos la validacion de permisos ya que AltaUsuario se usa solamente para registrarse.
         if (!usuarioValidador.Validar(usuario, out string mensajeError))

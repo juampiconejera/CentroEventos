@@ -13,7 +13,7 @@ public class Sesion
         return UsuarioActual != null;
     }
 
-    public void Iniciar(Usuario usuario)
+    public void GuardarSesion(Usuario usuario)
     {
         UsuarioActual = usuario;
         
