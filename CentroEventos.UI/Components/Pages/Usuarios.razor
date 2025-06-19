@@ -146,7 +146,13 @@ else
     private HashSet<Permiso> permisosSeleccionados = new();
     protected override void OnInitialized()
     {
-        _usuarios = listarUsuario.Ejecutar();
+        try {
+            _usuarios = listarUsuario.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
     }
     void AbrirEditar(Usuario u)
     {
@@ -172,20 +178,48 @@ else
     {
         if (usuarioSeleccionado is null) return;
 
-        modificarUsuario.Ejecutar(usuarioSeleccionado, sesion.UsuarioActual!);
+        try
+        {
+            modificarUsuario.Ejecutar(usuarioSeleccionado, sesion.UsuarioActual!);
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
 
         var permisosOriginales = usuarioSeleccionado.Permisos.ToHashSet();
 
         // Permisos nuevos a agregar
         var nuevos = permisosSeleccionados.Except(permisosOriginales).ToList();
         if (nuevos.Any())
-            asignarPermisos.Ejecutar(usuarioSeleccionado.Id, nuevos, sesion.UsuarioActual!);
+            try
+            {
+                asignarPermisos.Ejecutar(usuarioSeleccionado.Id, nuevos, sesion.UsuarioActual!);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+            }
 
         // Permisos quitados
         var quitados = permisosOriginales.Except(permisosSeleccionados).ToList();
         if (quitados.Any())
-            retirarPermiso.Ejecutar(usuarioSeleccionado.Id, quitados, sesion.UsuarioActual!);
-        _usuarios = listarUsuario.Ejecutar();
+            try
+            {
+                retirarPermiso.Ejecutar(usuarioSeleccionado.Id, quitados, sesion.UsuarioActual!);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+            }
+        try
+        {
+            _usuarios = listarUsuario.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
         CerrarModal();
     }
     void AbrirEliminar(Usuario u)
