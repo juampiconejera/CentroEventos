@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CentroEventos.Aplicacion.Servicios;
 
-public class ServicioSHA256 : IServicioSHA26
+public class ServicioSHA256 : IServicioSHA256
 {
     public string getSha256(string entrada)
     {

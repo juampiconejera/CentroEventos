@@ -1,11 +1,35 @@
+@using CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso
+@using CentroEventos.Aplicacion.Servicios
 @page "/"
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
-@* NavigationManager NavigationManager *@
+@inject LoginUseCase loginUseCase
 @inject Sesion Sesion
 
 <PageTitle>Login - Centro de Eventos</PageTitle>
 
 <h3>Iniciar Sesion</h3>
 
-<form @onsubmit="IniciarSesion"></form>
+<form @onsubmit="IniciarSesion">
+    <label for="email">Usuario</label>
+    <input type="text" id="email" name="email" placeholder="email" @bind="_email" >
+    <label for="password">Contraseña</label>
+    <input type="password" id="password" name="password" placeholder="contraseña" @bind="_password">
+    <button type="submit">Aceptar</button>
+    <a href="/register">Registrarse</a>
+</form>
+
+@code {
+    private string _email = "";
+    private string _password = "";
+    
+    private void IniciarSesion()
+    {
+        try {
+            loginUseCase.Ejecutar(_email,_password);    
+        } catch (Exception err){
+            Console.WriteLine(err);
+        }
+    }
+
+    }

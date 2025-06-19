@@ -14,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<CentroEventosContext>();
 
+builder.Services.AddTransient<LoginUseCase>();
+builder.Services.AddSingleton<Sesion>();
 // Repositorios
 builder.Services.AddScoped<IRepositorioPersona, RepositorioPersona>();
 builder.Services.AddScoped<IRepositorioEventoDeportivo, RepositorioEventoDeportivo>();
@@ -43,15 +45,17 @@ builder.Services.AddTransient<ModificarUsuarioUseCase>();
 builder.Services.AddTransient<BajaUsuarioUseCase>();
 builder.Services.AddTransient<ListarUsuarioUseCase>();
 
+
 // Servicios
 builder.Services.AddTransient<IServicioAutorizacion, ServicioAutorizacion>();
+builder.Services.AddTransient<IServicioSHA256, ServicioSHA256>();
+builder.Services.AddTransient<ServicioSHA256>();
 // Validadores
 builder.Services.AddTransient<PersonaValidador>();
 builder.Services.AddTransient<EventoDeportivoValidador>();
 builder.Services.AddTransient<ReservaValidador>();
 builder.Services.AddTransient<UsuarioValidador>();
 //Sesion
-builder.Services.AddSingleton<Sesion>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
