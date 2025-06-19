@@ -12,6 +12,11 @@
 
 <PageTitle>Sign in - Centro de Eventos</PageTitle>
 
+@if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger fs-5">@mensajeError</div>
+}
+
 <h3>Registrarse</h3>
 <form @onsubmit="Registrarse">
     <label for="nombre">Nombre</label>
@@ -40,7 +45,17 @@
         } 
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
+    }
+
+    private string? mensajeError;
+
+    private async Task LimpiarMensajeErrorAsync()
+    {
+        await Task.Delay(3000); // 3 segundos
+        mensajeError = null;
+        StateHasChanged();
     }
 }
