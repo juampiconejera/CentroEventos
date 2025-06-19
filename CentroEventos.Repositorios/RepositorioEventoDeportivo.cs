@@ -59,11 +59,11 @@ public class RepositorioEventoDeportivo : IRepositorioEventoDeportivo
         }
     }
 
-    public EventoDeportivo? ObtenerPorId(int idEvento)      //REVISAR LOGICA
+    public EventoDeportivo ObtenerPorId(int idEvento)      //REVISAR LOGICA
     {
         using (var context = new CentroEventosContext())
         {
-            EventoDeportivo? eventoDeportivo = context.EventosDeportivos.FirstOrDefault(e => e.Id == idEvento);
+            EventoDeportivo? eventoDeportivo = context.EventosDeportivos.FirstOrDefault(e => e.Id == idEvento)!;
             return eventoDeportivo;
         }
     }

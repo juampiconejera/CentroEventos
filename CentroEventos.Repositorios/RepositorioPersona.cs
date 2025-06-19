@@ -78,11 +78,11 @@ public class RepositorioPersona : IRepositorioPersona
             return persona != null;
         }
     }
-    public Persona? ObtenerPorId(int id)         //retornar null?
+    public Persona ObtenerPorId(int id)         
     {
         using (var context = new CentroEventosContext())
         {
-            Persona? persona = context.Personas.FirstOrDefault(p => p.Id == id);
+            Persona? persona = context.Personas.FirstOrDefault(p => p.Id == id)!;
             return persona;
         }
     }
