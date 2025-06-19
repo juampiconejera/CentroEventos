@@ -45,6 +45,9 @@ builder.Services.AddTransient<ModificarUsuarioUseCase>();
 builder.Services.AddTransient<BajaUsuarioUseCase>();
 builder.Services.AddTransient<ListarUsuarioUseCase>();
 
+builder.Services.AddTransient<AsignarPermisosUseCase>();
+builder.Services.AddTransient<RetirarPermisosUseCase>();
+
 
 // Servicios
 builder.Services.AddTransient<IServicioAutorizacion, ServicioAutorizacion>();

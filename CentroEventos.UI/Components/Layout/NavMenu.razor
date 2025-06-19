@@ -1,30 +1,48 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">CentroEventos.UI</a>
+﻿@using CentroEventos.Aplicacion.Servicios
+@inject Sesion sesion
+@inject NavigationManager nav
+
+@if (sesion.isLogin())
+{
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark text-white" style="width: 220px; min-height: 100vh;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-5 fw-semibold">Centro Deportivo</span>
+        </a>
+        <hr class="text-white" />
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <NavLink class="nav-link text-white" activeClass="active" href="/">Inicio</NavLink>
+            </li>
+            <li>
+                <NavLink class="nav-link text-white" activeClass="active" href="/eventos">Eventos</NavLink>
+            </li>
+            <li>
+                <NavLink class="nav-link text-white" activeClass="active" href="/eventos-cupo">Eventos con cupo</NavLink>
+            </li>
+            <li>
+                <NavLink class="nav-link text-white" activeClass="active" href="/asistencias">Asistencias</NavLink>
+            </li>
+            <li>
+                <NavLink class="nav-link text-white" activeClass="active" href="/personas">Personas</NavLink>
+            </li>
+            <li>
+                <NavLink class="nav-link text-white" activeClass="active" href="/reservas">Reservas</NavLink>
+            </li>
+            <li>
+                <NavLink class="nav-link text-white" activeClass="active" href="/usuarios">Usuarios</NavLink>
+            </li>
+        </ul>
+        <hr class="text-white" />
+        <div class="mt-auto">
+            <button class="btn btn-outline-light btn-sm w-100" @onclick="CerrarSesion">Cerrar sesión</button>
+        </div>
     </div>
-</div>
+}
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
+@code {
+    private void CerrarSesion()
+    {
+        sesion.CerrarSesion();
+        nav.NavigateTo("/login", true);
+    }
+}

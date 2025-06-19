@@ -1,9 +1,9 @@
 @using CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso
 @using CentroEventos.Aplicacion.Servicios
 @using CentroEventos.Aplicacion.Entidades
-@page "/"
+@page "/login"
 @rendermode InteractiveServer
-@inject NavigationManager NavigationManager
+@inject NavigationManager nav
 @inject LoginUseCase loginUseCase
 @inject AltaUsuarioUseCase altaUsuarioUseCase
 @inject Sesion sesion
@@ -28,9 +28,9 @@
     private void IniciarSesion()
     {
         try {
-            loginUseCase.Ejecutar(_email,_password);
-            sesion.GuardarSesion(new Usuario(_email,_password));
-            NavigationManager.NavigateTo("/home");
+            var u = loginUseCase.Ejecutar(_email,_password);
+            sesion.GuardarSesion(u);
+            nav.NavigateTo("/");
             
         } 
         catch (Exception err)

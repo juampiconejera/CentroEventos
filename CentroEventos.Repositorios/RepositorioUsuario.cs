@@ -103,7 +103,10 @@ public class RepositorioUsuario : IRepositorioUsuario
                 usuarioViejo.Nombre = usuarioNuevo.Nombre;
                 usuarioViejo.Apellido = usuarioNuevo.Apellido;
                 usuarioViejo.Email = usuarioNuevo.Email;
-                usuarioViejo.Password = usuarioNuevo.Password;
+                if (usuarioViejo.Password != usuarioNuevo.Password)
+                {
+                    usuarioViejo.Password = usuarioNuevo.Password;
+                }
                 context.SaveChanges();
             }
         }

@@ -4,7 +4,7 @@ using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Enumerativos;
 using CentroEventos.Aplicacion.Excepciones;
 
-namespace CentroEventos.Aplicacion.CasosDeUso.ServiciosCasosDeUso;
+namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
 
 public class AsignarPermisosUseCase(IRepositorioUsuario repoUsuario, IServicioAutorizacion Auth)
 {

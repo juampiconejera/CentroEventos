@@ -1,13 +1,56 @@
 ﻿@using CentroEventos.Aplicacion.Servicios
-@page "/home"
+@page "/"
 @rendermode InteractiveServer
-@inject NavigationManager NavigationManager
+@inject NavigationManager nav
 @inject Sesion sesion
-@if(sesion.isLogin())
-{
-    <h2>Bienvenido a Centro de Eventos!</h2>
-}
-@if(!sesion.isLogin())
-{
-    <h1><a href="/">INICIAR SESION!</a></h1>
-}
+
+
+<div class="container mt-4">
+    <h2 class="text-center">Panel de Gestión</h2>
+
+    @if (!sesion.isLogin())
+    {
+        <div class="text-center mt-4">
+            <p>Bienvenido/a. Iniciá sesión o registrate para continuar.</p>
+            <button class="btn btn-primary me-2" @onclick='() => nav.NavigateTo("/login")'>Iniciar Sesión</button>
+            <button class="btn btn-secondary" @onclick='() => nav.NavigateTo("/register")'>Registrarse</button>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/personas")' style="cursor: pointer;">
+                    <div class="card-body">
+                        <h5 class="card-title">Personas</h5>
+                        <p class="card-text">Listar y gestionar personas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/eventos")' style="cursor: pointer;">
+                    <div class="card-body">
+                        <h5 class="card-title">Eventos</h5>
+                        <p class="card-text">Listar y gestionar eventos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/reservas")' style="cursor: pointer;">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservas</h5>
+                        <p class="card-text">Listar y gestionar reservas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/usuarios")' style="cursor: pointer;">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text">Listar y gestionar usuarios</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

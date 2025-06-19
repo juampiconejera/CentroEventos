@@ -4,6 +4,8 @@
 @using CentroEventos.Aplicacion.Entidades
 @page "/register"
 @rendermode InteractiveServer
+@inject NavigationManager nav
+
 @inject AltaUsuarioUseCase altaUsuarioUseCase
 @inject AltaPersonaUseCase altaPersonaUseCase
 @inject Sesion sesion
@@ -11,7 +13,7 @@
 <PageTitle>Sign in - Centro de Eventos</PageTitle>
 
 <h3>Registrarse</h3>
-<form @onsubmit="IniciarSesion">
+<form @onsubmit="Registrarse">
     <label for="nombre">Nombre</label>
     <input type="text" id="nombre" name="nombre" placeholder="nombre" @bind="_nombre" >
     <label for="apellido">Apellido</label>
@@ -29,12 +31,12 @@
     private string _email = "";
     private string _password = "";
     
-    private void IniciarSesion()
+    private void Registrarse()
     {
         try {
             Usuario u = new Usuario(_nombre,_apellido,_email,_password);
             altaUsuarioUseCase.Ejecutar(u);
-            
+            nav.NavigateTo("/login");
         } 
         catch (Exception err)
         {

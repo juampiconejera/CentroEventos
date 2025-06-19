@@ -1,0 +1,207 @@
+@using CentroEventos.Aplicacion.Entidades
+@using CentroEventos.Aplicacion.Enumerativos
+@using CentroEventos.Aplicacion.Servicios
+@using CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso
+@page "/usuarios"
+@rendermode InteractiveServer
+@inject NavigationManager nav
+@inject Sesion sesion
+@inject ListarUsuarioUseCase listarUsuario
+@inject ModificarUsuarioUseCase modificarUsuario
+@inject AsignarPermisosUseCase asignarPermisos
+@inject RetirarPermisosUseCase retirarPermiso
+
+@if (!sesion.isLogin())
+{
+    <div class="text-center mt-4">
+        <p>Bienvenido/a. Iniciá sesión o registrate para continuar.</p>
+        <button class="btn btn-primary me-2" @onclick='() => nav.NavigateTo("/login")'>Iniciar Sesión</button>
+        <button class="btn btn-secondary" @onclick='() => nav.NavigateTo("/register")'>Registrarse</button>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+         <table class="table table-bordered table-striped mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Permisos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in _usuarios)
+            {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.Apellido</td>
+                    <td>@usuario.Email</td>
+                    <td>
+                        @string.Join(", ", usuario.Permisos)
+                    </td>
+                    <td style="width: 140px;">
+                        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioModificacion))
+                        {
+                            <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(usuario)">Editar</button>
+                        }
+                        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioBaja))
+                        {
+                            <button class="btn btn-sm btn-danger" @onclick="() => AbrirEliminar(usuario)">Eliminar</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (sesion.UsuarioActual.Permisos.Contains(Permiso.PersonaAlta))
+        {
+            <button class="btn btn-success mt-3" @onclick="AbrirAgregar">Agregar usuario</button>
+        }
+    </div>
+}
+
+@if (usuarioSeleccionado is not null && modo == "editar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Usuario</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="usuarioSeleccionado" OnValidSubmit="GuardarCambios">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <InputText class="form-control" @bind-Value="usuarioSeleccionado.Nombre" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Apellido</label>
+                            <InputText class="form-control" @bind-Value="usuarioSeleccionado.Apellido" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <InputText class="form-control" @bind-Value="usuarioSeleccionado.Email" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Permisos</label>
+                            <div class="row">
+                                @foreach (var permiso in Enum.GetValues<Permiso>())
+                                {
+                                    @if (sesion.UsuarioActual.Permisos.Contains(permiso))
+                                    {
+                                        <div class="col-6 col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    checked="@permisosSeleccionados.Contains(permiso)"
+                                                    @onchange="(e) => TogglePermiso(permiso, e.Value!.Equals(true))" />
+                                                <label class="form-check-label">@permiso</label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
+                            <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (usuarioSeleccionado is not null && modo == "eliminar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que querés eliminar a <strong>@usuarioSeleccionado.Nombre</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code
+{
+    private List<Usuario> _usuarios = new List<Usuario>();
+    private Usuario? usuarioSeleccionado;
+    private string? modo;
+    private HashSet<Permiso> permisosSeleccionados = new();
+    protected override void OnInitialized()
+    {
+        _usuarios = listarUsuario.Ejecutar();
+    }
+    void AbrirEditar(Usuario u)
+    {
+        usuarioSeleccionado = new Usuario
+        {
+            Id = u.Id,
+            Nombre = u.Nombre,
+            Apellido = u.Apellido,
+            Email = u.Email,
+            Permisos = new List<Permiso>(u.Permisos)
+        };
+        permisosSeleccionados = u.Permisos.ToHashSet();
+        modo = "editar";
+    }
+    void TogglePermiso(Permiso permiso, bool activo)
+    {
+        if (activo)
+            permisosSeleccionados.Add(permiso);
+        else
+            permisosSeleccionados.Remove(permiso);
+    }
+    void GuardarCambios()
+    {
+        if (usuarioSeleccionado is null) return;
+
+        modificarUsuario.Ejecutar(usuarioSeleccionado, sesion.UsuarioActual!);
+
+        var permisosOriginales = usuarioSeleccionado.Permisos.ToHashSet();
+
+        // Permisos nuevos a agregar
+        var nuevos = permisosSeleccionados.Except(permisosOriginales).ToList();
+        if (nuevos.Any())
+            asignarPermisos.Ejecutar(usuarioSeleccionado.Id, nuevos, sesion.UsuarioActual!);
+
+        // Permisos quitados
+        var quitados = permisosOriginales.Except(permisosSeleccionados).ToList();
+        if (quitados.Any())
+            retirarPermiso.Ejecutar(usuarioSeleccionado.Id, quitados, sesion.UsuarioActual!);
+        _usuarios = listarUsuario.Ejecutar();
+        CerrarModal();
+    }
+    void AbrirEliminar(Usuario u)
+    {
+        usuarioSeleccionado = u;
+        modo = "eliminar";
+    }
+    void AbrirAgregar()
+    {
+        usuarioSeleccionado = new Usuario();
+        modo = "editar";
+    }
+    void CerrarModal()
+    {
+        usuarioSeleccionado = null;
+        modo = null;
+    }
+
+}
