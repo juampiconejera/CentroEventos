@@ -7,11 +7,11 @@ using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 
-public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioUsuario repoUsuario, IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
+public class AltaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,  IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
 {
-    public void Ejecutar(EventoDeportivo eventoDeportivo, int idUsuario)
+    public void Ejecutar(EventoDeportivo eventoDeportivo, Usuario usuario)
     {
-        var usuario = repoUsuario.ObtenerUsuario(idUsuario);
+        
          if(!Auth.PoseeElPermiso(usuario.Permisos, Permiso.EventoAlta ))
         {
             throw new FalloAutorizacionException("Usuario no autorizado");
