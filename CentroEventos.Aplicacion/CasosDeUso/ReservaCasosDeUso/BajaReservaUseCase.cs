@@ -3,18 +3,19 @@ using System.Runtime.Serialization;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
+using CentroEventos.Aplicacion.Enumerativos;
 using Aplicacion;
 
 public class BajaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, 
 IRepositorioReserva repoReserva, IServicioAutorizacion Auth)
 {
-    public void Ejecutar(int reservaId, int idUsuario)
+    public void Ejecutar(int reservaId, Usuario usuario)
     {
         //Verificamos permisos
-        /* if (!Auth.PoseeElPermiso(idUsuario))
+        if (!Auth.PoseeElPermiso(usuario.Permisos, Permiso.ReservaBaja))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        } */
+        }
         //Obtenemos la reserva
         var reserva = repoReserva.ObtenerPorId(reservaId);
         if (reserva == null)
