@@ -34,12 +34,10 @@
         try {
             Usuario u = new Usuario(_nombre,_apellido,_email,_password);
             altaUsuarioUseCase.Ejecutar(u);
-            
         } 
         catch (Exception err)
         {
             Console.WriteLine(err);
         }
     }
-
-    }
+}

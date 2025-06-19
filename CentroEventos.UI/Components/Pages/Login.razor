@@ -31,7 +31,6 @@
             loginUseCase.Ejecutar(_email,_password);
             sesion.GuardarSesion(new Usuario(_email,_password));
             NavigationManager.NavigateTo("/home");
-            
         } 
         catch (Exception err)
         {

@@ -11,7 +11,7 @@ public interface IRepositorioUsuario
     void Modificar(Usuario usuario);
     bool ExistePorId(int id);
     bool ExistePorEmail(string email);
-    Usuario? ObtenerUsuario(int id);
+    Usuario? ObtenerUsuarioPorId(int id);
     List<Usuario> listarUsuarios();
     void AsignarPermisos(int id, List<Permiso> listaPermisos);
     void RetirarPermisos(int id, List<Permiso> listaPermisos);

@@ -109,7 +109,7 @@ public class RepositorioUsuario : IRepositorioUsuario
         }
     }
 
-    public Usuario? ObtenerUsuario(int id)
+    public Usuario? ObtenerUsuarioPorId(int id)
     {
         using (var context = new CentroEventosContext())
         {
