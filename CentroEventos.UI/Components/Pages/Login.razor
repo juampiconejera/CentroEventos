@@ -1,2 +1,11 @@
-@page "/login"
-<h3>Iniciar Sesión</h3>
+@page "/"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@* NavigationManager NavigationManager *@
+@inject Sesion Sesion
+
+<PageTitle>Login - Centro de Eventos</PageTitle>
+
+<h3>Iniciar Sesion</h3>
+
+<form @onsubmit="IniciarSesion"></form>
