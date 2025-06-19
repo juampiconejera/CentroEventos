@@ -11,6 +11,8 @@
 @inject BajaPersonaUseCase bajaPersona
 @inject AltaPersonaUseCase altaPersona
 
+<PageTitle>Gestion Personas - Centro Eventos</PageTitle>
+
 @if (!sesion.isLogin())
 {
     <div class="text-center mt-4">
@@ -177,7 +179,8 @@ else
     private HashSet<Permiso> permisosSeleccionados = new();
     protected override void OnInitialized()
     {
-        try {
+        try 
+        {
             _personas = listarPersona.Ejecutar();
         }
         catch (Exception err)
@@ -259,7 +262,8 @@ else
 
     void agregarPersona()
     {
-        try{
+        try
+        {
             altaPersona.Ejecutar(personaSeleccionado,sesion.UsuarioActual);
             
         }

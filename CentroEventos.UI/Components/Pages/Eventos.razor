@@ -1,0 +1,169 @@
+@using CentroEventos.Aplicacion.Entidades
+@using CentroEventos.Aplicacion.Enumerativos
+@using CentroEventos.Aplicacion.Servicios
+@using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso
+@page "/reserva"
+@rendermode InteractiveServer
+@inject NavigationManager nav
+@inject Sesion sesion
+@inject ListarReservaUseCase listarReserva
+@inject ModificarReservaUseCase modificarReserva
+@inject BajaReservaUseCase bajaReserva
+@inject AltaReservaUseCase altaReserva
+
+<PageTitle>Gestion de Reservas - Centro de Eventos</PageTitle>
+
+@if (!sesion.isLogin())
+{
+    <div class="text-center mt-4">
+        <p>Bienvenido/a. Iniciá sesión o registrate para continuar.</p>
+        <button class="btn btn-primary me-2" @onclick='() => nav.NavigateTo("/login")'>Iniciar Sesión</button>
+        <button class="btn btn-secondary" @onclick='() => nav.NavigateTo("/register")'>Registrarse</button>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+        <table class="table table-bordered table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Id del responsable</th>
+                    <th>Id del evento</th>
+                    <th>Fecha de alta</th>
+                    <th>Estado de la asistencia</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reserva in _reservas)
+                {
+                    <tr>
+                        <td>@reserva.Id</td>
+                        <td>@reserva.PersonaId</td>
+                        <td>@reserva.EventoDeportivoId</td>
+                        <td>@reserva.FechaAltaReserva</td>
+                        <td>@reserva.EstadoAsistencia</td>
+                        <td style="width: 140px;">
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaBaja))
+                            {
+                                <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(reserva)">Editar</button>
+                            }
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaBaja))
+                            {
+                                <button class="btn btn-sm btn-danger" @onclick="() => AbrirEliminar(reserva)">Eliminar</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaAlta))
+        {
+            <button class="btn btn-success mt-3" @onclick="AbrirAgregar">Agregar reserva</button>
+        }
+    </div>
+}
+
+@code {
+    private List<Reserva> _reservas = new List<Reserva>();
+    private Reserva? reservaSeleccionada = new Reserva();
+    private string? modo;
+    protected override void OnInitialized()
+    {
+        try
+        {
+            _reservas = listarReserva.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+    }
+    void AbrirEditar(Reserva r)
+    {
+        reservaSeleccionada = new Reserva
+        {
+            Id = r.Id,
+            PersonaId = r.PersonaId,
+            EventoDeportivoId = r.EventoDeportivoId,
+        };
+        modo = "editar";
+    }
+    void AbrirEliminar(Reserva r)
+    {
+        reservaSeleccionada = r;
+        modo = "eliminar";
+    }
+    void AbrirAgregar()
+    {
+        reservaSeleccionada = new Reserva();
+        modo = "agregar";
+    }
+    void CerrarModal()
+    {
+        reservaSeleccionada = null;
+        modo = null;
+    }
+
+    void GuardarCambios()
+    {
+        try
+        {
+            modificarReserva.Ejecutar(reservaSeleccionada!, sesion.UsuarioActual!);
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        try
+        {
+            _reservas = listarReserva.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        CerrarModal();
+    }
+    void agregarReserva()
+    {
+        try
+        {
+            altaReserva.Ejecutar(reservaSeleccionada,sesion.UsuarioActual);
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        try
+        {
+            _reservas = listarReserva.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        CerrarModal();
+    }
+    void EliminarReserva()
+    {
+        try
+        {
+            bajaReserva.Ejecutar(reservaSeleccionada.Id, sesion.UsuarioActual);
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        try
+        {
+            _reservas = listarReserva.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
+        CerrarModal();
+    }
+}
