@@ -31,7 +31,7 @@
             var u = loginUseCase.Ejecutar(_email,_password);
             sesion.GuardarSesion(u);
             nav.NavigateTo("/");
-            
+            StateHasChanged();
         } 
         catch (Exception err)
         {

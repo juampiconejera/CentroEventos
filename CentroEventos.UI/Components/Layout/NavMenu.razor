@@ -1,4 +1,5 @@
 ﻿@using CentroEventos.Aplicacion.Servicios
+@rendermode InteractiveServer
 @inject Sesion sesion
 @inject NavigationManager nav
 
@@ -43,6 +44,7 @@
     private void CerrarSesion()
     {
         sesion.CerrarSesion();
-        nav.NavigateTo("/login", true);
+        nav.NavigateTo("/login");
+        StateHasChanged();
     }
 }
