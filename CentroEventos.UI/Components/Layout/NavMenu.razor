@@ -44,7 +44,7 @@
     private void CerrarSesion()
     {
         sesion.CerrarSesion();
-        nav.NavigateTo("/login");
+        nav.NavigateTo("/login", true); // Forzar recarga completa
         StateHasChanged();
     }
 }
