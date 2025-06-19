@@ -6,7 +6,7 @@ using CentroEventos.Aplicacion.Validadores;
 using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
-public class AltaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacion Auth, PersonaValidador personaValidador)
+public class AltaPersonaUseCase(IRepositorioPersona repoPersona, IServicioAutorizacion Auth,PersonaValidador personaValidador)
 {
     public void Ejecutar(Persona persona, Usuario usuario)
     {

@@ -1,4 +1,13 @@
-﻿@page "/home"
+﻿@using CentroEventos.Aplicacion.Servicios
+@page "/home"
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
-
+@inject Sesion sesion
+@if(sesion.isLogin())
+{
+    <h2>Bienvenido a Centro de Eventos!</h2>
+}
+@if(!sesion.isLogin())
+{
+    <h1><a href="/">INICIAR SESION!</a></h1>
+}

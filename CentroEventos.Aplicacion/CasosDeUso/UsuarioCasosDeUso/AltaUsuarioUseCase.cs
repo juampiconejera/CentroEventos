@@ -1,6 +1,7 @@
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using System.Net.Security;
+using CentroEventos.Aplicacion.Enumerativos;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Validadores;
 using CentroEventos.Aplicacion.Servicios;
@@ -20,7 +21,10 @@ public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario, ServicioSHA256 
         {
             throw new DuplicadoException("El email ya fue registrado");
         }
-        
+        if (repoUsuario.listarUsuarios().Count == 0)
+        {
+            usuario.Permisos = Enum.GetValues<Permiso>().ToList();
+        }
         //Hashing del password
         string newPass = servicioSHA256.getSha256(usuario.Password);
         usuario.Password = newPass;

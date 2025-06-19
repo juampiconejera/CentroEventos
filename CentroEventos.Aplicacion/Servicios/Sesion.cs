@@ -8,7 +8,7 @@ public class Sesion
     
     public event Action? OnSesionCambiada;
 
-    public bool EstaLogueado()
+    public bool isLogin()
     {
         return UsuarioActual != null;
     }

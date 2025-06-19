@@ -1,8 +1,11 @@
-@page "/register"
 @using CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso
+@using CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso
 @using CentroEventos.Aplicacion.Servicios
 @using CentroEventos.Aplicacion.Entidades
+@page "/register"
+@rendermode InteractiveServer
 @inject AltaUsuarioUseCase altaUsuarioUseCase
+@inject AltaPersonaUseCase altaPersonaUseCase
 @inject Sesion sesion
 
 <PageTitle>Sign in - Centro de Eventos</PageTitle>
