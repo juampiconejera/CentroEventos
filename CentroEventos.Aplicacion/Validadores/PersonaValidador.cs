@@ -23,7 +23,7 @@ public class PersonaValidador
             mensajeError += "Apellido de la persona invalido.\n";
         }
         //validacion dni
-        if(string.IsNullOrEmpty(persona.Dni))
+        if(string.IsNullOrWhiteSpace(persona.Dni))
         {
             mensajeError += "DNI de la persona invalido.\n";
         }
@@ -31,6 +31,10 @@ public class PersonaValidador
         if(string.IsNullOrEmpty(persona.Email))
         {
             mensajeError += "Email de la persona invalido.\n";
+        }
+                  else if (!persona.Email.Contains("@") || !persona.Email.Contains("."))
+        {
+            mensajeError += "El formato del email es incorrecto.\n";
         }
         return mensajeError == "";
     }
