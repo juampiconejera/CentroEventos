@@ -13,6 +13,11 @@
 
 <PageTitle>Gestion de Reservas - Centro de Eventos</PageTitle>
 
+@if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger fs-5">@mensajeError</div>
+}
+
 @if (!sesion.isLogin())
 {
     <div class="text-center mt-4">
@@ -173,7 +178,8 @@ else
         }
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
     }
     void AbrirEditar(Reserva r)
@@ -210,7 +216,8 @@ else
         }
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
         try
         {
@@ -218,7 +225,8 @@ else
         }
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
         CerrarModal();
     }
@@ -230,7 +238,8 @@ else
         }
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
         try
         {
@@ -238,7 +247,8 @@ else
         }
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
         CerrarModal();
     }
@@ -250,7 +260,8 @@ else
         }
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
         try
         {
@@ -258,8 +269,17 @@ else
         }
         catch (Exception err)
         {
-            Console.WriteLine(err);
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
         }
         CerrarModal();
+    }
+    private string? mensajeError;
+
+    private async Task LimpiarMensajeErrorAsync()
+    {
+        await Task.Delay(3000); // 3 segundos
+        mensajeError = null;
+        StateHasChanged();
     }
 }
