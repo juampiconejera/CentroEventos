@@ -30,7 +30,7 @@
         try {
             var u = loginUseCase.Ejecutar(_email,_password);
             sesion.GuardarSesion(u);
-            nav.NavigateTo("/",true);
+            nav.NavigateTo("/", true);
             StateHasChanged();
         } 
         catch (Exception err)

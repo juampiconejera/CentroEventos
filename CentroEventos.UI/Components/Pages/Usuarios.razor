@@ -162,6 +162,7 @@ else
             Nombre = u.Nombre,
             Apellido = u.Apellido,
             Email = u.Email,
+            Password = u.Password,
             Permisos = new List<Permiso>(u.Permisos)
         };
         permisosSeleccionados = u.Permisos.ToHashSet();
