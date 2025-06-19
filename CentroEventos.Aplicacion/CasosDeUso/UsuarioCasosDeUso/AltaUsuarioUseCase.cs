@@ -7,7 +7,7 @@ using CentroEventos.Aplicacion.Servicios;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
 
-public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario,/*  IRepositorioUsuario Auth, */ ServicioSHA256 servicioSHA256, UsuarioValidador usuarioValidador)
+public class AltaUsuarioUseCase(IRepositorioUsuario repoUsuario, ServicioSHA256 servicioSHA256, UsuarioValidador usuarioValidador)
 {
     public void Ejecutar(Usuario usuario, Usuario admin)
     {

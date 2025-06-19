@@ -8,12 +8,13 @@ public enum Permiso
     EventoModificacion,
     EventoBaja,
     ReservaAlta,
-    ReservaModificacion, 
+    ReservaModificacion,
     ReservaBaja,
     PersonaAlta,
     PersonaBaja,
     PersonaModificacion,
     UsuarioAlta,
     UsuarioModificacion,
-    UsuarioBaja
+    UsuarioBaja,
+    AsignarPermiso
 }

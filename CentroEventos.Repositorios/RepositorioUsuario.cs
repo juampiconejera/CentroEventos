@@ -1,5 +1,6 @@
 using System;
 using CentroEventos.Aplicacion.Entidades;
+using CentroEventos.Aplicacion.Enumerativos;
 using CentroEventos.Aplicacion.Interfaces;
 
 namespace CentroEventos.Repositorios;
@@ -12,6 +13,22 @@ public class RepositorioUsuario : IRepositorioUsuario
         {
             context.Add(usuario);
             context.SaveChanges();
+        }
+    }
+
+    public void AsignarPermisos(int id, List<Permiso> listaPermisos)        //ingresa la lista de permisos y lo agrego uno a uno
+    {
+        using (var context = new CentroEventosContext())
+        {
+            Usuario? usuario = context.Usuarios.FirstOrDefault(u => u.Id == id);
+            if (usuario != null)
+            {
+                foreach (Permiso p in listaPermisos)
+                {
+                    usuario.Permisos.Add(p);
+                }
+                context.SaveChanges();
+            }
         }
     }
 

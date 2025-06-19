@@ -1,5 +1,6 @@
 using System;
 using CentroEventos.Aplicacion.Entidades;
+using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.Interfaces;
 
@@ -12,4 +13,5 @@ public interface IRepositorioUsuario
     bool ExistePorEmail(string email);
     Usuario? ObtenerUsuario(int id);
     List<Usuario> listarUsuarios();
+    void AsignarPermisos(int id, List<Permiso> listaPermisos);
 }

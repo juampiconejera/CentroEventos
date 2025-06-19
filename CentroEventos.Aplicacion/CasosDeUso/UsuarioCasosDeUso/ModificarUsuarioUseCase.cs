@@ -5,17 +5,18 @@ using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Servicios;
 using CentroEventos.Aplicacion.Validadores;
+using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
 
-public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, /* IServicioAutorizacion Auth, */ ServicioSHA256 servicioSHA256, UsuarioValidador usuarioValidador)
+public class ModificarUsuarioUseCase(IRepositorioUsuario repoUsuario, IServicioAutorizacion Auth, ServicioSHA256 servicioSHA256, UsuarioValidador usuarioValidador)
 {
     public void Ejecutar(Usuario usuario, Usuario admin)
     {
-        /* if (!Auth.PoseeElPermiso(admin))
+        if (!Auth.PoseeElPermiso(admin.Permisos, Permiso.UsuarioModificacion))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        } */
+        }
         if (!usuarioValidador.Validar(usuario, out string mensajeError))
         {
             throw new ValidacionException(mensajeError);
