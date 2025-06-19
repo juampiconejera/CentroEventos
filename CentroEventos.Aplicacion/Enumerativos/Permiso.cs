@@ -15,6 +15,5 @@ public enum Permiso
     PersonaModificacion,
     UsuarioAlta,
     UsuarioModificacion,
-    UsuarioBaja,
-    AsignarPermiso
+    UsuarioBaja
 }
