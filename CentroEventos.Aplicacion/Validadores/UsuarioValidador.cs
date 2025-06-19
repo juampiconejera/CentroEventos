@@ -23,9 +23,13 @@ public class UsuarioValidador
         { 
             mensajeError += "Email de la persona invalido.\n";
         }
+            else if (!usuario.Email.Contains("@") || !usuario.Email.Contains("."))
+        {
+            mensajeError += "El formato del email es incorrecto.\n";
+        }
         //validacion password
         if (string.IsNullOrWhiteSpace(usuario.Password))
-        { 
+        {
             mensajeError += "Contraseña de la persona invalida.\n";
         }
         //no hago validador de permisos ya que un usuario puede no estar autorizado a nada
