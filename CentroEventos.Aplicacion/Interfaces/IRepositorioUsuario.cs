@@ -12,4 +12,5 @@ public interface IRepositorioUsuario
     bool ExistePorEmail(string email);
     Usuario? ObtenerUsuario(int id);
     List<Usuario> listarUsuarios();
+    
 }

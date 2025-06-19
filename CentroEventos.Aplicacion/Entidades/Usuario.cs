@@ -34,4 +34,8 @@ public class Usuario
         Email = email;
         Password = password;
     }
+    public void AsignarPermisos(List<Permiso> nuevosPermisos)
+{
+    Permisos = nuevosPermisos;
+}
 }
