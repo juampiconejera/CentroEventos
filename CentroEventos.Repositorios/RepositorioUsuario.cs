@@ -26,7 +26,7 @@ public class RepositorioUsuario : IRepositorioUsuario
                 foreach (Permiso p in listaPermisos)
                 {
                     if (!usuario.Permisos.Contains(p))      //si no tiene el permiso, lo agrega
-                    { 
+                    {
                         usuario.Permisos.Add(p);
                     }
                 }
@@ -117,4 +117,9 @@ public class RepositorioUsuario : IRepositorioUsuario
             return usuario;
         }
     }
+    public Usuario? ObtenerPorEmail(string email)
+{
+    using var context = new CentroEventosContext();
+    return context.Usuarios.FirstOrDefault(u => u.Email == email);
+}
 }

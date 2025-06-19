@@ -13,7 +13,7 @@ public class Usuario
     public string Apellido { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
-    public List<Permiso>? Permisos { get; private set; }
+    public List<Permiso>? Permisos { get; private set; } = new List<Permiso>();
 
     public Usuario()
     {
