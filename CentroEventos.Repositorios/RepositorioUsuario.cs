@@ -25,10 +25,32 @@ public class RepositorioUsuario : IRepositorioUsuario
             {
                 foreach (Permiso p in listaPermisos)
                 {
-                    usuario.Permisos.Add(p);
+                    if (!usuario.Permisos.Contains(p))      //si no tiene el permiso, lo agrega
+                    { 
+                        usuario.Permisos.Add(p);
+                    }
                 }
                 context.SaveChanges();
             }
+        }
+    }
+
+    public void RetirarPermisos(int id, List<Permiso> listaPermisos)
+    {
+        using (var context = new CentroEventosContext())
+        {
+            Usuario? usuario = context.Usuarios.FirstOrDefault(u => u.Id == id);
+            if (usuario != null)
+            {
+                foreach (Permiso p in listaPermisos)
+                {
+                    if (usuario.Permisos.Contains(p))   //si tiene el permiso, lo elimina
+                    {
+                        usuario.Permisos.Remove(p);
+                    }
+                }
+            }
+            context.SaveChanges();
         }
     }
 

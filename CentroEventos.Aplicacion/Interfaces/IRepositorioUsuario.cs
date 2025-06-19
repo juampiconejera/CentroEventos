@@ -13,9 +13,6 @@ public interface IRepositorioUsuario
     bool ExistePorEmail(string email);
     Usuario? ObtenerUsuario(int id);
     List<Usuario> listarUsuarios();
-<<<<<<< HEAD
     void AsignarPermisos(int id, List<Permiso> listaPermisos);
-=======
-    
->>>>>>> b749e95fe0321adf19cfcdfa4878cf8e55807087
+    void RetirarPermisos(int id, List<Permiso> listaPermisos);
 }
