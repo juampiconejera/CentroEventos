@@ -4,24 +4,25 @@ using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Validadores;
+using CentroEventos.Aplicacion.Enumerativos;
 using Aplicacion;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 public class AltaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, 
 IRepositorioReserva repoReserva, IServicioAutorizacion Auth, ReservaValidador reservaValidador)
 {
-    private bool CuposDisponibles(IRepositorioReserva repoReserva, IRepositorioEventoDeportivo repoEventoDeportivo, Reserva reserva)
+    private bool CuposDisponibles(IRepositorioReserva repoReserva, IServicioAutorizacion Auth, IRepositorioEventoDeportivo repoEventoDeportivo, Reserva reserva)
     {
         var totalEventos = repoReserva.ListarReservasPorEvento(reserva.EventoDeportivoId);
         var evento = repoEventoDeportivo.ObtenerPorId(reserva.EventoDeportivoId);
         return totalEventos.Count() < evento.CupoMaximo;
     }
 
-    public void Ejecutar(Reserva reserva, int idUsuario){
+    public void Ejecutar(Reserva reserva, Usuario usuario){
         //verificamos si posee permisos
-        /* if(!Auth.PoseeElPermiso(idUsuario)){
+        if(!Auth.PoseeElPermiso(usuario.Permisos, Permiso.ReservaAlta)){
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        } */
+        } 
 
         //validamos la reserva
         if(!reservaValidador.Validar(reserva, out string message))
@@ -41,7 +42,7 @@ IRepositorioReserva repoReserva, IServicioAutorizacion Auth, ReservaValidador re
         }
 
         //validar cupo disponible.
-        if (!CuposDisponibles(repoReserva,repoEventoDeportivo, reserva))
+        if (!CuposDisponibles(repoReserva, Auth, repoEventoDeportivo, reserva))
         {
             throw new CupoExcedidoException("Evento deportivo lleno.");
         }

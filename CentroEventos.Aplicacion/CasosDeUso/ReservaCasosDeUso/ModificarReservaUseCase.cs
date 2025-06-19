@@ -3,18 +3,19 @@ using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Validadores;
+using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
 public class ModificarReservaUseCase(IRepositorioReserva repoReserva, IRepositorioPersona repoPersona, IRepositorioEventoDeportivo repoEventoDeportivo, IServicioAutorizacion Auth, ReservaValidador reservaValidador)
 {
-    public void Ejecutar(Reserva reserva, int idUsuario)
+    public void Ejecutar(Reserva reserva, Usuario usuario)
     {
         //Verificamos los permisos del usuario
-        /* if(!Auth.PoseeElPermiso(idUsuario))
+        if(!Auth.PoseeElPermiso(usuario.Permisos, Permiso.ReservaModificacion))
         {
             throw new FalloAutorizacionException("Usuario no autorizado.");
-        } */
+        }
         
         //Validamos los datos de la reserva
         if(!reservaValidador.Validar(reserva, out string mensajeError))

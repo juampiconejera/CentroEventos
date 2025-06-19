@@ -1,15 +1,16 @@
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Interfaces;
-
-public class BajaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IServicioAutorizacion Auth)
+using CentroEventos.Aplicacion.Enumerativos;
+public class BajaEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,   IServicioAutorizacion Auth)
 {
-    public void Ejecutar(int idEventoDeportivo, int idUsuario)
+    public void Ejecutar(int idEventoDeportivo, Usuario usuario)
     {
-        /* if (!Auth.PoseeElPermiso(idUsuario))
+         
+         if(!Auth.PoseeElPermiso(usuario.Permisos, Permiso.EventoBaja ))
         {
-            throw new FalloAutorizacionException("Usuario no autorizado.");
-        } */
+            throw new FalloAutorizacionException("Usuario no autorizado");
+        } 
         
         if (!repoEventoDeportivo.ExistePorId(idEventoDeportivo))
         {

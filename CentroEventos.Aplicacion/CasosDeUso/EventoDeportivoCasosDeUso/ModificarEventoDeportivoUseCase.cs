@@ -3,17 +3,19 @@ using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Validadores;
+using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 
-public class ModificarEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
+public class ModificarEventoDeportivoUseCase(IRepositorioEventoDeportivo repoEventoDeportivo,  IRepositorioPersona repoPersona, IServicioAutorizacion Auth, EventoDeportivoValidador eventoDeportivoValidador)
 {
-    public void Ejecutar(EventoDeportivo eventoDeportivo, int IdUsuario)
+    public void Ejecutar(EventoDeportivo eventoDeportivo, Usuario usuario)
     {
-        /* if(!Auth.PoseeElPermiso(IdUsuario))
+       
+         if(!Auth.PoseeElPermiso(usuario.Permisos, Permiso.EventoAlta ))
         {
-            throw new FalloAutorizacionException("Usuario no autorizado.");
-        } */
+            throw new FalloAutorizacionException("Usuario no autorizado");
+        } 
 
         if(!eventoDeportivoValidador.Validar(eventoDeportivo, out string mensajeError))
         {
