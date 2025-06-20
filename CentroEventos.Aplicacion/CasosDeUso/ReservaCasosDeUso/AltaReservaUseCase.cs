@@ -5,7 +5,6 @@ using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Validadores;
 using CentroEventos.Aplicacion.Enumerativos;
-using Aplicacion;
 
 namespace CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 public class AltaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, IRepositorioPersona repoPersona, 

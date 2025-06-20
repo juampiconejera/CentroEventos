@@ -1,7 +1,6 @@
 using System;
 using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Enumerativos;
-using Aplicacion;
 
 namespace CentroEventos.Aplicacion.Entidades;
 

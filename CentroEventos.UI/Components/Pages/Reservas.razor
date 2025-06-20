@@ -1,12 +1,10 @@
-@using CentroEventos.Aplicacion.Entidades
-@using CentroEventos.Aplicacion.Enumerativos
-@using CentroEventos.Aplicacion.Servicios
-@using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso
 @page "/reservas"
 @rendermode InteractiveServer
 @inject NavigationManager nav
 @inject Sesion sesion
-@inject ListarReservaUseCase listarReserva
+@inject ListarReservaUseCase listarReservas
+@inject ListarEventoDeportivoUseCase listarEventos
+@inject ListarPersonaUseCase listarPersonas
 @inject ModificarReservaUseCase modificarReserva
 @inject BajaReservaUseCase bajaReserva
 @inject AltaReservaUseCase altaReserva
@@ -50,7 +48,7 @@ else
                         <td>@reserva.FechaAltaReserva</td>
                         <td>@reserva.EstadoAsistencia</td>
                         <td style="width: 140px;">
-                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaBaja))
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaModificacion))
                             {
                                 <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(reserva)">Editar</button>
                             }
@@ -83,20 +81,32 @@ else
                     <form Model="reservaSeleccionada" @onsubmit="GuardarCambios">
                         <div class="mb-3">
                             <label class="form-label">Id de la persona</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.PersonaId" />
+                            <select class="form-control" @bind="reservaSeleccionada.PersonaId">
+                                <option disabled value="">Seleccionar Persona (id)</option>
+                                @foreach (var p in _personas)
+                                {
+                                    <option value="@p.Id">@p.Nombre @p.Apellido (@p.Id)</option>
+                                }
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Id del evento deportivo</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.EventoDeportivoId" />
+                            <select class="form-control" @bind="reservaSeleccionada.EventoDeportivoId">
+                                <option disabled value="">Seleccionar Evento (id)</option>
+                                @foreach (var e in _eventos)
+                                {
+                                    <option value="@e.Id">@e.Nombre (@e.Id)</option>
+                                }
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fecha de alta</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.FechaAltaReserva" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Estado de asistencia</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.EstadoAsistencia" />
-                        </div>
+                        <label class="form-label">Estado de asistencia</label>
+                            <select class="form-control" @bind="reservaSeleccionada.EventoDeportivoId">
+                                <option disabled value="">Seleccionar Estado</option>
+                            @foreach (var e in Enum.GetValues<EstadoAsistencia>())
+                            {
+                                    <option value="@e">@e</option>
+                            }
+                            </select>
                         <div class="text-end">
                             <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
                             <button class="btn btn-primary" type="submit">Guardar cambios</button>
@@ -110,7 +120,7 @@ else
 
 @if (reservaSeleccionada is not null && modo == "agregar")
 {
-    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -121,19 +131,23 @@ else
                     <form Model="reservaSeleccionada"  @onsubmit="agregarReserva">
                         <div class="mb-3">
                             <label class="form-label">Id de la persona</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.PersonaId" />
+                            <select class="form-control" @bind="reservaSeleccionada.PersonaId">
+                                <option disabled value="">Seleccionar Persona (id)</option>
+                                @foreach (var p in _personas)
+                                {
+                                    <option value="@p.Id">@p.Nombre @p.Apellido (@p.Id)</option>
+                                }
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Id del evento deportivo</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.EventoDeportivoId" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fecha de alta</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.FechaAltaReserva" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Estado de asistencia</label>
-                            <input type="text" class="form-control" @bind="reservaSeleccionada.EstadoAsistencia" />
+                            <select class="form-control" @bind="reservaSeleccionada.EventoDeportivoId">
+                                <option disabled value="">Seleccionar Evento (id)</option>
+                                @foreach (var e in _eventos)
+                                {
+                                    <option value="@e.Id">@e.Nombre (@e.Id)</option>
+                                }
+                            </select>
                         </div>
                         <div class="text-end">
                             <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
@@ -168,13 +182,17 @@ else
 
 @code {
     private List<Reserva> _reservas = new List<Reserva>();
+    private List<Persona> _personas = new List<Persona>();
+    private List<EventoDeportivo> _eventos = new List<EventoDeportivo>(); 
     private Reserva? reservaSeleccionada = new Reserva();
     private string? modo;
     protected override void OnInitialized()
     {
         try
         {
-            _reservas = listarReserva.Ejecutar();
+            _reservas = listarReservas.Ejecutar();
+            _personas = listarPersonas.Ejecutar();
+            _eventos = listarEventos.Ejecutar();
         }
         catch (Exception err)
         {
@@ -221,7 +239,7 @@ else
         }
         try
         {
-            _reservas = listarReserva.Ejecutar();
+            _reservas = listarReservas.Ejecutar();
         }
         catch (Exception err)
         {
@@ -243,7 +261,7 @@ else
         }
         try
         {
-            _reservas = listarReserva.Ejecutar();
+            _reservas = listarReservas.Ejecutar();
         }
         catch (Exception err)
         {
@@ -265,7 +283,7 @@ else
         }
         try
         {
-            _reservas = listarReserva.Ejecutar();
+            _reservas = listarReservas.Ejecutar();
         }
         catch (Exception err)
         {
@@ -278,7 +296,7 @@ else
 
     private async Task LimpiarMensajeErrorAsync()
     {
-        await Task.Delay(3000); // 3 segundos
+        await Task.Delay(3000);
         mensajeError = null;
         StateHasChanged();
     }

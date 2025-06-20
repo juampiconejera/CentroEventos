@@ -1,17 +1,19 @@
-@using CentroEventos.Aplicacion.Entidades
-@using CentroEventos.Aplicacion.Enumerativos
-@using CentroEventos.Aplicacion.Servicios
-@using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso
 @page "/eventos"
 @rendermode InteractiveServer
 @inject NavigationManager nav
 @inject Sesion sesion
-@inject ListarReservaUseCase listarReserva
-@inject ModificarReservaUseCase modificarReserva
-@inject BajaReservaUseCase bajaReserva
-@inject AltaReservaUseCase altaReserva
+@inject ListarEventoDeportivoUseCase listarEventos
+@inject ListarPersonaUseCase listarPersonas
+@inject ModificarEventoDeportivoUseCase modificarEvento
+@inject BajaEventoDeportivoUseCase bajaEvento
+@inject AltaEventoDeportivoUseCase altaEvento
 
-<PageTitle>Gestion de Reservas - Centro de Eventos</PageTitle>
+<PageTitle>Gestion de Eventos - Centro de Eventos</PageTitle>
+
+@if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger fs-5">@mensajeError</div>
+}
 
 @if (!sesion.isLogin())
 {
@@ -23,5 +25,319 @@
 }
 else
 {
-    
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+        <table class="table table-bordered table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Fecha y hora de inicio</th>
+                    <th>Duracion</th>
+                    <th>Cupo Maximo</th>
+                    <th>Id del responsable</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var evento in _eventos)
+                {
+                    <tr>
+                        <td>@evento.Id</td>
+                        <td>@evento.Nombre</td>
+                        <td>@evento.Descripcion</td>
+                        <td>@evento.FechaHoraInicio</td>
+                        <td>@evento.DuracionHoras</td>
+                        <td>@evento.CupoMaximo</td>
+                        <td>@evento.ResponsableId</td>
+                        <td style="width: 140px;">
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.EventoModificacion))
+                            {
+                                <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(evento)">Editar</button>
+                            }
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.EventoBaja))
+                            {
+                                <button class="btn btn-sm btn-danger" @onclick="() => AbrirEliminar(evento)">Eliminar</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.EventoAlta))
+        {
+            <button class="btn btn-success mt-3" @onclick="() => AbrirAgregar()">Agregar evento</button>
+        }
+    </div>
+}
+
+@if (eventoSeleccionado is not null && modo == "editar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Evento</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form Model="eventoSeleccionado" @onsubmit="GuardarCambios">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" @bind="eventoSeleccionado.Nombre" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" @bind="eventoSeleccionado.Descripcion" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha del evento</label>
+                            <input type="date" class="form-control" @bind="fecha" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Hora del evento</label>
+                            <input type="time" class="form-control" @bind="hora" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Duracion en horas</label>
+                            <input type="number" class="form-control" @bind="eventoSeleccionado.DuracionHoras" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cupo Maximo</label>
+                            <input type="number" class="form-control" @bind="eventoSeleccionado.CupoMaximo" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Id de la persona responsable</label>
+                            <select class="form-control" @bind="eventoSeleccionado.ResponsableId">
+                                <option disabled value="">Seleccionar Persona (id)</option>
+                                @foreach (var p in _personas)
+                                {
+                                    <option value="@p.Id">@p.Nombre @p.Apellido (@p.Id)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
+                            <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (eventoSeleccionado is not null && modo == "agregar")
+{
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar evento</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form Model="eventoSeleccionado"  @onsubmit="agregarEvento">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" @bind="eventoSeleccionado.Nombre" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" @bind="eventoSeleccionado.Descripcion" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha del evento</label>
+                            <input type="date" class="form-control" @bind="fecha" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Hora del evento</label>
+                            <input type="time" class="form-control" @bind="hora" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Duracion en horas</label>
+                            <input type="number" class="form-control" @bind="eventoSeleccionado.DuracionHoras" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cupo Maximo</label>
+                            <input type="number" class="form-control" @bind="eventoSeleccionado.CupoMaximo" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Id de la persona responsable</label>
+                            <select class="form-control" @bind="eventoSeleccionado.ResponsableId">
+                                <option disabled value="">Seleccionar Persona (id)</option>
+                                @foreach (var p in _personas)
+                                {
+                                    <option value="@p.Id">@p.Nombre @p.Apellido (@p.Id)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-secondary me-2" type="button" @onclick="CerrarModal">Cancelar</button>
+                            <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (eventoSeleccionado is not null && modo == "eliminar")
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que querés eliminar el evento <strong>@eventoSeleccionado.Id</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-danger" @onclick="EliminarEvento">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<EventoDeportivo> _eventos = new List<EventoDeportivo>();
+    private List<Persona> _personas = new List<Persona>();
+    private EventoDeportivo? eventoSeleccionado = new EventoDeportivo();
+    private string? modo;
+    private string? mensajeError;
+    DateTime? fecha = null;
+    TimeOnly? hora = null;
+    protected override void OnInitialized()
+    {
+        try
+        {
+            _eventos = listarEventos.Ejecutar();
+            _personas = listarPersonas.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+    }
+    private async Task LimpiarMensajeErrorAsync()
+    {
+        await Task.Delay(3000);
+        mensajeError = null;
+        StateHasChanged();
+    }
+
+    void AbrirEditar(EventoDeportivo e)
+    {
+        eventoSeleccionado = new EventoDeportivo
+        {
+            Id = e.Id,
+            Nombre = e.Nombre,
+            Descripcion = e.Descripcion,
+            FechaHoraInicio = e.FechaHoraInicio,
+            CupoMaximo = e.CupoMaximo,
+            ResponsableId = e.ResponsableId
+        };
+        fecha = e.FechaHoraInicio.Date;
+        hora = TimeOnly.FromDateTime(e.FechaHoraInicio);
+        modo = "editar";
+    }
+    void AbrirEliminar(EventoDeportivo e)
+    {
+        eventoSeleccionado = e;
+        modo = "eliminar";
+    }
+    void AbrirAgregar()
+    {
+        eventoSeleccionado = new EventoDeportivo();
+        fecha = DateTime.Today;
+        hora = TimeOnly.FromDateTime(DateTime.Now);
+        modo = "agregar";
+    }
+    void CerrarModal()
+    {
+        eventoSeleccionado = null;
+        modo = null;
+    }
+    void GuardarCambios()
+    {
+        try
+        {
+            if (fecha.HasValue && hora.HasValue)
+                eventoSeleccionado.FechaHoraInicio = fecha.Value.Date
+                    .AddHours(hora.Value.Hour)
+                    .AddMinutes(hora.Value.Minute)
+                    .AddSeconds(hora.Value.Second);
+            modificarEvento.Ejecutar(eventoSeleccionado!, sesion.UsuarioActual!);
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+        try
+        {
+            _eventos = listarEventos.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+        CerrarModal();
+    }
+    void agregarEvento()
+    {
+        try
+        {
+            if (fecha.HasValue && hora.HasValue)
+                eventoSeleccionado.FechaHoraInicio = fecha.Value.Date
+                    .AddHours(hora.Value.Hour)
+                    .AddMinutes(hora.Value.Minute)
+                    .AddSeconds(hora.Value.Second);
+            altaEvento.Ejecutar(eventoSeleccionado,sesion.UsuarioActual);
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+        try
+        {
+            _eventos = listarEventos.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+        CerrarModal();
+    }
+
+    void EliminarEvento()
+    {
+        try
+        {
+            bajaEvento.Ejecutar(eventoSeleccionado.Id, sesion.UsuarioActual);
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+        try
+        {
+            _eventos = listarEventos.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+        CerrarModal();
+    }
+
 }

@@ -7,6 +7,7 @@ using CentroEventos.Aplicacion.CasosDeUso.PersonaCasosDeUso;
 using CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 using CentroEventos.Aplicacion.CasosDeUso.UsuarioCasosDeUso;
+using CentroEventos.Aplicacion.Enumerativos;
 
 CentroEventosSqlite.Inicializar();
 
@@ -48,7 +49,6 @@ builder.Services.AddTransient<ListarUsuarioUseCase>();
 builder.Services.AddTransient<AsignarPermisosUseCase>();
 builder.Services.AddTransient<RetirarPermisosUseCase>();
 
-
 // Servicios
 builder.Services.AddTransient<IServicioAutorizacion, ServicioAutorizacion>();
 builder.Services.AddTransient<IServicioSHA256, ServicioSHA256>();
@@ -58,7 +58,6 @@ builder.Services.AddTransient<PersonaValidador>();
 builder.Services.AddTransient<EventoDeportivoValidador>();
 builder.Services.AddTransient<ReservaValidador>();
 builder.Services.AddTransient<UsuarioValidador>();
-//Sesion
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

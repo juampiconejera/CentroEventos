@@ -5,7 +5,7 @@ using CentroEventos.Aplicacion.CasosDeUso.EventoDeportivoCasosDeUso;
 using CentroEventos.Aplicacion.CasosDeUso.ReservaCasosDeUso;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Interfaces;
-using Aplicacion;
+using CentroEventos.Aplicacion.Enumerativos;
 
 namespace CentroEventos.Repositorios;
 

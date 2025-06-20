@@ -4,7 +4,6 @@ using CentroEventos.Aplicacion.Interfaces;
 using CentroEventos.Aplicacion.Entidades;
 using CentroEventos.Aplicacion.Excepciones;
 using CentroEventos.Aplicacion.Enumerativos;
-using Aplicacion;
 
 public class BajaReservaUseCase(IRepositorioEventoDeportivo repoEventoDeportivo, 
 IRepositorioReserva repoReserva, IServicioAutorizacion Auth)
