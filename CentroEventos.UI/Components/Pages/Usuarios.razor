@@ -51,7 +51,7 @@ else
                             @string.Join(", ", usuario.Permisos)
                         </td>
                         <td style="width: 140px;">
-                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioModificacion))
+                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.UsuarioModificacion) || usuario.Id == sesion.UsuarioActual.Id)
                             {
                                 <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(usuario)">Editar</button>
                             }
