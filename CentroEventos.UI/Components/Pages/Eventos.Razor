@@ -52,7 +52,7 @@ else
                         <td>@evento.CupoMaximo</td>
                         <td>@evento.ResponsableId</td>
                         <td style="width: 140px;">
-                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.EventoModificacion))
+                            @if (sesion.UsuarioActual!.Permisos.Contains(Permiso.EventoModificacion))
                             {
                                 <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(evento)">Editar</button>
                             }
@@ -65,7 +65,7 @@ else
                 }
             </tbody>
         </table>
-        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.EventoAlta))
+        @if (sesion.UsuarioActual!.Permisos.Contains(Permiso.EventoAlta))
         {
             <button class="btn btn-success mt-3" @onclick="() => AbrirAgregar()">Agregar evento</button>
         }
@@ -269,7 +269,7 @@ else
         try
         {
             if (fecha.HasValue && hora.HasValue)
-                eventoSeleccionado.FechaHoraInicio = fecha.Value.Date
+                eventoSeleccionado!.FechaHoraInicio = fecha.Value.Date
                     .AddHours(hora.Value.Hour)
                     .AddMinutes(hora.Value.Minute)
                     .AddSeconds(hora.Value.Second);
@@ -296,11 +296,11 @@ else
         try
         {
             if (fecha.HasValue && hora.HasValue)
-                eventoSeleccionado.FechaHoraInicio = fecha.Value.Date
+                eventoSeleccionado!.FechaHoraInicio = fecha.Value.Date
                     .AddHours(hora.Value.Hour)
                     .AddMinutes(hora.Value.Minute)
                     .AddSeconds(hora.Value.Second);
-            altaEvento.Ejecutar(eventoSeleccionado,sesion.UsuarioActual);
+            altaEvento.Ejecutar(eventoSeleccionado!,sesion.UsuarioActual!);
         }
         catch (Exception err)
         {
@@ -323,7 +323,7 @@ else
     {
         try
         {
-            bajaEvento.Ejecutar(eventoSeleccionado.Id, sesion.UsuarioActual);
+            bajaEvento.Ejecutar(eventoSeleccionado!.Id, sesion.UsuarioActual!);
         }
         catch (Exception err)
         {
