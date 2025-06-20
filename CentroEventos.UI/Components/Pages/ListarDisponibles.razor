@@ -1,0 +1,77 @@
+@page "/eventos-cupo"
+@rendermode InteractiveServer
+@inject NavigationManager nav
+@inject Sesion sesion
+@inject ListarEventoDeportivoUseCase listarEventos
+
+<PageTitle>Listado de Eventos con cupo - Centro de Eventos</PageTitle>
+
+@if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger fs-5">@mensajeError</div>
+}
+
+@if (!sesion.isLogin())
+{
+    <div class="text-center mt-4">
+        <p>Bienvenido/a. Iniciá sesión o registrate para continuar.</p>
+        <button class="btn btn-primary me-2" @onclick='() => nav.NavigateTo("/login")'>Iniciar Sesión</button>
+        <button class="btn btn-secondary" @onclick='() => nav.NavigateTo("/register")'>Registrarse</button>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+        <table class="table table-bordered table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Fecha y hora de inicio</th>
+                    <th>Duracion</th>
+                    <th>Cupo Maximo</th>
+                    <th>Id del responsable</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var evento in _eventos)
+                {
+                    <tr>
+                        <td>@evento.Id</td>
+                        <td>@evento.Nombre</td>
+                        <td>@evento.Descripcion</td>
+                        <td>@evento.FechaHoraInicio</td>
+                        <td>@evento.DuracionHoras</td>
+                        <td>@evento.CupoMaximo</td>
+                        <td>@evento.ResponsableId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<EventoDeportivo> _eventos = new List<EventoDeportivo>();
+    private string? mensajeError;
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            _eventos = listarEventos.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+    }
+    private async Task LimpiarMensajeErrorAsync()
+    {
+        await Task.Delay(3000);
+        mensajeError = null;
+        StateHasChanged();
+    }
+}

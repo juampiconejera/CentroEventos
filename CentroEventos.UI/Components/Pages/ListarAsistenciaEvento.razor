@@ -1,0 +1,110 @@
+@page "/evento-asistencias"
+@rendermode InteractiveServer
+@inject NavigationManager nav
+@inject Sesion sesion
+@inject ListarAsistenciaAEventoUseCase listarAsistencias
+@inject ListarEventoDeportivoUseCase listarEventos
+@inject ListarPersonaUseCase listarPersonas
+
+<PageTitle>Listado de Asistencias a un evento - Centro de Eventos</PageTitle>
+
+@if (!string.IsNullOrEmpty(mensajeError))
+{
+    <div class="alert alert-danger fs-5">@mensajeError</div>
+}
+
+@if (!sesion.isLogin())
+{
+    <div class="text-center mt-4">
+        <p>Bienvenido/a. Iniciá sesión o registrate para continuar.</p>
+        <button class="btn btn-primary me-2" @onclick='() => nav.NavigateTo("/login")'>Iniciar Sesión</button>
+        <button class="btn btn-secondary" @onclick='() => nav.NavigateTo("/register")'>Registrarse</button>
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+        <label class="form-label">Id del evento a listar:</label>
+        <select class="form-control" @onchange="OnEventoChanged">
+            <option disabled value="">Seleccionar Persona (id)</option>
+            @foreach (var e in _eventos)
+            {
+                <option value="@e.Id">@e.Nombre | @e.Descripcion (@e.Id)</option>
+            }
+        </select>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
+        <table class="table table-bordered table-striped mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Dni</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Telefono</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var persona in _personas)
+            {
+                <tr>
+                    <td>@persona.Id</td>
+                    <td>@persona.Dni</td>
+                    <td>@persona.Nombre</td>
+                    <td>@persona.Apellido</td>
+                    <td>@persona.Email</td>
+                    <td>@persona.Telefono</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+
+@code {
+    private List<EventoDeportivo> _eventos = new List<EventoDeportivo>();
+    private List<Persona> _personas = new List<Persona>();
+    private string _eventoId = "";
+    private string? mensajeError;
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            _eventos = listarEventos.Ejecutar();
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            _ = LimpiarMensajeErrorAsync();
+        }
+    }
+    private async Task OnEventoChanged(ChangeEventArgs e)
+{
+    _eventoId = e.Value?.ToString() ?? "";
+    if (int.TryParse(_eventoId, out int idEvento))
+    {
+        try
+        {
+            _personas = listarAsistencias.Ejecutar(idEvento);
+        }
+        catch (Exception err)
+        {
+            mensajeError = err.Message;
+            await LimpiarMensajeErrorAsync();
+        }
+    }
+    else
+    {
+        _personas = new List<Persona>();
+    }
+    StateHasChanged();
+}
+    private async Task LimpiarMensajeErrorAsync()
+    {
+        await Task.Delay(3000);
+        mensajeError = null;
+        StateHasChanged();
+    }
+}
