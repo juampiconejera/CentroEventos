@@ -25,35 +25,39 @@
             <div class="col">
                 <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/personas")' style="cursor: pointer;">
                     <div class="card-body">
+                        <i class="bi bi-people fs-1 mb-2" style="color: black;"></i>
                         <h5 class="card-title">Personas</h5>
                         <p class="card-text">Listar y gestionar personas</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/eventos")' style="cursor: pointer;">
-                    <div class="card-body">
-                        <h5 class="card-title">Eventos</h5>
-                        <p class="card-text">Listar y gestionar eventos</p>
-                    </div>
+        <div class="col">
+            <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/eventos")' style="cursor: pointer;">
+                <div class="card-body">
+                    <i class="bi bi-calendar-event fs-1 mb-2" style="color: black;"></i>
+                    <h5 class="card-title">Eventos</h5>
+                    <p class="card-text">Listar y gestionar eventos</p>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/reservas")' style="cursor: pointer;">
-                    <div class="card-body">
-                        <h5 class="card-title">Reservas</h5>
-                        <p class="card-text">Listar y gestionar reservas</p>
-                    </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/reservas")' style="cursor: pointer;">
+                <div class="card-body">
+                    <i class="bi bi-clipboard-check fs-1 mb-2" style="color: black;"></i>
+                    <h5 class="card-title">Reservas</h5>
+                    <p class="card-text">Listar y gestionar reservas</p>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/usuarios")' style="cursor: pointer;">
-                    <div class="card-body">
-                        <h5 class="card-title">Usuarios</h5>
-                        <p class="card-text">Listar y gestionar usuarios</p>
-                    </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center shadow-sm" @onclick='() => nav.NavigateTo("/usuarios")' style="cursor: pointer;">
+                <div class="card-body">
+                    <i class="bi bi-person-gear fs-1 mb-2" style="color: black;"></i>
+                    <h5 class="card-title">Usuarios</h5>
+                    <p class="card-text">Listar y gestionar usuarios</p>
                 </div>
             </div>
+        </div>
         </div>
     }
 </div>
