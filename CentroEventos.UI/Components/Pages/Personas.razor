@@ -52,7 +52,7 @@ else
                     <td>@persona.Email</td>
                     <td>@persona.Telefono</td>
                     <td style="width: 140px;">
-                        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.PersonaModificacion))
+                        @if (sesion.UsuarioActual!.Permisos.Contains(Permiso.PersonaModificacion))
                         {
                             <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(persona)">Editar</button>
                         }
@@ -65,7 +65,7 @@ else
             }
         </tbody>
     </table>
-    @if (sesion.UsuarioActual.Permisos.Contains(Permiso.PersonaAlta))
+    @if (sesion.UsuarioActual!.Permisos.Contains(Permiso.PersonaAlta))
         {
             <button class="btn btn-success mt-3" @onclick="AbrirAgregar">Agregar persona</button>
         }
@@ -251,7 +251,7 @@ else
     {
         try
         {
-            bajaPersona.Ejecutar(personaSeleccionado.Id, sesion.UsuarioActual);
+            bajaPersona.Ejecutar(personaSeleccionado!.Id, sesion.UsuarioActual!);
         }
         catch (Exception err)
         {
@@ -274,7 +274,7 @@ else
     {
         try
         {
-            altaPersona.Ejecutar(personaSeleccionado,sesion.UsuarioActual);
+            altaPersona.Ejecutar(personaSeleccionado!,sesion.UsuarioActual!);
             
         }
         catch (Exception err)
