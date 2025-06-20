@@ -48,7 +48,7 @@ else
                         <td>@reserva.FechaAltaReserva</td>
                         <td>@reserva.EstadoAsistencia</td>
                         <td style="width: 140px;">
-                            @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaModificacion))
+                            @if (sesion.UsuarioActual!.Permisos.Contains(Permiso.ReservaModificacion))
                             {
                                 <button class="btn btn-sm btn-warning me-1" @onclick="() => AbrirEditar(reserva)">Editar</button>
                             }
@@ -61,7 +61,7 @@ else
                 }
             </tbody>
         </table>
-        @if (sesion.UsuarioActual.Permisos.Contains(Permiso.ReservaAlta))
+        @if (sesion.UsuarioActual!.Permisos.Contains(Permiso.ReservaAlta))
         {
             <button class="btn btn-success mt-3" @onclick="() => AbrirAgregar()">Agregar reserva</button>
         }
@@ -252,7 +252,7 @@ else
     {
         try
         {
-            altaReserva.Ejecutar(reservaSeleccionada,sesion.UsuarioActual);
+            altaReserva.Ejecutar(reservaSeleccionada!,sesion.UsuarioActual!);
         }
         catch (Exception err)
         {
@@ -274,7 +274,7 @@ else
     {
         try
         {
-            bajaReserva.Ejecutar(reservaSeleccionada.Id, sesion.UsuarioActual);
+            bajaReserva.Ejecutar(reservaSeleccionada!.Id, sesion.UsuarioActual!);
         }
         catch (Exception err)
         {
